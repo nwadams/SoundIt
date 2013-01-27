@@ -20,22 +20,23 @@ def signUp(request):
     
     user_service = UserService()
     new_user = user_service.register(device_id, password)
-    return HttpResponse(serializers.serialize("json", User.objects.all()), mimetype='application/json')
+    return HttpResponse(serializers.serialize("json", [new_user]), mimetype='application/json')
 
-def login(request):
+# Login is deprecated for now.
+#def login(request):
     
-    try: 
-        user_id = request.GET['user_id']
-        password = request.GET['password']
-    except KeyError:
-        return HttpResponse(utils.internalServerErrorResponse("Invalid request: User id and password required for sign in."), mimetype='application/json')
+#    try: 
+#        user_id = request.GET['user_id']
+#        password = request.GET['password']
+#    except KeyError:
+#        return HttpResponse(utils.internalServerErrorResponse("Invalid request: User id and password required for sign in."), mimetype='application/json')
     
-    user_service = UserService()
-    authenticated = user_service.login(user_id, password)    
+#    user_service = UserService()
+#    authenticated = user_service.login(user_id, password)    
     # Return playlist instead of just success.
-    result = []
-    result.append({"Result": ("SUCCESS" if authenticated else "FAIL")})
-    return HttpResponse(simplejson.dumps(result), mimetype='application/json')
+#    result = []
+#    result.append({"Result": ("SUCCESS" if authenticated else "FAIL")})
+#    return HttpResponse(simplejson.dumps(result), mimetype='application/json')
 
 def addToPlaylist(request, location_id):
     
@@ -53,3 +54,20 @@ def addToPlaylist(request, location_id):
 
 def voteUp(request):
     return HttpResponse("request")
+
+def refreshPlaylist(request):
+    
+    try: 
+        device_id = request.GET['device_id']
+        location_id = request.GET['location_id'] 
+    except KeyError:
+        return HttpResponse(utils.internalServerErrorResponse("Invalid request: Device Id and password required for sign up."), mimetype='application/json')
+
+    
+    return HttpResponse("refresh playlist")
+
+def getLibrary(request):
+    return HttpResponse("get Library")
+
+def getVoteHistory(request):
+    return HttpResponse("get Vote History")
