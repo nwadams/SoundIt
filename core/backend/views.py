@@ -6,6 +6,7 @@ from services.voting_service import VotingService
 from django.core import serializers
 
 import json
+from models import User
 
 def signUp(request):
     
@@ -15,13 +16,11 @@ def signUp(request):
     except KeyError:
         return HttpResponse(utils.internalServerErrorResponse("Invalid request: Device Id and password required for sign up."), mimetype='application/json')
     
+    # Check if user is already signed up
+    
     user_service = UserService()
     new_user = user_service.register(device_id, password)
-    
-    # Returning user object right now so that app can store user_id. But must also return playlist.
-    result = []
-    result.append({"user": new_user.toDict()})
-    return HttpResponse(simplejson.dumps(result), mimetype='application/json')
+    return HttpResponse(serializers.serialize("json", User.objects.all()), mimetype='application/json')
 
 def login(request):
     
