@@ -13,20 +13,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="Qmn-CK-x5j">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jQJ-wH-AHw">
                                     <constraints>
                                         <constraint firstAttribute="width" constant="60" id="eFa-Bb-SHl"/>
+                                        <constraint firstAttribute="height" constant="60" id="vYO-pv-1bp"/>
                                     </constraints>
                                 </imageView>
                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Now playing: Song Description - &quot;Artist (feat: Artists) - Song name&quot;" translatesAutoresizingMaskIntoConstraints="NO" id="HNs-d4-t2s">
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="212" id="CLC-rm-5KV"/>
-                                        <constraint firstAttribute="height" constant="60" id="XRH-cI-uiq"/>
-                                    </constraints>
                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -34,16 +31,17 @@
                             </subviews>
                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstItem="HNs-d4-t2s" firstAttribute="top" secondItem="Qmn-CK-x5j" secondAttribute="top" constant="40" id="2cc-FD-A34"/>
-                                <constraint firstItem="jQJ-wH-AHw" firstAttribute="leading" secondItem="Qmn-CK-x5j" secondAttribute="leading" constant="10" id="Jgm-7j-aMO"/>
-                                <constraint firstItem="HNs-d4-t2s" firstAttribute="bottom" secondItem="jQJ-wH-AHw" secondAttribute="bottom" type="default" id="Pfo-Ph-PEU"/>
-                                <constraint firstItem="HNs-d4-t2s" firstAttribute="top" secondItem="jQJ-wH-AHw" secondAttribute="top" type="default" id="VMb-kG-CRT"/>
+                                <constraint firstItem="HNs-d4-t2s" firstAttribute="top" secondItem="Qmn-CK-x5j" secondAttribute="top" type="default" id="8bx-Bs-Er8"/>
+                                <constraint firstItem="HNs-d4-t2s" firstAttribute="bottom" secondItem="jQJ-wH-AHw" secondAttribute="bottom" type="default" id="FgX-fa-xVn"/>
+                                <constraint firstItem="jQJ-wH-AHw" firstAttribute="top" secondItem="Qmn-CK-x5j" secondAttribute="top" type="default" id="HR2-mQ-G1V"/>
+                                <constraint firstItem="HNs-d4-t2s" firstAttribute="leading" secondItem="jQJ-wH-AHw" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="bCx-tg-v6E"/>
+                                <constraint firstItem="jQJ-wH-AHw" firstAttribute="leading" secondItem="Qmn-CK-x5j" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="enS-9Q-RfN"/>
                                 <constraint firstAttribute="trailing" secondItem="HNs-d4-t2s" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="wnO-lf-G7e"/>
                             </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="pQ0-8S-5Yb" customClass="PlaylistSongCell">
-                                <rect key="frame" x="0.0" y="132" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="92" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -101,7 +99,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="XNm-4Z-gco">
-                                <rect key="frame" x="0.0" y="192" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="152" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -153,7 +151,7 @@
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="GEc-Ar-rSf">
-                                <rect key="frame" x="0.0" y="252" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="212" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -205,7 +203,7 @@
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="gTx-JG-scg">
-                                <rect key="frame" x="0.0" y="312" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="272" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -257,7 +255,7 @@
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Ba2-YK-tat">
-                                <rect key="frame" x="0.0" y="372" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="332" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -309,7 +307,7 @@
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="9Xr-I3-jaQ">
-                                <rect key="frame" x="0.0" y="432" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="392" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -361,7 +359,7 @@
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="lcZ-Hd-3k7">
-                                <rect key="frame" x="0.0" y="492" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="452" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
@@ -413,7 +411,7 @@
                                 </constraints>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="PU3-gk-PS9">
-                                <rect key="frame" x="0.0" y="552" width="320" height="60"/>
+                                <rect key="frame" x="0.0" y="512" width="320" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>

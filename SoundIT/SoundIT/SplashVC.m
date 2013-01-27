@@ -43,22 +43,25 @@
         
     [[API sharedInstance] callAPIMethod:@"signUp"
                              withParams:params
-                           onCompletion:^(NSMutableString *responseString){
-                               NSLog(@"responseString reads %@", responseString);
-                               [responseString replaceOccurrencesOfString:@"\\" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, responseString.length)];
-                               NSLog(@"...responseString after / strip now reads %@", responseString);
-                               [responseString replaceOccurrencesOfString:@"\"[" withString:@"[" options:NSCaseInsensitiveSearch range:NSMakeRange(0, responseString.length)];
-                               NSLog(@"...responseString after \"[ strip now reads %@", responseString);
-                               [responseString replaceOccurrencesOfString:@"]\"" withString:@"]" options:NSCaseInsensitiveSearch range:NSMakeRange(0, responseString.length)];
-                               NSLog(@"...and finally responseString is now %@", responseString);
-                               
-                               SBJsonParser *parser = [[SBJsonParser alloc] init];
-                               NSArray *json = [parser objectWithString:responseString];
+                           onCompletion:^(NSArray *json){
                                NSArray *user = [[json objectAtIndex:0] objectForKey:@"user"];
-                               NSDictionary *idDict = [user objectAtIndex:0];
-                               NSLog(@"idDict value reads: %@", [idDict objectForKey:@"id"]);
+                               NSLog(@"id contains: %@", [[user objectAtIndex:0] objectForKey:@"id"]);
                                
-                               NSLog(@"json description: %@", [json description]);
+//                               NSLog(@"responseString reads %@", responseString);
+//                               [responseString replaceOccurrencesOfString:@"\\" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, responseString.length)];
+//                               NSLog(@"...responseString after / strip now reads %@", responseString);
+//                               [responseString replaceOccurrencesOfString:@"\"[" withString:@"[" options:NSCaseInsensitiveSearch range:NSMakeRange(0, responseString.length)];
+//                               NSLog(@"...responseString after \"[ strip now reads %@", responseString);
+//                               [responseString replaceOccurrencesOfString:@"]\"" withString:@"]" options:NSCaseInsensitiveSearch range:NSMakeRange(0, responseString.length)];
+//                               NSLog(@"...and finally responseString is now %@", responseString);
+//                               
+//                               SBJsonParser *parser = [[SBJsonParser alloc] init];
+//                               NSArray *json = [parser objectWithString:responseString];
+//                               NSArray *user = [[json objectAtIndex:0] objectForKey:@"user"];
+//                               NSDictionary *idDict = [user objectAtIndex:0];
+//                               NSLog(@"idDict value reads: %@", [idDict objectForKey:@"id"]);
+//                               
+//                               NSLog(@"json description: %@", [json description]);
                                
                                
 //                               NSError *error;

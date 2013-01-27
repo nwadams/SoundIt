@@ -10,7 +10,7 @@
 #import "AFNetworking.h"
 
 //block used for calls to API; takes in an NSDictionary object as inputs to JSON around
-typedef void (^JSONResponseBlock)(NSDictionary *json);
+typedef void (^JSONResponseBlock)(NSArray *json);
 typedef void (^StringResponseBlock)(NSMutableString *responseString);
 
 @interface API : AFHTTPClient
@@ -24,6 +24,6 @@ typedef void (^StringResponseBlock)(NSMutableString *responseString);
 
 //instance methods
 -(BOOL)isAuthorized;
--(void)callAPIMethod:(NSString *)command withParams:(NSMutableDictionary *)params onCompletion:(StringResponseBlock)responseBlock;
+-(void)callAPIMethod:(NSString *)command withParams:(NSMutableDictionary *)params onCompletion:(JSONResponseBlock)completionBlock;
 
 @end

@@ -54,7 +54,7 @@
         [self registerHTTPOperationClass:[AFHTTPRequestOperation class]];
         
         // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
-//        [self setDefaultHeader:@"Accept" value:@"application/text"];
+        [self setDefaultHeader:@"Accept" value:@"application/text"];
     }
     
     return self;
@@ -65,7 +65,7 @@
     return authorized;
 }
 
--(void)callAPIMethod:(NSString *)command withParams:(NSMutableDictionary *)params onCompletion:(StringResponseBlock)responseBlock
+-(void)callAPIMethod:(NSString *)command withParams:(NSMutableDictionary *)params onCompletion:(JSONResponseBlock)completionBlock
 {
     //build our urlCommandString with Host + Path first
     NSMutableString *urlCommandString = [NSMutableString stringWithFormat:@"%@/%@/%@/?", kAPIHost, kAPIPath, command];
@@ -86,43 +86,13 @@
                                                          path:urlCommandString
                                                    parameters:nil];
     
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:apiRequest];
+    AFJSONRequestOperation *operation = [[AFJSONRequestOperation alloc] initWithRequest:apiRequest];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject){
-        
-//        NSMutableString *content = [[NSMutableString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        
-//        NSLog(@"content reads %@", content);
-//        
-//        [content replaceOccurrencesOfString:@"\\" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, content.length)];
-//        
-//        NSLog(@"content reads %@", content);
-//        
-//        SBJsonParser *parser = [[SBJsonParser alloc] init];
-//        NSArray *json = [parser objectWithString:content];
-//        
-//        NSDictionary *jsonUser = [json objectAtIndex:0];
-//        
-//        NSLog(@"jsonUser reads: %@", [jsonUser description]);
-        
-        NSMutableString *responseString = [[NSMutableString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
-//        
-//        NSLog(@"responseeString %@", responseString);
-//        
-//        [responseString replaceOccurrencesOfString:@"\\" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, responseString.length - 1)];
-//        [responseString replaceOccurrencesOfString:@"\"" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, responseString.length - 1)];
-//        
-//        NSLog(@"responseString is: %@", responseString);
-//        
-//        NSError *error;
-//        NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
-//        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
-//        
-//        NSLog(@"results: %@", [results description]);
-//        
-        responseBlock(responseString);
+        NSLog(@"responseObject description:%@", responseObject);
+        completionBlock(responseObject);
         
     }failure:^(AFHTTPRequestOperation *operation, NSError *error){
-        responseBlock([error localizedDescription].mutableCopy);
+        completionBlock([NSDictionary dictionaryWithObject:[error localizedDescription] forKey:@"error"]);
         
     }];
     
