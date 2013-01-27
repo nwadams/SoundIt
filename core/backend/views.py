@@ -4,9 +4,9 @@ import utils
 from services.user_service import UserService
 from services.voting_service import VotingService
 from django.core import serializers
-
 import json
 from models import User
+from models import PlaylistItem
 
 def signUp(request):
     
@@ -14,7 +14,8 @@ def signUp(request):
         device_id = request.GET['device_id']
         password = request.GET['password'] 
     except KeyError:
-        return HttpResponse(utils.internalServerErrorResponse("Invalid request: Device Id and password required for sign up."), mimetype='application/json')
+        error = utils.internalServerErrorResponse("Invalid request: Device Id and password required for sign up.")
+        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     
     # Check if user is already signed up
     
@@ -38,13 +39,15 @@ def signUp(request):
 #    result.append({"Result": ("SUCCESS" if authenticated else "FAIL")})
 #    return HttpResponse(simplejson.dumps(result), mimetype='application/json')
 
-def addToPlaylist(request, location_id):
+def addToPlaylist(request):
     
     try:
         user_id = request.GET['user_id']
         music_track_id = request.GET['music_track_id']
+        location_id = request.GET['location_id']
     except KeyError:
-        return HttpResponse(utils.internalServerErrorResponse("Invalid request: User id and track id required for adding to playlist."), mimetype='application/json')
+        error = utils.internalServerErrorResponse("Invalid request: User id and track id required for adding to playlist.")
+        return HttpResponse( simplejson.dumps(error), mimetype='application/json')
     
     voting_service = VotingService()
     updated_playlist = voting_service.addToPlaylist(user_id, location_id, music_track_id)
@@ -61,10 +64,11 @@ def refreshPlaylist(request):
         device_id = request.GET['device_id']
         location_id = request.GET['location_id'] 
     except KeyError:
-        return HttpResponse(utils.internalServerErrorResponse("Invalid request: Device Id and password required for sign up."), mimetype='application/json')
+        error = utils.internalServerErrorResponse("Invalid request: Device Id and password required for sign up.")
+        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
 
-    
-    return HttpResponse("refresh playlist")
+    # Use location id to fetch current playlist
+    return HttpResponse(serializers.serialize("json", PlaylistItem.objects.all(), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}))
 
 def getLibrary(request):
     return HttpResponse("get Library")
