@@ -7,6 +7,54 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		678B884A16AC6467008E105E /* PlaylistSongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B884916AC6467008E105E /* PlaylistSongCell.m */; };
+		678B884B16AC6467008E105E /* PlaylistSongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B884916AC6467008E105E /* PlaylistSongCell.m */; };
+		678B886216AC74E8008E105E /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885016AC74E8008E105E /* AFHTTPClient.m */; };
+		678B886316AC74E8008E105E /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885016AC74E8008E105E /* AFHTTPClient.m */; };
+		678B886416AC74E8008E105E /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885216AC74E8008E105E /* AFHTTPRequestOperation.m */; };
+		678B886516AC74E8008E105E /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885216AC74E8008E105E /* AFHTTPRequestOperation.m */; };
+		678B886616AC74E8008E105E /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885416AC74E8008E105E /* AFImageRequestOperation.m */; };
+		678B886716AC74E8008E105E /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885416AC74E8008E105E /* AFImageRequestOperation.m */; };
+		678B886816AC74E8008E105E /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885616AC74E8008E105E /* AFJSONRequestOperation.m */; };
+		678B886916AC74E8008E105E /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885616AC74E8008E105E /* AFJSONRequestOperation.m */; };
+		678B886A16AC74E8008E105E /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885816AC74E8008E105E /* AFNetworkActivityIndicatorManager.m */; };
+		678B886B16AC74E8008E105E /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885816AC74E8008E105E /* AFNetworkActivityIndicatorManager.m */; };
+		678B886C16AC74E8008E105E /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885B16AC74E8008E105E /* AFPropertyListRequestOperation.m */; };
+		678B886D16AC74E8008E105E /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885B16AC74E8008E105E /* AFPropertyListRequestOperation.m */; };
+		678B886E16AC74E8008E105E /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885D16AC74E8008E105E /* AFURLConnectionOperation.m */; };
+		678B886F16AC74E8008E105E /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885D16AC74E8008E105E /* AFURLConnectionOperation.m */; };
+		678B887016AC74E8008E105E /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885F16AC74E8008E105E /* AFXMLRequestOperation.m */; };
+		678B887116AC74E8008E105E /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885F16AC74E8008E105E /* AFXMLRequestOperation.m */; };
+		678B887216AC74E8008E105E /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B886116AC74E8008E105E /* UIImageView+AFNetworking.m */; };
+		678B887316AC74E8008E105E /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B886116AC74E8008E105E /* UIImageView+AFNetworking.m */; };
+		678B887D16B33B2F008E105E /* SoundIT logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 678B887C16B33B2F008E105E /* SoundIT logo.png */; };
+		678B887E16B33B2F008E105E /* SoundIT logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 678B887C16B33B2F008E105E /* SoundIT logo.png */; };
+		678B888116B33C09008E105E /* SplashVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B888016B33C09008E105E /* SplashVC.m */; };
+		678B888216B33C09008E105E /* SplashVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B888016B33C09008E105E /* SplashVC.m */; };
+		678B889416B46DC2008E105E /* UIAlertView+error.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B889316B46DC2008E105E /* UIAlertView+error.m */; };
+		678B889516B46DC2008E105E /* UIAlertView+error.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B889316B46DC2008E105E /* UIAlertView+error.m */; };
+		678B889816B481E0008E105E /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B889716B481E0008E105E /* API.m */; };
+		678B889916B481E0008E105E /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B889716B481E0008E105E /* API.m */; };
+		678B88B016B4FF0B008E105E /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B889D16B4FF0B008E105E /* SBJsonParser.m */; };
+		678B88B116B4FF0B008E105E /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B889D16B4FF0B008E105E /* SBJsonParser.m */; };
+		678B88B216B4FF0B008E105E /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B889F16B4FF0B008E105E /* SBJsonStreamParser.m */; };
+		678B88B316B4FF0B008E105E /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B889F16B4FF0B008E105E /* SBJsonStreamParser.m */; };
+		678B88B416B4FF0B008E105E /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88A116B4FF0B008E105E /* SBJsonStreamParserAccumulator.m */; };
+		678B88B516B4FF0B008E105E /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88A116B4FF0B008E105E /* SBJsonStreamParserAccumulator.m */; };
+		678B88B616B4FF0B008E105E /* SBJsonStreamParserAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88A316B4FF0B008E105E /* SBJsonStreamParserAdapter.m */; };
+		678B88B716B4FF0B008E105E /* SBJsonStreamParserAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88A316B4FF0B008E105E /* SBJsonStreamParserAdapter.m */; };
+		678B88B816B4FF0B008E105E /* SBJsonStreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88A516B4FF0B008E105E /* SBJsonStreamParserState.m */; };
+		678B88B916B4FF0B008E105E /* SBJsonStreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88A516B4FF0B008E105E /* SBJsonStreamParserState.m */; };
+		678B88BA16B4FF0B008E105E /* SBJsonStreamTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88A716B4FF0B008E105E /* SBJsonStreamTokeniser.m */; };
+		678B88BB16B4FF0B008E105E /* SBJsonStreamTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88A716B4FF0B008E105E /* SBJsonStreamTokeniser.m */; };
+		678B88BC16B4FF0B008E105E /* SBJsonStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88A916B4FF0B008E105E /* SBJsonStreamWriter.m */; };
+		678B88BD16B4FF0B008E105E /* SBJsonStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88A916B4FF0B008E105E /* SBJsonStreamWriter.m */; };
+		678B88BE16B4FF0B008E105E /* SBJsonStreamWriterAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88AB16B4FF0B008E105E /* SBJsonStreamWriterAccumulator.m */; };
+		678B88BF16B4FF0B008E105E /* SBJsonStreamWriterAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88AB16B4FF0B008E105E /* SBJsonStreamWriterAccumulator.m */; };
+		678B88C016B4FF0B008E105E /* SBJsonStreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88AD16B4FF0B008E105E /* SBJsonStreamWriterState.m */; };
+		678B88C116B4FF0B008E105E /* SBJsonStreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88AD16B4FF0B008E105E /* SBJsonStreamWriterState.m */; };
+		678B88C216B4FF0B008E105E /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88AF16B4FF0B008E105E /* SBJsonWriter.m */; };
+		678B88C316B4FF0B008E105E /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B88AF16B4FF0B008E105E /* SBJsonWriter.m */; };
 		67BFC5A916A38B7500D406E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67BFC5A816A38B7500D406E4 /* UIKit.framework */; };
 		67BFC5AB16A38B7500D406E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67BFC5AA16A38B7500D406E4 /* Foundation.framework */; };
 		67BFC5AD16A38B7500D406E4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67BFC5AC16A38B7500D406E4 /* CoreGraphics.framework */; };
@@ -22,7 +70,6 @@
 		67BFC5CF16A38B7600D406E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67BFC5AA16A38B7500D406E4 /* Foundation.framework */; };
 		67BFC5D716A38B7600D406E4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 67BFC5D516A38B7600D406E4 /* InfoPlist.strings */; };
 		67BFC5DA16A38B7600D406E4 /* SoundITTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 67BFC5D916A38B7600D406E4 /* SoundITTests.m */; };
-		67BFC5E716A391DB00D406E4 /* soundit_logo_professional.png in Resources */ = {isa = PBXBuildFile; fileRef = 67BFC5E616A391DB00D406E4 /* soundit_logo_professional.png */; };
 		67BFC5EB16A39B0E00D406E4 /* upArrowGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 67BFC5EA16A39B0E00D406E4 /* upArrowGreen.png */; };
 		67BFC5EE16A3A06A00D406E4 /* PlaylistTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67BFC5ED16A3A06A00D406E4 /* PlaylistTVC.m */; };
 		67BFC5EF16A3A06A00D406E4 /* PlaylistTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 67BFC5ED16A3A06A00D406E4 /* PlaylistTVC.m */; };
@@ -39,6 +86,57 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		678B884816AC6467008E105E /* PlaylistSongCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistSongCell.h; sourceTree = "<group>"; };
+		678B884916AC6467008E105E /* PlaylistSongCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistSongCell.m; sourceTree = "<group>"; };
+		678B884F16AC74E8008E105E /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
+		678B885016AC74E8008E105E /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPClient.m; sourceTree = "<group>"; };
+		678B885116AC74E8008E105E /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
+		678B885216AC74E8008E105E /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
+		678B885316AC74E8008E105E /* AFImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFImageRequestOperation.h; sourceTree = "<group>"; };
+		678B885416AC74E8008E105E /* AFImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFImageRequestOperation.m; sourceTree = "<group>"; };
+		678B885516AC74E8008E105E /* AFJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFJSONRequestOperation.h; sourceTree = "<group>"; };
+		678B885616AC74E8008E105E /* AFJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFJSONRequestOperation.m; sourceTree = "<group>"; };
+		678B885716AC74E8008E105E /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworkActivityIndicatorManager.h; sourceTree = "<group>"; };
+		678B885816AC74E8008E105E /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFNetworkActivityIndicatorManager.m; sourceTree = "<group>"; };
+		678B885916AC74E8008E105E /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
+		678B885A16AC74E8008E105E /* AFPropertyListRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFPropertyListRequestOperation.h; sourceTree = "<group>"; };
+		678B885B16AC74E8008E105E /* AFPropertyListRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFPropertyListRequestOperation.m; sourceTree = "<group>"; };
+		678B885C16AC74E8008E105E /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLConnectionOperation.h; sourceTree = "<group>"; };
+		678B885D16AC74E8008E105E /* AFURLConnectionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLConnectionOperation.m; sourceTree = "<group>"; };
+		678B885E16AC74E8008E105E /* AFXMLRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFXMLRequestOperation.h; sourceTree = "<group>"; };
+		678B885F16AC74E8008E105E /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
+		678B886016AC74E8008E105E /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
+		678B886116AC74E8008E105E /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		678B887416B26CF9008E105E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		678B887616B26D01008E105E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		678B887C16B33B2F008E105E /* SoundIT logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SoundIT logo.png"; sourceTree = "<group>"; };
+		678B887F16B33C09008E105E /* SplashVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashVC.h; sourceTree = "<group>"; };
+		678B888016B33C09008E105E /* SplashVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashVC.m; sourceTree = "<group>"; };
+		678B889216B46DC2008E105E /* UIAlertView+error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+error.h"; sourceTree = "<group>"; };
+		678B889316B46DC2008E105E /* UIAlertView+error.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertView+error.m"; sourceTree = "<group>"; };
+		678B889616B481DF008E105E /* API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
+		678B889716B481E0008E105E /* API.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = API.m; sourceTree = "<group>"; };
+		678B889B16B4FF0B008E105E /* SBJson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson.h; sourceTree = "<group>"; };
+		678B889C16B4FF0B008E105E /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		678B889D16B4FF0B008E105E /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		678B889E16B4FF0B008E105E /* SBJsonStreamParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParser.h; sourceTree = "<group>"; };
+		678B889F16B4FF0B008E105E /* SBJsonStreamParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParser.m; sourceTree = "<group>"; };
+		678B88A016B4FF0B008E105E /* SBJsonStreamParserAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAccumulator.h; sourceTree = "<group>"; };
+		678B88A116B4FF0B008E105E /* SBJsonStreamParserAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAccumulator.m; sourceTree = "<group>"; };
+		678B88A216B4FF0B008E105E /* SBJsonStreamParserAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserAdapter.h; sourceTree = "<group>"; };
+		678B88A316B4FF0B008E105E /* SBJsonStreamParserAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserAdapter.m; sourceTree = "<group>"; };
+		678B88A416B4FF0B008E105E /* SBJsonStreamParserState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamParserState.h; sourceTree = "<group>"; };
+		678B88A516B4FF0B008E105E /* SBJsonStreamParserState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamParserState.m; sourceTree = "<group>"; };
+		678B88A616B4FF0B008E105E /* SBJsonStreamTokeniser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamTokeniser.h; sourceTree = "<group>"; };
+		678B88A716B4FF0B008E105E /* SBJsonStreamTokeniser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamTokeniser.m; sourceTree = "<group>"; };
+		678B88A816B4FF0B008E105E /* SBJsonStreamWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriter.h; sourceTree = "<group>"; };
+		678B88A916B4FF0B008E105E /* SBJsonStreamWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriter.m; sourceTree = "<group>"; };
+		678B88AA16B4FF0B008E105E /* SBJsonStreamWriterAccumulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterAccumulator.h; sourceTree = "<group>"; };
+		678B88AB16B4FF0B008E105E /* SBJsonStreamWriterAccumulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterAccumulator.m; sourceTree = "<group>"; };
+		678B88AC16B4FF0B008E105E /* SBJsonStreamWriterState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonStreamWriterState.h; sourceTree = "<group>"; };
+		678B88AD16B4FF0B008E105E /* SBJsonStreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterState.m; sourceTree = "<group>"; };
+		678B88AE16B4FF0B008E105E /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		678B88AF16B4FF0B008E105E /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		67BFC5A416A38B7500D406E4 /* SoundIT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundIT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67BFC5A816A38B7500D406E4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		67BFC5AA16A38B7500D406E4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -59,7 +157,6 @@
 		67BFC5D616A38B7600D406E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		67BFC5D816A38B7600D406E4 /* SoundITTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundITTests.h; sourceTree = "<group>"; };
 		67BFC5D916A38B7600D406E4 /* SoundITTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoundITTests.m; sourceTree = "<group>"; };
-		67BFC5E616A391DB00D406E4 /* soundit_logo_professional.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soundit_logo_professional.png; sourceTree = "<group>"; };
 		67BFC5EA16A39B0E00D406E4 /* upArrowGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upArrowGreen.png; sourceTree = "<group>"; };
 		67BFC5EC16A3A06A00D406E4 /* PlaylistTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistTVC.h; sourceTree = "<group>"; };
 		67BFC5ED16A3A06A00D406E4 /* PlaylistTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistTVC.m; sourceTree = "<group>"; };
@@ -89,6 +186,71 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		678B884D16AC6473008E105E /* CurrentPlaylist */ = {
+			isa = PBXGroup;
+			children = (
+				67BFC5EC16A3A06A00D406E4 /* PlaylistTVC.h */,
+				67BFC5ED16A3A06A00D406E4 /* PlaylistTVC.m */,
+				678B884816AC6467008E105E /* PlaylistSongCell.h */,
+				678B884916AC6467008E105E /* PlaylistSongCell.m */,
+			);
+			name = CurrentPlaylist;
+			sourceTree = "<group>";
+		};
+		678B884E16AC74E8008E105E /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				678B884F16AC74E8008E105E /* AFHTTPClient.h */,
+				678B885016AC74E8008E105E /* AFHTTPClient.m */,
+				678B885116AC74E8008E105E /* AFHTTPRequestOperation.h */,
+				678B885216AC74E8008E105E /* AFHTTPRequestOperation.m */,
+				678B885316AC74E8008E105E /* AFImageRequestOperation.h */,
+				678B885416AC74E8008E105E /* AFImageRequestOperation.m */,
+				678B885516AC74E8008E105E /* AFJSONRequestOperation.h */,
+				678B885616AC74E8008E105E /* AFJSONRequestOperation.m */,
+				678B885716AC74E8008E105E /* AFNetworkActivityIndicatorManager.h */,
+				678B885816AC74E8008E105E /* AFNetworkActivityIndicatorManager.m */,
+				678B885916AC74E8008E105E /* AFNetworking.h */,
+				678B885A16AC74E8008E105E /* AFPropertyListRequestOperation.h */,
+				678B885B16AC74E8008E105E /* AFPropertyListRequestOperation.m */,
+				678B885C16AC74E8008E105E /* AFURLConnectionOperation.h */,
+				678B885D16AC74E8008E105E /* AFURLConnectionOperation.m */,
+				678B885E16AC74E8008E105E /* AFXMLRequestOperation.h */,
+				678B885F16AC74E8008E105E /* AFXMLRequestOperation.m */,
+				678B886016AC74E8008E105E /* UIImageView+AFNetworking.h */,
+				678B886116AC74E8008E105E /* UIImageView+AFNetworking.m */,
+			);
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		678B889A16B4FF0B008E105E /* objc */ = {
+			isa = PBXGroup;
+			children = (
+				678B889B16B4FF0B008E105E /* SBJson.h */,
+				678B889C16B4FF0B008E105E /* SBJsonParser.h */,
+				678B889D16B4FF0B008E105E /* SBJsonParser.m */,
+				678B889E16B4FF0B008E105E /* SBJsonStreamParser.h */,
+				678B889F16B4FF0B008E105E /* SBJsonStreamParser.m */,
+				678B88A016B4FF0B008E105E /* SBJsonStreamParserAccumulator.h */,
+				678B88A116B4FF0B008E105E /* SBJsonStreamParserAccumulator.m */,
+				678B88A216B4FF0B008E105E /* SBJsonStreamParserAdapter.h */,
+				678B88A316B4FF0B008E105E /* SBJsonStreamParserAdapter.m */,
+				678B88A416B4FF0B008E105E /* SBJsonStreamParserState.h */,
+				678B88A516B4FF0B008E105E /* SBJsonStreamParserState.m */,
+				678B88A616B4FF0B008E105E /* SBJsonStreamTokeniser.h */,
+				678B88A716B4FF0B008E105E /* SBJsonStreamTokeniser.m */,
+				678B88A816B4FF0B008E105E /* SBJsonStreamWriter.h */,
+				678B88A916B4FF0B008E105E /* SBJsonStreamWriter.m */,
+				678B88AA16B4FF0B008E105E /* SBJsonStreamWriterAccumulator.h */,
+				678B88AB16B4FF0B008E105E /* SBJsonStreamWriterAccumulator.m */,
+				678B88AC16B4FF0B008E105E /* SBJsonStreamWriterState.h */,
+				678B88AD16B4FF0B008E105E /* SBJsonStreamWriterState.m */,
+				678B88AE16B4FF0B008E105E /* SBJsonWriter.h */,
+				678B88AF16B4FF0B008E105E /* SBJsonWriter.m */,
+			);
+			path = objc;
+			sourceTree = "<group>";
+		};
 		67BFC59916A38B7500D406E4 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +273,8 @@
 		67BFC5A716A38B7500D406E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				678B887616B26D01008E105E /* SystemConfiguration.framework */,
+				678B887416B26CF9008E105E /* MobileCoreServices.framework */,
 				67BFC5A816A38B7500D406E4 /* UIKit.framework */,
 				67BFC5AA16A38B7500D406E4 /* Foundation.framework */,
 				67BFC5AC16A38B7500D406E4 /* CoreGraphics.framework */,
@@ -122,11 +286,14 @@
 		67BFC5AE16A38B7500D406E4 /* SoundIT */ = {
 			isa = PBXGroup;
 			children = (
-				67BFC5EC16A3A06A00D406E4 /* PlaylistTVC.h */,
-				67BFC5ED16A3A06A00D406E4 /* PlaylistTVC.m */,
+				678B884D16AC6473008E105E /* CurrentPlaylist */,
 				67BFC5B716A38B7500D406E4 /* SounditAppDelegate.h */,
 				67BFC5B816A38B7500D406E4 /* SounditAppDelegate.m */,
 				67BFC5C016A38B7600D406E4 /* MainStoryboard.storyboard */,
+				678B887F16B33C09008E105E /* SplashVC.h */,
+				678B888016B33C09008E105E /* SplashVC.m */,
+				678B889616B481DF008E105E /* API.h */,
+				678B889716B481E0008E105E /* API.m */,
 				67BFC5AF16A38B7500D406E4 /* Supporting Files */,
 			);
 			path = SoundIT;
@@ -135,6 +302,10 @@
 		67BFC5AF16A38B7500D406E4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				678B889216B46DC2008E105E /* UIAlertView+error.h */,
+				678B889316B46DC2008E105E /* UIAlertView+error.m */,
+				678B889A16B4FF0B008E105E /* objc */,
+				678B884E16AC74E8008E105E /* AFNetworking */,
 				67BFC5E316A38DBA00D406E4 /* elements */,
 				67BFC5B016A38B7500D406E4 /* SoundIT-Info.plist */,
 				67BFC5B116A38B7500D406E4 /* InfoPlist.strings */,
@@ -185,8 +356,8 @@
 		67BFC5E516A38DCE00D406E4 /* retina */ = {
 			isa = PBXGroup;
 			children = (
+				678B887C16B33B2F008E105E /* SoundIT logo.png */,
 				67BFC5EA16A39B0E00D406E4 /* upArrowGreen.png */,
-				67BFC5E616A391DB00D406E4 /* soundit_logo_professional.png */,
 			);
 			name = retina;
 			sourceTree = "<group>";
@@ -268,8 +439,8 @@
 				67BFC5BD16A38B7600D406E4 /* Default@2x.png in Resources */,
 				67BFC5BF16A38B7600D406E4 /* Default-568h@2x.png in Resources */,
 				67BFC5C216A38B7600D406E4 /* MainStoryboard.storyboard in Resources */,
-				67BFC5E716A391DB00D406E4 /* soundit_logo_professional.png in Resources */,
 				67BFC5EB16A39B0E00D406E4 /* upArrowGreen.png in Resources */,
+				678B887D16B33B2F008E105E /* SoundIT logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				67BFC5D716A38B7600D406E4 /* InfoPlist.strings in Resources */,
+				678B887E16B33B2F008E105E /* SoundIT logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +479,29 @@
 				67BFC5B516A38B7500D406E4 /* main.m in Sources */,
 				67BFC5B916A38B7500D406E4 /* SounditAppDelegate.m in Sources */,
 				67BFC5EE16A3A06A00D406E4 /* PlaylistTVC.m in Sources */,
+				678B884A16AC6467008E105E /* PlaylistSongCell.m in Sources */,
+				678B886216AC74E8008E105E /* AFHTTPClient.m in Sources */,
+				678B886416AC74E8008E105E /* AFHTTPRequestOperation.m in Sources */,
+				678B886616AC74E8008E105E /* AFImageRequestOperation.m in Sources */,
+				678B886816AC74E8008E105E /* AFJSONRequestOperation.m in Sources */,
+				678B886A16AC74E8008E105E /* AFNetworkActivityIndicatorManager.m in Sources */,
+				678B886C16AC74E8008E105E /* AFPropertyListRequestOperation.m in Sources */,
+				678B886E16AC74E8008E105E /* AFURLConnectionOperation.m in Sources */,
+				678B887016AC74E8008E105E /* AFXMLRequestOperation.m in Sources */,
+				678B887216AC74E8008E105E /* UIImageView+AFNetworking.m in Sources */,
+				678B888116B33C09008E105E /* SplashVC.m in Sources */,
+				678B889416B46DC2008E105E /* UIAlertView+error.m in Sources */,
+				678B889816B481E0008E105E /* API.m in Sources */,
+				678B88B016B4FF0B008E105E /* SBJsonParser.m in Sources */,
+				678B88B216B4FF0B008E105E /* SBJsonStreamParser.m in Sources */,
+				678B88B416B4FF0B008E105E /* SBJsonStreamParserAccumulator.m in Sources */,
+				678B88B616B4FF0B008E105E /* SBJsonStreamParserAdapter.m in Sources */,
+				678B88B816B4FF0B008E105E /* SBJsonStreamParserState.m in Sources */,
+				678B88BA16B4FF0B008E105E /* SBJsonStreamTokeniser.m in Sources */,
+				678B88BC16B4FF0B008E105E /* SBJsonStreamWriter.m in Sources */,
+				678B88BE16B4FF0B008E105E /* SBJsonStreamWriterAccumulator.m in Sources */,
+				678B88C016B4FF0B008E105E /* SBJsonStreamWriterState.m in Sources */,
+				678B88C216B4FF0B008E105E /* SBJsonWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,6 +511,29 @@
 			files = (
 				67BFC5DA16A38B7600D406E4 /* SoundITTests.m in Sources */,
 				67BFC5EF16A3A06A00D406E4 /* PlaylistTVC.m in Sources */,
+				678B884B16AC6467008E105E /* PlaylistSongCell.m in Sources */,
+				678B886316AC74E8008E105E /* AFHTTPClient.m in Sources */,
+				678B886516AC74E8008E105E /* AFHTTPRequestOperation.m in Sources */,
+				678B886716AC74E8008E105E /* AFImageRequestOperation.m in Sources */,
+				678B886916AC74E8008E105E /* AFJSONRequestOperation.m in Sources */,
+				678B886B16AC74E8008E105E /* AFNetworkActivityIndicatorManager.m in Sources */,
+				678B886D16AC74E8008E105E /* AFPropertyListRequestOperation.m in Sources */,
+				678B886F16AC74E8008E105E /* AFURLConnectionOperation.m in Sources */,
+				678B887116AC74E8008E105E /* AFXMLRequestOperation.m in Sources */,
+				678B887316AC74E8008E105E /* UIImageView+AFNetworking.m in Sources */,
+				678B888216B33C09008E105E /* SplashVC.m in Sources */,
+				678B889516B46DC2008E105E /* UIAlertView+error.m in Sources */,
+				678B889916B481E0008E105E /* API.m in Sources */,
+				678B88B116B4FF0B008E105E /* SBJsonParser.m in Sources */,
+				678B88B316B4FF0B008E105E /* SBJsonStreamParser.m in Sources */,
+				678B88B516B4FF0B008E105E /* SBJsonStreamParserAccumulator.m in Sources */,
+				678B88B716B4FF0B008E105E /* SBJsonStreamParserAdapter.m in Sources */,
+				678B88B916B4FF0B008E105E /* SBJsonStreamParserState.m in Sources */,
+				678B88BB16B4FF0B008E105E /* SBJsonStreamTokeniser.m in Sources */,
+				678B88BD16B4FF0B008E105E /* SBJsonStreamWriter.m in Sources */,
+				678B88BF16B4FF0B008E105E /* SBJsonStreamWriterAccumulator.m in Sources */,
+				678B88C116B4FF0B008E105E /* SBJsonStreamWriterState.m in Sources */,
+				678B88C316B4FF0B008E105E /* SBJsonWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +700,7 @@
 				67BFC5DF16A38B7600D406E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		67BFC5E016A38B7600D406E4 /* Build configuration list for PBXNativeTarget "SoundITTests" */ = {
 			isa = XCConfigurationList;
@@ -490,6 +709,7 @@
 				67BFC5E216A38B7600D406E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

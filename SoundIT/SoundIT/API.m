@@ -8,9 +8,11 @@
 
 #import "API.h"
 
+#import "SBJson.h"
+
 //the web location of the service
-#define kAPIHost @"http://www.sadiqk.com"//change to ip or uploading of photos
-#define kAPIPath @"/areufree/ios_interface/"
+#define kAPIHost @"http://ec2-107-22-139-35.compute-1.amazonaws.com:11080"//change to ip or uploading of photos
+#define kAPIPath @"backend"
 //#define kAPIHost @"http://localhost"
 //#define kAPIPath @"/~samuelchan/Web/ios_interface/"
 
@@ -27,7 +29,9 @@
     static API *sharedInstance = nil;
     static dispatch_once_t oncePredicate;
     dispatch_once(&oncePredicate, ^{
+        //below is equivalent to: AFHTTPClient *httpClient = [[AFHTTPClient alloc] initWithBaseURL:[NSURL URLWithString:@"http://samwize.com/"]];
         sharedInstance = [[self alloc] initWithBaseURL:[NSURL URLWithString:kAPIHost]];
+        
     });
     
     return sharedInstance;
@@ -46,10 +50,11 @@
         user = nil;
         authorized = NO;
         
-        [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+        //below is equivalent to: [httpClient registerHTTPOperationClass:[AFHTTPRequestOperation class]];
+        [self registerHTTPOperationClass:[AFHTTPRequestOperation class]];
         
         // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
-        [self setDefaultHeader:@"Accept" value:@"application/json"];
+//        [self setDefaultHeader:@"Accept" value:@"application/text"];
     }
     
     return self;
@@ -60,39 +65,68 @@
     return authorized;
 }
 
--(void)commandWithParams:(NSMutableDictionary*)params onCompletion:(JSONResponseBlock)completionBlock
+-(void)callAPIMethod:(NSString *)command withParams:(NSMutableDictionary *)params onCompletion:(StringResponseBlock)responseBlock
 {
-    NSData* uploadFile = nil;
-    if ([params objectForKey:@"file"]) {
-        uploadFile = (NSData*)[params objectForKey:@"file"];
-        [params removeObjectForKey:@"file"];
+    //build our urlCommandString with Host + Path first
+    NSMutableString *urlCommandString = [NSMutableString stringWithFormat:@"%@/%@/%@/?", kAPIHost, kAPIPath, command];
+    
+    for(id key in params){
+        [urlCommandString appendString:key];
+        [urlCommandString appendString:@"="];
+        [urlCommandString appendString:[params objectForKey:key]];
+        [urlCommandString appendString:@"&"];
+        
     }
     
-    NSMutableURLRequest *apiRequest =
-    [self multipartFormRequestWithMethod:@"POST"
-                                    path:kAPIPath
-                              parameters:params
-               constructingBodyWithBlock: ^(id <AFMultipartFormData>formData) {
-                   
-                   //attach a file; will eventually be used to upload ics files
-//                   if (uploadFile) {
-//                       [formData appendPartWithFileData:uploadFile
-//                                                   name:@"file"
-//                                               fileName:@"photo.jpg"
-//                                               mimeType:@"image/jpeg"];
-//                   }
-               }];
+    urlCommandString = [urlCommandString substringToIndex:urlCommandString.length - 1].mutableCopy;
     
-    AFJSONRequestOperation* operation = [[AFJSONRequestOperation alloc] initWithRequest: apiRequest];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //success!
-        completionBlock(responseObject);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //failure :(
-        completionBlock([NSDictionary dictionaryWithObject:[error localizedDescription] forKey:@"error"]);
+    NSLog(@"urlString holds: %@", urlCommandString);
+    NSMutableURLRequest *apiRequest = [self requestWithMethod:@"GET"
+                                                         path:urlCommandString
+                                                   parameters:nil];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:apiRequest];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject){
+        
+//        NSMutableString *content = [[NSMutableString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//        
+//        NSLog(@"content reads %@", content);
+//        
+//        [content replaceOccurrencesOfString:@"\\" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, content.length)];
+//        
+//        NSLog(@"content reads %@", content);
+//        
+//        SBJsonParser *parser = [[SBJsonParser alloc] init];
+//        NSArray *json = [parser objectWithString:content];
+//        
+//        NSDictionary *jsonUser = [json objectAtIndex:0];
+//        
+//        NSLog(@"jsonUser reads: %@", [jsonUser description]);
+        
+        NSMutableString *responseString = [[NSMutableString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding];
+//        
+//        NSLog(@"responseeString %@", responseString);
+//        
+//        [responseString replaceOccurrencesOfString:@"\\" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, responseString.length - 1)];
+//        [responseString replaceOccurrencesOfString:@"\"" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, responseString.length - 1)];
+//        
+//        NSLog(@"responseString is: %@", responseString);
+//        
+//        NSError *error;
+//        NSData *jsonData = [responseString dataUsingEncoding:NSUTF8StringEncoding];
+//        NSDictionary *results = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+//        
+//        NSLog(@"results: %@", [results description]);
+//        
+        responseBlock(responseString);
+        
+    }failure:^(AFHTTPRequestOperation *operation, NSError *error){
+        responseBlock([error localizedDescription].mutableCopy);
+        
     }];
     
     [operation start];
+    
 }
 
 @end

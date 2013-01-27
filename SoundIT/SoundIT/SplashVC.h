@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "API.h"
+#import "UIAlertView+error.h"
+#import "SBJson.h"
 
 @interface SplashVC : UIViewController
 

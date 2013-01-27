@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface PlaylistSongCell : UITableViewCell
+@property (strong, nonatomic) IBOutlet UIImageView *songAlbumImage;
+@property (strong, nonatomic) IBOutlet UITextView *songDescription;
+@property (strong, nonatomic) IBOutlet UIImageView *voteUpButton;
+@property (strong, nonatomic) IBOutlet UILabel *numVotesLabel;
 
 @end

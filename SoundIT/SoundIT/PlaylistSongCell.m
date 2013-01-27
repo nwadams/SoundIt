@@ -10,6 +10,11 @@
 
 @implementation PlaylistSongCell
 
+@synthesize songAlbumImage = _songAlbumImage;
+@synthesize songDescription = _songDescription;
+@synthesize voteUpButton = _voteUpButton;
+@synthesize numVotesLabel = _numVotesLabel;
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
