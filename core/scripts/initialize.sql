@@ -1,0 +1,10 @@
+drop table backend_consumer;
+drop table backend_vote;
+drop table backend_playlistitem;
+drop table backend_playlist;
+drop table backend_location;
+drop table backend_user;
+drop table backend_musictrack;
+drop table backend_musiccategory;
+drop table backend_album;
+drop table backend_artist;
