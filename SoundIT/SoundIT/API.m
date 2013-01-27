@@ -78,6 +78,7 @@
         
     }
     
+    //TODO:REFACTOR -- remove the last occurence of '&' due to our for loop (I know this is ugly; needs refactor
     urlCommandString = [urlCommandString substringToIndex:urlCommandString.length - 1].mutableCopy;
     
     NSLog(@"urlString holds: %@", urlCommandString);
