@@ -17,7 +17,7 @@ def signUp(request):
     
     # Returning user object right now so that app can store user_id. But must also return playlist.
     result = []
-    result.append({"user": new_user.toJson()})
+    result.append({"user": new_user.toDict()})
     return HttpResponse(simplejson.dumps(result), mimetype='application/json')
 
 def login(request):
@@ -46,7 +46,7 @@ def addToPlaylist(request, location_id):
     voting_service = VotingService()
     updated_playlist = voting_service.addToPlaylist(user_id, location_id, music_track_id)
     result = []
-    result.append({"playlist": updated_playlist.toJson()})
+    result.append({"playlist": updated_playlist.toDict()})
     return HttpResponse(simplejson.dumps(result), mimetype='application/json')
 
 def voteUp(request):

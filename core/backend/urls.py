@@ -15,5 +15,6 @@ urlpatterns = patterns('',
 
     # ex: /voteUp/<location_id>?user_id=id&track_id=id
     url(r'^voteUp/(?P<location_id>\d+)/$', views.voteUp, name='voteUp'),
+    
 
 )
