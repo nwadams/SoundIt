@@ -5,6 +5,8 @@ from services.user_service import UserService
 from services.voting_service import VotingService
 from django.core import serializers
 
+import json
+
 def signUp(request):
     
     try: 
@@ -18,8 +20,7 @@ def signUp(request):
     
     # Returning user object right now so that app can store user_id. But must also return playlist.
     result = []
-    data = serializers.serialize("json", [new_user])
-    result.append({"user": data})
+    result.append({"user": new_user.toDict()})
     return HttpResponse(simplejson.dumps(result), mimetype='application/json')
 
 def login(request):
