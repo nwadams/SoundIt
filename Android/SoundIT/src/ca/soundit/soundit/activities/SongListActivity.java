@@ -24,14 +24,11 @@ public class SongListActivity extends SherlockFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);  
-        
+                
         setContentView(R.layout.activity_song_list);
         
         mRefreshTimer = new Timer();
-        mRefreshingPlaylist = false;
-        
+        mRefreshingPlaylist = false;        
     }
     
     @Override
@@ -63,6 +60,7 @@ public class SongListActivity extends SherlockFragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
        	this.getSupportMenuInflater().inflate(R.menu.activity_song_list, menu);
+       	
         return true;
     }
     
