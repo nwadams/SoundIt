@@ -10,16 +10,17 @@
 
 @implementation PlaylistSongCell
 
-@synthesize songAlbumImage = _songAlbumImage;
+//@synthesize songAlbumImage = _songAlbumImage;
 @synthesize songDescription = _songDescription;
-@synthesize voteUpButton = _voteUpButton;
+//@synthesize voteUpButton = _voteUpButton;
 @synthesize numVotesLabel = _numVotesLabel;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        self.backgroundColor = [UIColor blackColor];
+        
     }
     return self;
 }
@@ -31,4 +32,6 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)didPressUpVoteButton:(id)sender {
+}
 @end

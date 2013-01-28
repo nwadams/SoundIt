@@ -14,6 +14,10 @@
 
 @implementation PlaylistTVC
 
+@synthesize playlistItems = _playlistItems;
+@synthesize thisDeviceUniqueIdentifier = _thisDeviceUniqueIdentifier;
+@synthesize delegate = _delegate;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -23,25 +27,8 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:YES];
     
-//    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-//                                   @"fetchCurrentPlaylistPush", @"command",
-//                                   nil];
-//    [[API sharedInstance] commandWithParams:params
-//                               onCompletion:^(NSDictionary *json){
-//                                   if ([json objectForKey:@"error"] == nil) {
-//                                       <#statements#>
-//                                   } else {
-//                                       //handle error :(
-//                                       
-//                                   }
-//                               }];
+    [self refreshPlaylist];
     
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -55,59 +42,48 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    //return the number of playlistItems in our playlist
+    NSLog(@"self.playlistItems.count holds %i", self.playlistItems.count);
+    return self.playlistItems.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"playlistItem";
+    PlaylistSongCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
+    if (cell == nil ) {
+        cell = [[PlaylistSongCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        
+    }
+    
+    NSMutableDictionary *playlistItemFields = [self.playlistItems[indexPath.row] objectForKey:@"fields"];
+    //debug
+    NSLog(@"playlistItemFields description:%@", [playlistItemFields description]);
+    
+    NSMutableDictionary *musicTrackFields = [[playlistItemFields objectForKey:@"music_track"] objectForKey:@"fields"];
+    //debug
+    NSLog(@"musicTrackFields description:%@", [musicTrackFields description]);
+    
+    NSString *songName = [musicTrackFields valueForKey:@"name"];
+    //debug
+    NSLog(@"songName is:%@", songName);
+    
+    NSString *artistName = [[[musicTrackFields objectForKey:@"artist"] objectForKey:@"fields"] valueForKey:@"name"];
+    //debug
+    NSLog(@"artistName is:%@", artistName);
+    
+    cell.songDescription.text = [NSString stringWithFormat:@"%@ - %@", songName, artistName];
+    //debug
+    NSLog(@"cell.songDescription is;%@", cell.songDescription.text);
+    
+    NSNumber *votes = [playlistItemFields valueForKey:@"votes"];
+    cell.numVotesLabel.text = [votes stringValue];
+    //debug
+    NSLog(@"votes is %@", cell.numVotesLabel.text);
     
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
@@ -120,6 +96,41 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+#pragma mark refreshPlaylist
+//refreshPlaylist - public getter
+//DESCRIPTOIN: method that creates a API call to the web backend to get the current playlist
+//USAGE: just call it
+-(void)refreshPlaylist{
+    //grab our deviceID
+    NSString *thisDeviceUniqueIDentifier = [UIDevice currentDevice].identifierForVendor.UUIDString;
+    NSLog(@"thisDeviceUniqueIDentifier reads: %@", thisDeviceUniqueIDentifier);
+    
+    //send DeviceID and send to backend before continuing
+    NSLog(@"Shooting deviceID to Anuj right now of string %@", thisDeviceUniqueIDentifier);
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   thisDeviceUniqueIDentifier, @"device_id",
+                                   @"thepit", @"location_id",
+                                   nil];
+    
+    [[API sharedInstance] callAPIMethod:@"refreshPlaylist"
+                             withParams:params
+                           onCompletion:^(NSArray *json){
+                               NSLog(@"%@", [json description]);
+                               
+                               if([[json objectAtIndex:0] objectForKey:@"Error Message"] != nil){
+                                   //handle error
+                                   [UIAlertView error:(NSString *)[[json objectAtIndex:0] valueForKey:@"Error Message"]];
+                                   
+                               } else {
+                                   self.playlistItems = json;
+                                   [self.tableView reloadData];
+                                   
+                               }
+                               
+                           }];
+    
 }
 
 @end

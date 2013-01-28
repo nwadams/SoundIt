@@ -13,4 +13,6 @@
 
 @interface SplashVC : UIViewController
 
+-(void)attemptConnectionWithBackend;
+
 @end
