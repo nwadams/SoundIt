@@ -4,7 +4,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.os.Bundle;
-import android.support.v4.util.LruCache;
 import android.widget.Toast;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
@@ -14,17 +13,25 @@ import ca.soundit.soundit.fragments.SongListFragment;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 
 public class SongListActivity extends SherlockFragmentActivity {
 
 	private Timer mRefreshTimer;
+	private boolean mRefreshingPlaylist;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);  
+        
         setContentView(R.layout.activity_song_list);
         
         mRefreshTimer = new Timer();
+        mRefreshingPlaylist = false;
+        
     }
     
     @Override
@@ -37,7 +44,7 @@ public class SongListActivity extends SherlockFragmentActivity {
 
 			@Override
 			public void run() {
-				 new RefreshPlaylistAsyncTask(SongListActivity.this).execute();
+				 refreshPlaylist();
 			}  		
     	}, 0, 1000 * Constants.REFRESH_INTERVAL); //run every minute
     }
@@ -58,8 +65,33 @@ public class SongListActivity extends SherlockFragmentActivity {
        	this.getSupportMenuInflater().inflate(R.menu.activity_song_list, menu);
         return true;
     }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case android.R.id.home:
+        	return true;
+        case R.id.menu_settings:
+            return true;
+        case R.id.menu_refresh:
+            refreshPlaylist();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+	private void refreshPlaylist() {
+		if (!mRefreshingPlaylist) {
+			mRefreshingPlaylist = true;
+			new RefreshPlaylistAsyncTask(SongListActivity.this).execute();
+		}
+		
+	}
 
 	public void notifiyRefresh(String result) {
+		mRefreshingPlaylist = false;
+
 		if (!Constants.OK.equals(result))
 			Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
 		

@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dip" >
+
+    <ImageView 
+        android:id="@+id/album_art_image"
+        android:layout_width="60dip"
+        android:layout_height="60dip"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="#ff0000"
+    />
+    
+    <Button
+        android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"  
+	    android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/vote_button"
+        android:text="vote"
+        />
+    
+    <TextView 
+        android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"  
+	    android:layout_toLeftOf="@id/vote_button"
+        android:layout_centerVertical="true"
+        android:id="@+id/number_votes"
+        android:textSize="16sp"
+        android:paddingRight="5dip"
+        android:text="#votes"
+     />
+    
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_toRightOf="@id/album_art_image"
+        android:layout_toLeftOf="@id/number_votes"
+        android:gravity="center_vertical"
+        android:paddingLeft="20dip"
+        >
+        
+        <TextView
+	        android:id="@+id/song_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"    
+	        android:text="Song Title"
+	        android:textSize="16sp"
+	    />
+	    
+	    <TextView
+	        android:id="@+id/artist_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Artist Name"
+	        android:textSize="16sp"
+	    />
+    </LinearLayout>
+    
+   
+
+</RelativeLayout>
