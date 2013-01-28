@@ -3,6 +3,7 @@ package ca.soundit.soundit.activities;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 import ca.soundit.soundit.Constants;
@@ -74,10 +75,16 @@ public class SongListActivity extends SherlockFragmentActivity {
         case R.id.menu_refresh:
             refreshPlaylist();
             return true;
+        case R.id.menu_add_song:
+        	startAddSongActivity();
         default:
             return super.onOptionsItemSelected(item);
         }
     }
+
+	private void startAddSongActivity() {
+		startActivity(new Intent(this, AddSongActivity.class));
+	}
 
 	private void refreshPlaylist() {
 		if (!mRefreshingPlaylist) {
@@ -90,8 +97,9 @@ public class SongListActivity extends SherlockFragmentActivity {
 	public void notifiyRefresh(String result) {
 		mRefreshingPlaylist = false;
 
-		if (!Constants.OK.equals(result))
+		if (!Constants.OK.equals(result)) {
 			Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+		}
 		
 		SoundITApplication myApplication = (SoundITApplication) getApplication();
 		

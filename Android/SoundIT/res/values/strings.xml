@@ -8,5 +8,6 @@
     <string name="menu_add_song">Add Song</string>
     <string name="menu_about">About</string>
     <string name="error_no_data">Error: no data found</string>
+    <string name="list_loading_data">Loading data</string>
 
 </resources>
