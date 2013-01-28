@@ -12,6 +12,25 @@ public class Constants {
 	public static final String API_LOCATION_ID_KEY = "location_id";
 	
 	public static final String JSON_ERROR_MESSAGE = "Error Message";
+	public static final String JSON_FIELDS = "fields";
+	public static final String JSON_CURRENT_RANKING = "current_ranking";
+	public static final String JSON_ITEM_STATE = "item_state";
+	public static final String JSON_VOTES = "votes";
+	public static final String JSON_MUSIC_TRACK = "music_track";
+	public static final String JSON_TRACK_URL = "track_URL";
+	public static final String JSON_TRACK_NAME = "name";
+	public static final String JSON_ALBUM = "album";
+	public static final String JSON_ALBUM_NAME = "name";
+	public static final String JSON_ALBUM_URL = "image_URL";
+	public static final String JSON_CATEOGORY = "category";
+	public static final String JSON_CATEGORY_NAME = "name";
+	public static final String JSON_ARTIST = "artist";
+	public static final String JSON_ARTIST_NAME = "name";
+	public static final String JSON_NONE = "none";
+	
+	public static final int STATE_CURRENT_PLAYING = 1;
+	public static final int STATE_TO_BE_PLAYED = 2;
+	
 	public static final String OK = "ok";
 
 	

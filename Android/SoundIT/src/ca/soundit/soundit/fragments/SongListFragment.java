@@ -1,5 +1,7 @@
 package ca.soundit.soundit.fragments;
 
+import java.util.List;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import ca.soundit.soundit.R;
+import ca.soundit.soundit.back.data.Song;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -35,5 +38,9 @@ public class SongListFragment extends SherlockFragment {
         
         return view;
     }
+
+	public void updateList(List<Song> songQueue) {
+		
+	}
 	
 }

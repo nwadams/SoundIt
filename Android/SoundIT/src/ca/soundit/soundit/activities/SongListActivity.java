@@ -8,7 +8,9 @@ import android.support.v4.util.LruCache;
 import android.widget.Toast;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
+import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.asynctask.RefreshPlaylistAsyncTask;
+import ca.soundit.soundit.fragments.SongListFragment;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -38,7 +40,6 @@ public class SongListActivity extends SherlockFragmentActivity {
 				 new RefreshPlaylistAsyncTask(SongListActivity.this).execute();
 			}  		
     	}, 0, 1000 * Constants.REFRESH_INTERVAL); //run every minute
-    	
     }
     
     @Override
@@ -59,7 +60,20 @@ public class SongListActivity extends SherlockFragmentActivity {
     }
 
 	public void notifiyRefresh(String result) {
-		Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+		if (!Constants.OK.equals(result))
+			Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+		
+		SoundITApplication myApplication = (SoundITApplication) getApplication();
+		
+		SongListFragment songListFragment = (SongListFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_song_list);
+		
+		if(songListFragment != null)
+		{
+			songListFragment.updateList(myApplication.getSongQueue());
+		}
+		
+		
 	}
     
 }

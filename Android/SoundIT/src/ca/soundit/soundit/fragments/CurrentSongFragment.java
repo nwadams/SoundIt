@@ -15,5 +15,6 @@ public class CurrentSongFragment extends SherlockFragment {
         Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_current_song, container, false);
+        
 	}
 }
