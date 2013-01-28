@@ -68,7 +68,7 @@ def refreshPlaylist(request):
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
 
     # Use location id to fetch current playlist
-    return HttpResponse(serializers.serialize("json", PlaylistItem.objects.all(), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}))
+    return HttpResponse(serializers.serialize("json", PlaylistItem.objects.all(), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
 def getLibrary(request):
     return HttpResponse("get Library")
