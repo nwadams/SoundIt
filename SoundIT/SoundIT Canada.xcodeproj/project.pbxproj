@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		676BC40F16B651C400B512C1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 676BC40E16B651C300B512C1 /* QuartzCore.framework */; };
+		676BC42216B6901500B512C1 /* SoundIT_appIcon_nonRetina.png in Resources */ = {isa = PBXBuildFile; fileRef = 676BC42116B6901500B512C1 /* SoundIT_appIcon_nonRetina.png */; };
+		676BC42316B6901500B512C1 /* SoundIT_appIcon_nonRetina.png in Resources */ = {isa = PBXBuildFile; fileRef = 676BC42116B6901500B512C1 /* SoundIT_appIcon_nonRetina.png */; };
+		676BC42516B6901D00B512C1 /* SoundIT_appIcon_Retina.png in Resources */ = {isa = PBXBuildFile; fileRef = 676BC42416B6901D00B512C1 /* SoundIT_appIcon_Retina.png */; };
+		676BC42616B6901D00B512C1 /* SoundIT_appIcon_Retina.png in Resources */ = {isa = PBXBuildFile; fileRef = 676BC42416B6901D00B512C1 /* SoundIT_appIcon_Retina.png */; };
+		676BC42816B6903C00B512C1 /* SoundIT_appIcon_nonRetina.png in Resources */ = {isa = PBXBuildFile; fileRef = 676BC42716B6903C00B512C1 /* SoundIT_appIcon_nonRetina.png */; };
+		676BC42A16B6904700B512C1 /* SoundIT_appIcon_Retina.png in Resources */ = {isa = PBXBuildFile; fileRef = 676BC42916B6904700B512C1 /* SoundIT_appIcon_Retina.png */; };
 		678B884A16AC6467008E105E /* PlaylistSongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B884916AC6467008E105E /* PlaylistSongCell.m */; };
 		678B884B16AC6467008E105E /* PlaylistSongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B884916AC6467008E105E /* PlaylistSongCell.m */; };
 		678B886216AC74E8008E105E /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 678B885016AC74E8008E105E /* AFHTTPClient.m */; };
@@ -86,6 +93,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		676BC40E16B651C300B512C1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		676BC42116B6901500B512C1 /* SoundIT_appIcon_nonRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundIT_appIcon_nonRetina.png; sourceTree = "<group>"; };
+		676BC42416B6901D00B512C1 /* SoundIT_appIcon_Retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundIT_appIcon_Retina.png; sourceTree = "<group>"; };
+		676BC42716B6903C00B512C1 /* SoundIT_appIcon_nonRetina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundIT_appIcon_nonRetina.png; sourceTree = SOURCE_ROOT; };
+		676BC42916B6904700B512C1 /* SoundIT_appIcon_Retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SoundIT_appIcon_Retina.png; sourceTree = SOURCE_ROOT; };
 		678B884816AC6467008E105E /* PlaylistSongCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaylistSongCell.h; sourceTree = "<group>"; };
 		678B884916AC6467008E105E /* PlaylistSongCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaylistSongCell.m; sourceTree = "<group>"; };
 		678B884F16AC74E8008E105E /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
@@ -137,23 +149,23 @@
 		678B88AD16B4FF0B008E105E /* SBJsonStreamWriterState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonStreamWriterState.m; sourceTree = "<group>"; };
 		678B88AE16B4FF0B008E105E /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		678B88AF16B4FF0B008E105E /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		67BFC5A416A38B7500D406E4 /* SoundIT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundIT.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		67BFC5A416A38B7500D406E4 /* SoundIT Canada.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SoundIT Canada.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		67BFC5A816A38B7500D406E4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		67BFC5AA16A38B7500D406E4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		67BFC5AC16A38B7500D406E4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		67BFC5B016A38B7500D406E4 /* SoundIT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoundIT-Info.plist"; sourceTree = "<group>"; };
+		67BFC5B016A38B7500D406E4 /* SoundIT Canada-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoundIT Canada-Info.plist"; sourceTree = "<group>"; };
 		67BFC5B216A38B7500D406E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		67BFC5B416A38B7500D406E4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		67BFC5B616A38B7500D406E4 /* SoundIT-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundIT-Prefix.pch"; sourceTree = "<group>"; };
+		67BFC5B616A38B7500D406E4 /* SoundIT Canada-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundIT Canada-Prefix.pch"; sourceTree = "<group>"; };
 		67BFC5B716A38B7500D406E4 /* SounditAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SounditAppDelegate.h; sourceTree = "<group>"; };
 		67BFC5B816A38B7500D406E4 /* SounditAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SounditAppDelegate.m; sourceTree = "<group>"; };
 		67BFC5BA16A38B7600D406E4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		67BFC5BC16A38B7600D406E4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		67BFC5BE16A38B7600D406E4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		67BFC5C116A38B7600D406E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		67BFC5CB16A38B7600D406E4 /* SoundITTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundITTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		67BFC5CB16A38B7600D406E4 /* SoundIT CanadaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "SoundIT CanadaTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		67BFC5CC16A38B7600D406E4 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		67BFC5D416A38B7600D406E4 /* SoundITTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoundITTests-Info.plist"; sourceTree = "<group>"; };
+		67BFC5D416A38B7600D406E4 /* SoundIT CanadaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SoundIT CanadaTests-Info.plist"; sourceTree = "<group>"; };
 		67BFC5D616A38B7600D406E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		67BFC5D816A38B7600D406E4 /* SoundITTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SoundITTests.h; sourceTree = "<group>"; };
 		67BFC5D916A38B7600D406E4 /* SoundITTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SoundITTests.m; sourceTree = "<group>"; };
@@ -167,6 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				676BC40F16B651C400B512C1 /* QuartzCore.framework in Frameworks */,
 				67BFC5A916A38B7500D406E4 /* UIKit.framework in Frameworks */,
 				67BFC5AB16A38B7500D406E4 /* Foundation.framework in Frameworks */,
 				67BFC5AD16A38B7500D406E4 /* CoreGraphics.framework in Frameworks */,
@@ -264,8 +277,8 @@
 		67BFC5A516A38B7500D406E4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				67BFC5A416A38B7500D406E4 /* SoundIT.app */,
-				67BFC5CB16A38B7600D406E4 /* SoundITTests.octest */,
+				67BFC5A416A38B7500D406E4 /* SoundIT Canada.app */,
+				67BFC5CB16A38B7600D406E4 /* SoundIT CanadaTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -273,6 +286,7 @@
 		67BFC5A716A38B7500D406E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				676BC40E16B651C300B512C1 /* QuartzCore.framework */,
 				678B887616B26D01008E105E /* SystemConfiguration.framework */,
 				678B887416B26CF9008E105E /* MobileCoreServices.framework */,
 				67BFC5A816A38B7500D406E4 /* UIKit.framework */,
@@ -307,10 +321,10 @@
 				678B889A16B4FF0B008E105E /* objc */,
 				678B884E16AC74E8008E105E /* AFNetworking */,
 				67BFC5E316A38DBA00D406E4 /* elements */,
-				67BFC5B016A38B7500D406E4 /* SoundIT-Info.plist */,
+				67BFC5B016A38B7500D406E4 /* SoundIT Canada-Info.plist */,
 				67BFC5B116A38B7500D406E4 /* InfoPlist.strings */,
 				67BFC5B416A38B7500D406E4 /* main.m */,
-				67BFC5B616A38B7500D406E4 /* SoundIT-Prefix.pch */,
+				67BFC5B616A38B7500D406E4 /* SoundIT Canada-Prefix.pch */,
 				67BFC5BA16A38B7600D406E4 /* Default.png */,
 				67BFC5BC16A38B7600D406E4 /* Default@2x.png */,
 				67BFC5BE16A38B7600D406E4 /* Default-568h@2x.png */,
@@ -331,7 +345,7 @@
 		67BFC5D316A38B7600D406E4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				67BFC5D416A38B7600D406E4 /* SoundITTests-Info.plist */,
+				67BFC5D416A38B7600D406E4 /* SoundIT CanadaTests-Info.plist */,
 				67BFC5D516A38B7600D406E4 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -340,6 +354,8 @@
 		67BFC5E316A38DBA00D406E4 /* elements */ = {
 			isa = PBXGroup;
 			children = (
+				676BC42916B6904700B512C1 /* SoundIT_appIcon_Retina.png */,
+				676BC42716B6903C00B512C1 /* SoundIT_appIcon_nonRetina.png */,
 				67BFC5E516A38DCE00D406E4 /* retina */,
 				67BFC5E416A38DC400D406E4 /* non-retina */,
 			);
@@ -349,6 +365,7 @@
 		67BFC5E416A38DC400D406E4 /* non-retina */ = {
 			isa = PBXGroup;
 			children = (
+				676BC42116B6901500B512C1 /* SoundIT_appIcon_nonRetina.png */,
 			);
 			name = "non-retina";
 			sourceTree = "<group>";
@@ -356,6 +373,7 @@
 		67BFC5E516A38DCE00D406E4 /* retina */ = {
 			isa = PBXGroup;
 			children = (
+				676BC42416B6901D00B512C1 /* SoundIT_appIcon_Retina.png */,
 				678B887C16B33B2F008E105E /* SoundIT logo.png */,
 				67BFC5EA16A39B0E00D406E4 /* upArrowGreen.png */,
 			);
@@ -365,9 +383,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		67BFC5A316A38B7500D406E4 /* SoundIT */ = {
+		67BFC5A316A38B7500D406E4 /* SoundIT Canada */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 67BFC5DD16A38B7600D406E4 /* Build configuration list for PBXNativeTarget "SoundIT" */;
+			buildConfigurationList = 67BFC5DD16A38B7600D406E4 /* Build configuration list for PBXNativeTarget "SoundIT Canada" */;
 			buildPhases = (
 				67BFC5A016A38B7500D406E4 /* Sources */,
 				67BFC5A116A38B7500D406E4 /* Frameworks */,
@@ -377,14 +395,14 @@
 			);
 			dependencies = (
 			);
-			name = SoundIT;
+			name = "SoundIT Canada";
 			productName = SoundIT;
-			productReference = 67BFC5A416A38B7500D406E4 /* SoundIT.app */;
+			productReference = 67BFC5A416A38B7500D406E4 /* SoundIT Canada.app */;
 			productType = "com.apple.product-type.application";
 		};
-		67BFC5CA16A38B7600D406E4 /* SoundITTests */ = {
+		67BFC5CA16A38B7600D406E4 /* SoundIT CanadaTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 67BFC5E016A38B7600D406E4 /* Build configuration list for PBXNativeTarget "SoundITTests" */;
+			buildConfigurationList = 67BFC5E016A38B7600D406E4 /* Build configuration list for PBXNativeTarget "SoundIT CanadaTests" */;
 			buildPhases = (
 				67BFC5C616A38B7600D406E4 /* Sources */,
 				67BFC5C716A38B7600D406E4 /* Frameworks */,
@@ -396,9 +414,9 @@
 			dependencies = (
 				67BFC5D116A38B7600D406E4 /* PBXTargetDependency */,
 			);
-			name = SoundITTests;
+			name = "SoundIT CanadaTests";
 			productName = SoundITTests;
-			productReference = 67BFC5CB16A38B7600D406E4 /* SoundITTests.octest */;
+			productReference = 67BFC5CB16A38B7600D406E4 /* SoundIT CanadaTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -411,7 +429,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = SoundIT;
 			};
-			buildConfigurationList = 67BFC59E16A38B7500D406E4 /* Build configuration list for PBXProject "SoundIT" */;
+			buildConfigurationList = 67BFC59E16A38B7500D406E4 /* Build configuration list for PBXProject "SoundIT Canada" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -423,8 +441,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				67BFC5A316A38B7500D406E4 /* SoundIT */,
-				67BFC5CA16A38B7600D406E4 /* SoundITTests */,
+				67BFC5A316A38B7500D406E4 /* SoundIT Canada */,
+				67BFC5CA16A38B7600D406E4 /* SoundIT CanadaTests */,
 			);
 		};
 /* End PBXProject section */
@@ -441,6 +459,10 @@
 				67BFC5C216A38B7600D406E4 /* MainStoryboard.storyboard in Resources */,
 				67BFC5EB16A39B0E00D406E4 /* upArrowGreen.png in Resources */,
 				678B887D16B33B2F008E105E /* SoundIT logo.png in Resources */,
+				676BC42216B6901500B512C1 /* SoundIT_appIcon_nonRetina.png in Resources */,
+				676BC42516B6901D00B512C1 /* SoundIT_appIcon_Retina.png in Resources */,
+				676BC42816B6903C00B512C1 /* SoundIT_appIcon_nonRetina.png in Resources */,
+				676BC42A16B6904700B512C1 /* SoundIT_appIcon_Retina.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +472,8 @@
 			files = (
 				67BFC5D716A38B7600D406E4 /* InfoPlist.strings in Resources */,
 				678B887E16B33B2F008E105E /* SoundIT logo.png in Resources */,
+				676BC42316B6901500B512C1 /* SoundIT_appIcon_nonRetina.png in Resources */,
+				676BC42616B6901D00B512C1 /* SoundIT_appIcon_Retina.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,7 +566,7 @@
 /* Begin PBXTargetDependency section */
 		67BFC5D116A38B7600D406E4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 67BFC5A316A38B7500D406E4 /* SoundIT */;
+			target = 67BFC5A316A38B7500D406E4 /* SoundIT Canada */;
 			targetProxy = 67BFC5D016A38B7600D406E4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -584,6 +608,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -599,6 +624,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -612,7 +638,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: SAMUEL CHAN";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: SAMUEL CHAN";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -620,6 +647,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "D2A13E6A-C557-43CA-91DC-C3E179A10643";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D2A13E6A-C557-43CA-91DC-C3E179A10643";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -628,10 +657,14 @@
 		67BFC5DE16A38B7600D406E4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SoundIT/SoundIT-Prefix.pch";
-				INFOPLIST_FILE = "SoundIT/SoundIT-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "SoundIT/SoundIT Canada-Prefix.pch";
+				INFOPLIST_FILE = "SoundIT/SoundIT Canada-Info.plist";
+				PRODUCT_NAME = "SoundIT Canada";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -639,10 +672,14 @@
 		67BFC5DF16A38B7600D406E4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: SAMUEL CHAN";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: SAMUEL CHAN";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "SoundIT/SoundIT-Prefix.pch";
-				INFOPLIST_FILE = "SoundIT/SoundIT-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "SoundIT/SoundIT Canada-Prefix.pch";
+				INFOPLIST_FILE = "SoundIT/SoundIT Canada-Info.plist";
+				PRODUCT_NAME = "SoundIT Canada";
+				PROVISIONING_PROFILE = "D2A13E6A-C557-43CA-91DC-C3E179A10643";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D2A13E6A-C557-43CA-91DC-C3E179A10643";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -657,8 +694,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoundIT/SoundIT-Prefix.pch";
-				INFOPLIST_FILE = "SoundITTests/SoundITTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "SoundITTests/SoundIT CanadaTests-Info.plist";
+				PRODUCT_NAME = "SoundIT CanadaTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -674,8 +711,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SoundIT/SoundIT-Prefix.pch";
-				INFOPLIST_FILE = "SoundITTests/SoundITTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "SoundITTests/SoundIT CanadaTests-Info.plist";
+				PRODUCT_NAME = "SoundIT CanadaTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -684,7 +721,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		67BFC59E16A38B7500D406E4 /* Build configuration list for PBXProject "SoundIT" */ = {
+		67BFC59E16A38B7500D406E4 /* Build configuration list for PBXProject "SoundIT Canada" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				67BFC5DB16A38B7600D406E4 /* Debug */,
@@ -693,7 +730,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		67BFC5DD16A38B7600D406E4 /* Build configuration list for PBXNativeTarget "SoundIT" */ = {
+		67BFC5DD16A38B7600D406E4 /* Build configuration list for PBXNativeTarget "SoundIT Canada" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				67BFC5DE16A38B7600D406E4 /* Debug */,
@@ -702,7 +739,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		67BFC5E016A38B7600D406E4 /* Build configuration list for PBXNativeTarget "SoundITTests" */ = {
+		67BFC5E016A38B7600D406E4 /* Build configuration list for PBXNativeTarget "SoundIT CanadaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				67BFC5E116A38B7600D406E4 /* Debug */,

@@ -92,7 +92,7 @@
         completionBlock(responseObject);
         
     }failure:^(AFHTTPRequestOperation *operation, NSError *error){
-        completionBlock([NSDictionary dictionaryWithObject:[error localizedDescription] forKey:@"error"]);
+        completionBlock([NSArray arrayWithObject:[NSDictionary dictionaryWithObject:[error localizedDescription] forKey:@"Error Message"]]);
         
     }];
     

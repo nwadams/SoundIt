@@ -10,13 +10,26 @@
 
 @interface SplashVC ()
 
+-(void)detectBecomeActive:(NSNotification *)notification;
+
 @end
 
 @implementation SplashVC
 
--(void)viewDidAppear:(BOOL)animated{
-    [self attemptConnectionWithBackend];
+-(void)viewDidLoad{
+    [self.navigationController.navigationBar setTintColor:[UIColor blackColor]];
+    self.navigationController.navigationBar.hidden = YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(detectBecomeActive:)
+                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
+
 }
+
+//- (void)viewDidAppear:(BOOL)animated{
+//    [self attemptConnectionWithBackend];
+//    
+//}
 
 -(void)attemptConnectionWithBackend{
     //grab our deviceID
@@ -33,6 +46,8 @@
     [[API sharedInstance] callAPIMethod:@"signUp"
                              withParams:params
                            onCompletion:^(NSArray *json){
+                               NSLog(@"json description:%@", [json description]);
+                               
                                if([[json objectAtIndex:0] objectForKey:@"Error Message"] != nil){
                                    //handle error
                                    [UIAlertView error:(NSString *)[[json objectAtIndex:0] valueForKey:@"Error Message"]];
@@ -45,6 +60,11 @@
                                }
                                
                            }];
+}
+
+-(void)detectBecomeActive:(NSNotification *)notification{
+    [self attemptConnectionWithBackend];
+    
 }
 
 @end

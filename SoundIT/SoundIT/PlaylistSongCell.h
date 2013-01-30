@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "API.h"
+#import "UIAlertView+error.h"
 
 @interface PlaylistSongCell : UITableViewCell
-//@property (strong, nonatomic) IBOutlet UIImageView *songAlbumImage;
-@property (strong, nonatomic) IBOutlet UITextView *songDescription;
-//@property (strong, nonatomic) IBOutlet UIImageView *voteUpButton;
-@property (strong, nonatomic) IBOutlet UILabel *numVotesLabel;
+
 @property (strong, nonatomic) IBOutlet UIButton *upVoteButton;
-- (IBAction)didPressUpVoteButton:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *songNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *artistNameLabel;
 
 @end
