@@ -10,14 +10,12 @@ import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.asynctask.RefreshPlaylistAsyncTask;
-import ca.soundit.soundit.back.data.Song;
 import ca.soundit.soundit.fragments.CurrentSongFragment;
 import ca.soundit.soundit.fragments.SongListFragment;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.Window;
 
 public class SongListActivity extends SherlockFragmentActivity {
 
@@ -91,7 +89,11 @@ public class SongListActivity extends SherlockFragmentActivity {
 	private void refreshPlaylist() {
 		if (!mRefreshingPlaylist) {
 			mRefreshingPlaylist = true;
-			new RefreshPlaylistAsyncTask(SongListActivity.this).execute();
+			runOnUiThread(new Runnable() {
+			    public void run() {
+			    	new RefreshPlaylistAsyncTask(SongListActivity.this).execute();
+			    }
+			});		
 		}
 		
 	}
