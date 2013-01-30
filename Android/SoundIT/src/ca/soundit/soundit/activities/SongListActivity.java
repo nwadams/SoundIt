@@ -10,6 +10,8 @@ import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.asynctask.RefreshPlaylistAsyncTask;
+import ca.soundit.soundit.back.data.Song;
+import ca.soundit.soundit.fragments.CurrentSongFragment;
 import ca.soundit.soundit.fragments.SongListFragment;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -102,13 +104,24 @@ public class SongListActivity extends SherlockFragmentActivity {
 		}
 		
 		SoundITApplication myApplication = (SoundITApplication) getApplication();
-		
+				
 		SongListFragment songListFragment = (SongListFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_song_list);
 		
 		if(songListFragment != null)
 		{
 			songListFragment.updateList(myApplication.getSongQueue());
+		}
+		
+		CurrentSongFragment currentSongFragment = (CurrentSongFragment)
+				getSupportFragmentManager().findFragmentById(R.id.current_song);
+		
+		if (currentSongFragment != null) {
+			if (myApplication.getCurrentPlayingSong() != null) {
+				currentSongFragment.updateSong(myApplication.getCurrentPlayingSong()); 
+			} else {
+				//TODO HANDLE ERROR
+			}
 		}
 		
 		

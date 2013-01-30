@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.adapter.SongListArrayAdapter;
 import ca.soundit.soundit.back.data.Song;
@@ -32,8 +30,8 @@ public class SongListFragment extends SherlockFragment {
         mArrayAdapter = new SongListArrayAdapter(getActivity(),R.layout.list_item_song_queue,R.id.song_title, new ArrayList<Song>());
         mArrayAdapter.setNotifyOnChange(false);
                         
-        View header = inflater.inflate(R.layout.header_current_song, null, false);
-        mListView.addHeaderView(header, null, false);
+        View currentSongHeaderView = inflater.inflate(R.layout.header_current_song, null, false);
+        mListView.addHeaderView(currentSongHeaderView, null, false);
         mListView.setHeaderDividersEnabled(false);
         
         mListView.setAdapter(mArrayAdapter);
