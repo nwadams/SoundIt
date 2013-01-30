@@ -8,12 +8,21 @@ urlpatterns = patterns('',
     url(r'^signUp/$', views.signUp, name='signUp'),
 
     # ex: /login?user_id=id&password=pwd
-    url(r'^login/$', views.login, name='login'),
+    # Needs to be deprecated for now.
+    # url(r'^login/$', views.login, name='login'),
     
-    # ex: /addToPlaylist/<location_id>?user_id=id&track_id=id
-    url(r'^addToPlaylist/(?P<location_id>\d+)/$', views.addToPlaylist, name='addToPlaylist'),
+    # ex: /addToPlaylist?user_id=id&location_id=id&music_track_id=id
+    url(r'^addToPlaylist/$', views.addToPlaylist, name='addToPlaylist'),
 
-    # ex: /voteUp/<location_id>?user_id=id&track_id=id
-    url(r'^voteUp/(?P<location_id>\d+)/$', views.voteUp, name='voteUp'),
-
+    # ex: /voteUp?device_id=id&location_id=id&music_track_id=id
+    url(r'^voteUp/$', views.voteUp, name='voteUp'),
+    
+    # ex: /refreshPlaylist?user_id=id&location_id=id
+    url(r'^refreshPlaylist/$', views.refreshPlaylist, name='refreshPlaylist'),
+    
+    # ex: /getLibrary?device_id=id&location_id=id
+    url(r'^getLibrary/$', views.getLibrary, name='getLibrary'),
+    
+    # ex: /getVoteHistory?device_id=id&location_id=id
+    url(r'^getVoteHistory/$', views.getVoteHistory, name='getVoteHistory'),
 )

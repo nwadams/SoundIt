@@ -21,7 +21,7 @@ class User(models.Model):
     ", is_deleted=" + str(self.is_deleted) + \
     "}"  
 
-    def toJson(self):
+    def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"email_address": self.email_address})
@@ -30,7 +30,7 @@ class User(models.Model):
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})
-        return simplejson.dumps(result)
+        return result
 
 class Consumer(models.Model):
     user = models.ForeignKey(User)
@@ -51,7 +51,7 @@ class Consumer(models.Model):
     ", is_deleted=" + str(self.is_deleted) + \
     "}"  
 
-    def toJson(self):
+    def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"user": self.user})
@@ -83,7 +83,7 @@ class Location(models.Model):
     ", is_deleted=" + str(self.is_deleted) + \
     "}"  
 
-    def toJson(self):
+    def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"user": self.user})
@@ -110,7 +110,7 @@ class Artist(models.Model):
     ", is_deleted=" + str(self.is_deleted) + \
     "}"  
 
-    def toJson(self):
+    def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"name": self.name})
@@ -138,7 +138,7 @@ class Album(models.Model):
     ", is_deleted=" + str(self.is_deleted) + \
     "}"  
 
-    def toJson(self):
+    def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"name": self.name})
@@ -164,7 +164,7 @@ class MusicCategory(models.Model):
     ", is_deleted=" + str(self.is_deleted) + \
     "}"  
 
-    def toJson(self):
+    def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"name": self.name})
@@ -198,7 +198,7 @@ class MusicTrack(models.Model):
     ", is_deleted=" + str(self.is_deleted) + \
     "}"  
 
-    def toJson(self):
+    def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"album": self.album})
@@ -227,7 +227,7 @@ class Playlist(models.Model):
     ", is_deleted=" + str(self.is_deleted) + \
     "}"  
 
-    def toJson(self):
+    def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"location": self.location})
@@ -236,6 +236,12 @@ class Playlist(models.Model):
         result.append({"is_deleted": str(self.is_deleted)})
         return simplejson.dumps(result)
 
+PLAYLIST_ITEM_STATUS = (
+                        (0, 'PLAYED'),
+                        (1, 'PLAYING'),
+                        (2, 'TO_BE_PLAYED'),
+                        )
+        
 class PlaylistItem(models.Model):
     playlist = models.ForeignKey(Playlist)
     music_track = models.ForeignKey(MusicTrack)
@@ -245,6 +251,7 @@ class PlaylistItem(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
+    item_state = models.IntegerField(PLAYLIST_ITEM_STATUS)
     
     def __unicode__(self):
         return "PlaylistItem{" + \
@@ -258,7 +265,7 @@ class PlaylistItem(models.Model):
     ", is_deleted=" + str(self.is_deleted) + \
     "}"  
 
-    def toJson(self):
+    def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"playlist": self.playlist})
@@ -268,7 +275,7 @@ class PlaylistItem(models.Model):
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})
         return simplejson.dumps(result)
-    
+
 class Vote(models.Model):
     playlist_item = models.ForeignKey(PlaylistItem)
     user = models.ForeignKey(User)
