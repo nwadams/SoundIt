@@ -1,15 +1,15 @@
 package ca.soundit.soundit.fragments;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import ca.soundit.soundit.R;
+import ca.soundit.soundit.adapter.SongListArrayAdapter;
 import ca.soundit.soundit.back.data.Song;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -17,6 +17,7 @@ import com.actionbarsherlock.app.SherlockFragment;
 public class SongListFragment extends SherlockFragment {
 	
 	private ListView mListView;
+	private SongListArrayAdapter mArrayAdapter;
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
@@ -26,21 +27,22 @@ public class SongListFragment extends SherlockFragment {
         
         mListView = (ListView) view.findViewById(android.R.id.list);
         
-        String[] values = {"A", "B", "C"};
+        mArrayAdapter = new SongListArrayAdapter(getActivity(),R.layout.list_item_song_queue,R.id.song_title, new ArrayList<Song>());
+        mArrayAdapter.setNotifyOnChange(false);
+                        
+        View currentSongHeaderView = inflater.inflate(R.layout.header_current_song, null, false);
+        mListView.addHeaderView(currentSongHeaderView, null, false);
+        mListView.setHeaderDividersEnabled(false);
         
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, values);
-        
-        View header = inflater.inflate(R.layout.header_current_song, null, false);
-        mListView.addHeaderView(header, null, false);
-        mListView.setHeaderDividersEnabled(true);
-        
-        mListView.setAdapter(adapter);
+        mListView.setAdapter(mArrayAdapter);
         
         return view;
     }
 
 	public void updateList(List<Song> songQueue) {
-		
+		mArrayAdapter.clear();
+		mArrayAdapter.addAll(songQueue);
+		mArrayAdapter.notifyDataSetChanged();
 	}
 	
 }

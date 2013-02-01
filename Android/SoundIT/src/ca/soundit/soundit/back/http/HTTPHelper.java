@@ -44,6 +44,7 @@ public class HTTPHelper {
 				}
 				
 				result = sb.toString();
+				
 			}
 			
 		} catch (MalformedURLException e) {
