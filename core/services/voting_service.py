@@ -9,8 +9,12 @@ from backend.models import Playlist
 from backend.models import PlaylistItem
 from backend.models import User
 from backend.models import Location
+from backend.models import Vote
 from xcptions.track_already_in_playlist_exception import TrackAlreadyInPlaylistException
 from xcptions.playlist_not_found_exception import PlaylistNotFoundException
+from xcptions.invalid_device_exception import InvalidDeviceException
+from xcptions.unable_to_vote_exception import UnableToVoteException
+import random
 
 class VotingService:
     
@@ -47,6 +51,41 @@ class VotingService:
         
         return current_playlist.playlist_item_set.all()
         
-    def voteUp(self):
-        return
+    def voteUp(self, device_id, location_id, music_track_id):
         
+        try:
+            user = User.objects.get(device_id=device_id)
+            music_track = MusicTrack.objects.get(pk=music_track_id)
+            # hack for ios: thepit
+            if location_id == "thepit":
+                location = Location.objects.get(pk=1)
+            else:
+                location = Location.objects.get(pk=location_id)
+        except (KeyError, Location.DoesNotExist, User.DoesNotExist, MusicTrack.DoesNotExist):
+            raise UnableToVoteException("Could not find objects for parameters- device_id: " + device_id + ", location_id: " + location_id + ", music_track_id: " + music_track_id)
+        
+        # Fetch playlist and playlist item from location and music_track
+        playlist = Playlist.objects.get(location_id=location.id)
+        playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
+        
+        # Vote that music track up
+        for playlist_item in playlist_items:
+            if playlist_item.music_track.id == music_track.id:
+                playlist_item.votes += 1
+                playlist_item.save()
+                vote = Vote(playlist_item_id=playlist_item.id, user_id=user.id)
+                vote.save()
+        
+        # Sort playlist by votes in descending order.
+        sorted_playlist_items = sorted(playlist_items, key=lambda PlaylistItem: PlaylistItem.votes, reverse=True)
+        
+        return sorted_playlist_items 
+    
+    def getVoteHistory(self, device_id):
+        try:
+            user = User.objects.get(device_id = device_id)
+        except (KeyError, User.DoesNotExist):
+            raise InvalidDeviceException("Could not find user for device " + device_id)
+        return Vote.objects.filter(user_id = user.id)
+        
+            

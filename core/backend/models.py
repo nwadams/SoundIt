@@ -4,6 +4,7 @@ from django.utils import simplejson
 class User(models.Model):
     # Setting null=True for email address since we're not asking for it yet.
     email_address = models.CharField(max_length=255, null=True)
+    device_id = models.CharField(max_length=255, null=True)
     password = models.CharField(max_length=255)
     salt = models.CharField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -13,18 +14,20 @@ class User(models.Model):
     def __unicode__(self):
         return "User{" + \
     "id=" + str(self.pk) + \
-    ", name='" + str(self.email_address) + '\'' + \
+    ", email_address='" + str(self.email_address) + '\'' + \
+    ", device_id='" + str(self.device_id) + '\'' + \
     ", password='" + self.password + "\'" + \
     ", salt=" + str(self.salt) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
-    "}"  
+    "}"
 
     def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"email_address": self.email_address})
+        result.append({"device_id": self.device_id})
         result.append({"password": self.password})
         result.append({"salt": self.salt})
         result.append({"date_created": str(self.date_created)})
@@ -74,10 +77,10 @@ class Location(models.Model):
     def __unicode__(self):
         return "Location{" + \
     "id=" + str(self.pk) + \
-    ", user='" + self.user + '\'' + \
-    ", name='" + self.name + "\'" + \
-    ", location=" + self.location + "\'" + \
-    ", phone_number=" + self.phone_number + "\'" + \
+    ", user='" + str(self.user) + '\'' + \
+    ", name='" + str(self.name) + "\'" + \
+    ", location=" + str(self.location) + "\'" + \
+    ", phone_number=" + str(self.phone_number) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -132,7 +135,7 @@ class Album(models.Model):
     "id=" + str(self.pk) + \
     ", name='" + self.name + "\'" + \
     ", image_URL=" + self.image_URL + "\'" + \
-    ", image_latest_rev=" + self.image_latest_rev + "\'" + \
+    ", image_latest_rev=" + str(self.image_latest_rev) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -187,12 +190,12 @@ class MusicTrack(models.Model):
     def __unicode__(self):
         return "MusicTrack{" + \
     "id=" + str(self.pk) + \
-    ", album='" + self.album + '\'' + \
-    ", artist='" + self.artist + '\'' + \
+    ", album='" + str(self.album) + '\'' + \
+    ", artist='" + str(self.artist) + '\'' + \
     ", name='" + self.name + "\'" + \
     ", track_URL=" + self.track_URL + "\'" + \
-    ", track_latest_rev=" + self.track_latest_rev + "\'" + \
-    ", category=" + self.category + "\'" + \
+    ", track_latest_rev=" + str(self.track_latest_rev) + "\'" + \
+    ", category=" + str(self.category) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -221,7 +224,7 @@ class Playlist(models.Model):
     def __unicode__(self):
         return "Playlist{" + \
     "id=" + str(self.pk) + \
-    ", location='" + self.location + '\'' + \
+    ", location='" + str(self.location) + '\'' + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -256,14 +259,14 @@ class PlaylistItem(models.Model):
     def __unicode__(self):
         return "PlaylistItem{" + \
     "id=" + str(self.pk) + \
-    ", playlist='" + self.playlist + '\'' + \
-    ", music_track='" + self.music_track + '\'' + \
-    ", votes='" + self.votes + "\'" + \
-    ", rank_played=" + self.rank_played + "\'" + \
+    ", playlist='" + str(self.playlist) + '\'' + \
+    ", music_track='" + str(self.music_track) + '\'' + \
+    ", votes='" + str(self.votes) + "\'" + \
+    ", rank_played=" + str(self.rank_played) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
-    "}"  
+    "}"
 
     def toDict(self):
         result = []
@@ -282,3 +285,23 @@ class Vote(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
+    
+    def __unicode__(self):
+        return "Vote{" + \
+    "id=" + str(self.pk) + \
+    ", playlist_item='" + str(self.playlist_item) + '\'' + \
+    ", user='" + str(self.user) + '\'' + \
+    ", date_created=" + str(self.date_created) + \
+    ", date_modified=" + str(self.date_modified) + \
+    ", is_deleted=" + str(self.is_deleted) + \
+    "}"
+    
+    def toDict(self):
+        result = []
+        result.append({"id": str(self.pk)})
+        result.append({"playlist_item": self.playlist_item})
+        result.append({"user": self.user})
+        result.append({"date_created": str(self.date_created)})
+        result.append({"date_modified": str(self.date_modified)})
+        result.append({"is_deleted": str(self.is_deleted)})
+        return simplejson.dumps(result)
