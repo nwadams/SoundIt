@@ -1,6 +1,8 @@
 package ca.soundit.soundit;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import ca.soundit.soundit.back.data.Song;
@@ -26,6 +28,19 @@ public class SoundITApplication extends Application {
 	}
 
 	public void setSongQueue(List<Song> mSongQueue) {
+		Collections.sort(mSongQueue, new Comparator<Song>() {
+
+			@Override
+			public int compare(Song lhs, Song rhs) {
+				if (lhs.getCurrentRanking() > rhs.getCurrentRanking())
+					return 1;
+				else if (lhs.getCurrentRanking() == rhs.getCurrentRanking())
+					return 0;
+				else
+					return -1;
+			}
+			
+		});
 		this.mSongQueue = mSongQueue;
 	}
 	

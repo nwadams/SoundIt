@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ca.soundit.soundit.Constants;
+import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.activities.SongListActivity;
 import ca.soundit.soundit.back.data.Song;
@@ -76,7 +77,7 @@ public class RefreshPlaylistAsyncTask extends
 					
 					if (song.getState() == Constants.STATE_CURRENT_PLAYING)
 						myApplication.setCurrentPlayingSong(song);
-					else if (song.getState() == Constants.STATE_TO_BE_PLAYED)
+					else if (song.getState() == Constants.STATE_TO_BE_PLAYED || song.getState() == 0) //debug
 						songList.add(song);
 				}
 				
@@ -91,7 +92,7 @@ public class RefreshPlaylistAsyncTask extends
 			return sb.toString();
 		}
 		
-		return null;
+		return mSongListActivity.getString(R.string.error_no_data);
 	}
 	
 	@Override

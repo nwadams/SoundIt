@@ -6,4 +6,21 @@
         android:showAsAction="never"
         android:title="@string/menu_settings"/>
 
+    <item android:id="@+id/menu_refresh"
+        android:orderInCategory="1"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="@string/menu_refresh" />
+    
+    <item android:id="@+id/menu_add_song"
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_add_song"
+        android:title="@string/menu_add_song" />
+    
+    <item
+        android:id="@+id/menu_about"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/menu_about"/>
 </menu>

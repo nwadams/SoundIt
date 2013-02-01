@@ -15,16 +15,16 @@
         android:name="ca.soundit.soundit.SoundITApplication"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Sherlock.Light.DarkActionBar" >
-        <activity
-            android:name="ca.soundit.soundit.activities.SongListActivity"
-            android:label="@string/app_name" >
+        android:theme="@style/AppBaseTheme" >
+        
+        <activity android:name="ca.soundit.soundit.activities.SplashActivity" android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="ca.soundit.soundit.activities.AddSongActivity" />
+        <activity android:name="ca.soundit.soundit.activities.SongListActivity" />
     </application>
 
 </manifest>

@@ -3,28 +3,33 @@ package ca.soundit.soundit.activities;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.util.LruCache;
 import android.widget.Toast;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.asynctask.RefreshPlaylistAsyncTask;
+import ca.soundit.soundit.fragments.CurrentSongFragment;
 import ca.soundit.soundit.fragments.SongListFragment;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 
 public class SongListActivity extends SherlockFragmentActivity {
 
 	private Timer mRefreshTimer;
+	private boolean mRefreshingPlaylist;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+                
         setContentView(R.layout.activity_song_list);
         
         mRefreshTimer = new Timer();
+        mRefreshingPlaylist = false;        
     }
     
     @Override
@@ -37,7 +42,7 @@ public class SongListActivity extends SherlockFragmentActivity {
 
 			@Override
 			public void run() {
-				 new RefreshPlaylistAsyncTask(SongListActivity.this).execute();
+				 refreshPlaylist();
 			}  		
     	}, 0, 1000 * Constants.REFRESH_INTERVAL); //run every minute
     }
@@ -56,21 +61,69 @@ public class SongListActivity extends SherlockFragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
        	this.getSupportMenuInflater().inflate(R.menu.activity_song_list, menu);
+       	
         return true;
     }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case android.R.id.home:
+        	return true;
+        case R.id.menu_settings:
+            return true;
+        case R.id.menu_refresh:
+            refreshPlaylist();
+            return true;
+        case R.id.menu_add_song:
+        	startAddSongActivity();
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+	private void startAddSongActivity() {
+		startActivity(new Intent(this, AddSongActivity.class));
+	}
+
+	private void refreshPlaylist() {
+		if (!mRefreshingPlaylist) {
+			mRefreshingPlaylist = true;
+			runOnUiThread(new Runnable() {
+			    public void run() {
+			    	new RefreshPlaylistAsyncTask(SongListActivity.this).execute();
+			    }
+			});		
+		}
+		
+	}
 
 	public void notifiyRefresh(String result) {
-		if (!Constants.OK.equals(result))
+		mRefreshingPlaylist = false;
+
+		if (!Constants.OK.equals(result)) {
 			Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+		}
 		
 		SoundITApplication myApplication = (SoundITApplication) getApplication();
-		
+				
 		SongListFragment songListFragment = (SongListFragment)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_song_list);
 		
 		if(songListFragment != null)
 		{
 			songListFragment.updateList(myApplication.getSongQueue());
+		}
+		
+		CurrentSongFragment currentSongFragment = (CurrentSongFragment)
+				getSupportFragmentManager().findFragmentById(R.id.current_song);
+		
+		if (currentSongFragment != null) {
+			if (myApplication.getCurrentPlayingSong() != null) {
+				currentSongFragment.updateSong(myApplication.getCurrentPlayingSong()); 
+			} else {
+				//TODO HANDLE ERROR
+			}
 		}
 		
 		
