@@ -7,8 +7,8 @@ class User(models.Model):
     device_id = models.CharField(max_length=255, null=True)
     password = models.CharField(max_length=255)
     salt = models.CharField(max_length=255)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
     
     def __unicode__(self):
@@ -39,8 +39,8 @@ class Consumer(models.Model):
     user = models.ForeignKey(User)
     facebook_id = models.IntegerField(null=True)
     device_id = models.IntegerField()
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -70,8 +70,8 @@ class Location(models.Model):
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=50)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -100,8 +100,8 @@ class Location(models.Model):
     
 class Artist(models.Model):
     name = models.CharField(max_length=255)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -126,8 +126,8 @@ class Album(models.Model):
     name = models.CharField(max_length=255)
     image_URL = models.CharField(max_length=255, null=True)
     image_latest_rev = models.IntegerField(null=True)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
     
     def __unicode__(self):
@@ -154,8 +154,8 @@ class Album(models.Model):
     
 class MusicCategory(models.Model):
     name = models.CharField(max_length=255)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
     
     def __unicode__(self):
@@ -183,8 +183,8 @@ class MusicTrack(models.Model):
     track_URL = models.CharField(max_length=255)
     track_latest_rev = models.IntegerField(null=True)
     category = models.ForeignKey(MusicCategory)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
     
     def __unicode__(self):
@@ -217,8 +217,8 @@ class MusicTrack(models.Model):
     
 class Playlist(models.Model):
     location = models.ForeignKey(Location)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
     
     def __unicode__(self):
@@ -251,8 +251,8 @@ class PlaylistItem(models.Model):
     votes = models.IntegerField(default=0)
     rank_played = models.IntegerField()
     current_ranking = models.IntegerField()
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
     item_state = models.IntegerField(PLAYLIST_ITEM_STATUS)
     
@@ -282,8 +282,8 @@ class PlaylistItem(models.Model):
 class Vote(models.Model):
     playlist_item = models.ForeignKey(PlaylistItem)
     user = models.ForeignKey(User)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
     
     def __unicode__(self):

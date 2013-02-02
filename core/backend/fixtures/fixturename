@@ -1,0 +1,12 @@
+[
+  {
+    "model": "backend.user",
+    "pk": 1,
+    "fields": {
+      "email_address": "anuj.nm@gmail.com",
+      "device_id": "1",
+      "password": "02b31057a8571be94458daa3fe170719",
+      "salt": "69"
+    }
+  }
+]
