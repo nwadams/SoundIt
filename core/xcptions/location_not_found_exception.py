@@ -4,7 +4,7 @@ Created on Feb 1, 2013
 @author: anuj
 '''
 
-class LocationNotFoundException(Exception):
+class LocationNotFoundError(Exception):
     
     def __init__(self, value):
         self.value = value

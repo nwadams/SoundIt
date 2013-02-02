@@ -9,11 +9,11 @@ from models import User
 from models import PlaylistItem
 from models import MusicTrack
 import logging
-from xcptions.invalid_device_exception import InvalidDeviceException
-from xcptions.unable_to_vote_exception import UnableToVoteException
-from xcptions.playlist_not_found_exception import PlaylistNotFoundException
-from xcptions.location_not_found_exception import LocationNotFoundException
-from xcptions.music_track_not_found_exception import MusicTrackNotFoundException
+from xcptions.invalid_device_exception import InvalidDeviceError
+from xcptions.unable_to_vote_exception import UnableToVoteError
+from xcptions.playlist_not_found_exception import PlaylistNotFoundError
+from xcptions.location_not_found_exception import LocationNotFoundError
+from xcptions.music_track_not_found_exception import MusicTrackNotFoundError
 
 
 
@@ -59,7 +59,7 @@ def addToPlaylist(request):
     voting_service = VotingService()
     try: 
         updated_playlist_items = voting_service.addToPlaylist(device_id, location_id, music_track_id)
-    except (KeyError, PlaylistNotFoundException) as pnf:
+    except (KeyError, PlaylistNotFoundError) as pnf:
         error = utils.internalServerErrorResponse(pnf.value)
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track': {'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
@@ -78,7 +78,7 @@ def voteUp(request):
     voting_service = VotingService()
     try: 
         updated_playlist_items = voting_service.voteUp(device_id, location_id, music_track_id)
-    except UnableToVoteException as utv:
+    except UnableToVoteError as utv:
         error = utils.internalServerErrorResponse(utv.value)
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
@@ -122,7 +122,7 @@ def getVoteHistory(request):
     voting_service = VotingService()
     try:
         votes = voting_service.getVoteHistory(device_id)
-    except InvalidDeviceException as ide:
+    except InvalidDeviceError as ide:
         error = utils.internalServerErrorResponse(ide.value)
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     playlist_item_list = []

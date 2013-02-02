@@ -4,7 +4,7 @@ Created on Jan 22, 2013
 @author: anuj
 '''
 
-class PlaylistNotFoundException(Exception):
+class PlaylistNotFoundError(Exception):
     
     def __init__(self, value):
         self.value = value

@@ -4,7 +4,7 @@ Created on Jan 21, 2013
 @author: anuj
 '''
 
-class TrackAlreadyInPlaylistException(Exception):
+class TrackAlreadyInPlaylistError(Exception):
     
     def __init__(self, value):
         self.value = value
