@@ -4,18 +4,14 @@ import utils
 from services.user_service import UserService
 from services.voting_service import VotingService
 from django.core import serializers
-import json
-from models import User
 from models import PlaylistItem
 from models import MusicTrack
 import logging
 from xcptions.Errors import InvalidDeviceError
 from xcptions.Errors import UnableToVoteError
 from xcptions.Errors import PlaylistNotFoundError
-from xcptions.Errors import LocationNotFoundError
-from xcptions.Errors import MusicTrackNotFoundError
 
-
+logger = logging.getLogger('core.backend')
 
 def signUp(request):
     
@@ -40,7 +36,7 @@ def signUp(request):
             print "User login failed, returning playlist to device " + str(device_id)
     else:
         print "Setting up new user, returning playlist to device " + str(device_id)
-        new_user = user_service.register(device_id, password)
+        user_service.register(device_id, password)
     return HttpResponse(serializers.serialize("json", PlaylistItem.objects.all(), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
 
