@@ -1,3 +1,5 @@
+-- Ensure triggers are added.
+
 -- Users, Consumers and Locations
 INSERT INTO backend_user (id, email_address, password, salt) VALUES (1, "1234", "02b31057a8571be94458daa3fe170719", "69");
 INSERT INTO backend_location (id, user_id, name, location, phone_number) VALUES (1, 1, "Restaurant 1", "Vancouver", "(604) 441-2685");

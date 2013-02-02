@@ -14,42 +14,56 @@ from xcptions.track_already_in_playlist_exception import TrackAlreadyInPlaylistE
 from xcptions.playlist_not_found_exception import PlaylistNotFoundException
 from xcptions.invalid_device_exception import InvalidDeviceException
 from xcptions.unable_to_vote_exception import UnableToVoteException
+from xcptions.unable_to_add_music_exception import UnableToAddMusicException
+from xcptions.location_not_found_exception import LocationNotFoundException
 import random
 
 class VotingService:
     
     
-    def addToPlaylist(self, user_id, location_id, music_track_id):
+    def addToPlaylist(self, device_id, location_id, music_track_id):
         
         try :
-            user = User.objects.get(pk=user_id)        
-            location = Location.objects.get(pk=location_id)
+            user = User.objects.get(device_id=device_id)
+            if location_id == "thepit":
+                location = Location.objects.get(pk=1)
+            else:        
+                location = Location.objects.get(pk=location_id)
             music_track = MusicTrack.objects.get(pk=music_track_id)
         except KeyError:
-            raise
+            raise UnableToAddMusicException("Could not add music track " + str(music_track_id) + ", location " + str(location_id) + ", user " + str(device_id))
+        except Location.DoesNotExist:
+            raise UnableToAddMusicException("Could not find location for id " + str(location_id))
+        except User.DoesNotExist:
+            raise UnableToAddMusicException("Could not find user for device id " + str(device_id))
+        except MusicTrack.DoesNotExist:
+            raise UnableToAddMusicException("Could not find music track for id " + str(music_track_id))
         
         # Fetch current playlist for that location.
-        # TODO: This is incorrect. Needs to be fixed.
+        playlist = Playlist.objects.get(location_id=location.id)
+        playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
         current_playlist = Playlist.objects.get(pk=1)
         
-        if current_playlist == None:
-            raise PlaylistNotFoundException("Could not find playlist for location id: " + location_id)
+        if playlist == None:
+            raise PlaylistNotFoundException("Could not find playlist for location id: " + str(location_id))
         
         # Check if current current_playlist already has that track. Raise exception if so.
-        playlist_items = current_playlist.playlist_item_set.all()
         for playlist_item in playlist_items:
             if playlist_item.music_track == music_track:
-                raise TrackAlreadyInPlaylistException("Music track: " + music_track_id + " is already in current_playlist: " + current_playlist.id)
+                raise TrackAlreadyInPlaylistException("Music track: " + str(music_track_id) + " is already in current_playlist: " + str(current_playlist.id))
         
         # If not already in current_playlist, add it.
         new_playlist_item = PlaylistItem()
         new_playlist_item.playlist = current_playlist
         new_playlist_item.music_track = music_track
+        new_playlist_item.votes = 0
+        new_playlist_item.rank_played = -1
         # Assuming playlist starts from 1 and goes to n. Not 0 to n-1.
         new_playlist_item.current_ranking = len(playlist_items) + 1
+        new_playlist_item.item_state = 2
         new_playlist_item.save()
-        
-        return current_playlist.playlist_item_set.all()
+        playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
+        return playlist_items
         
     def voteUp(self, device_id, location_id, music_track_id):
         
@@ -62,7 +76,7 @@ class VotingService:
             else:
                 location = Location.objects.get(pk=location_id)
         except (KeyError, Location.DoesNotExist, User.DoesNotExist, MusicTrack.DoesNotExist):
-            raise UnableToVoteException("Could not find objects for parameters- device_id: " + device_id + ", location_id: " + location_id + ", music_track_id: " + music_track_id)
+            raise UnableToVoteException("Could not find objects for parameters- device_id: " + str(device_id) + ", location_id: " + str(location_id) + ", music_track_id: " + str(music_track_id))
         
         # Fetch playlist and playlist item from location and music_track
         playlist = Playlist.objects.get(location_id=location.id)
@@ -85,7 +99,7 @@ class VotingService:
         try:
             user = User.objects.get(device_id = device_id)
         except (KeyError, User.DoesNotExist):
-            raise InvalidDeviceException("Could not find user for device " + device_id)
+            raise InvalidDeviceException("Could not find user for device " + str(device_id))
         return Vote.objects.filter(user_id = user.id)
         
             
