@@ -9,11 +9,11 @@ from models import User
 from models import PlaylistItem
 from models import MusicTrack
 import logging
-from xcptions.invalid_device_exception import InvalidDeviceError
-from xcptions.unable_to_vote_exception import UnableToVoteError
-from xcptions.playlist_not_found_exception import PlaylistNotFoundError
-from xcptions.location_not_found_exception import LocationNotFoundError
-from xcptions.music_track_not_found_exception import MusicTrackNotFoundError
+from xcptions.Errors import InvalidDeviceError
+from xcptions.Errors import UnableToVoteError
+from xcptions.Errors import PlaylistNotFoundError
+from xcptions.Errors import LocationNotFoundError
+from xcptions.Errors import MusicTrackNotFoundError
 
 
 
