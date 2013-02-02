@@ -20,9 +20,9 @@ def signUp(request):
         password = request.GET['password'] 
     except KeyError:
         error = utils.internalServerErrorResponse("Invalid request: Device Id and password required for sign up.")
+        logger.warning("Invalid request: Device Id and password required for sign up.")
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    
-    print "Sign up request with credentials: " + device_id + "/" + password
+    logger.info("Incoming request- sign up with credentials: " + str(device_id) + "/ " + password)
     
     # Check if user is already signed up
     user_service = UserService()
@@ -30,12 +30,12 @@ def signUp(request):
     if is_current_user:
         is_logged_in = user_service.login(device_id, password)
         if is_logged_in:
-            print "User logged in, returning playlist to device " + str(device_id)
+            logger.info("User logged in, returning playlist to device " + str(device_id))
         else:
             # TODO: this should return false. but returning playlist right now since iOS will not be able to handle it. Will deal with dupes later.
-            print "User login failed, returning playlist to device " + str(device_id)
+            logger.info("User login failed, returning playlist to device " + str(device_id))
     else:
-        print "Setting up new user, returning playlist to device " + str(device_id)
+        logger.info("Setting up new user, returning playlist to device " + str(device_id))
         user_service.register(device_id, password)
     return HttpResponse(serializers.serialize("json", PlaylistItem.objects.all(), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
@@ -49,14 +49,18 @@ def addToPlaylist(request):
         music_track_id = request.GET['music_track_id']
         location_id = request.GET['location_id']
     except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: User id and track id required for adding to playlist.")
+        error = utils.internalServerErrorResponse("Invalid request: User id, location id and track id required for adding to playlist.")
+        logger.warning("Invalid request: User id, location id and track id required for adding to playlist.")
         return HttpResponse( simplejson.dumps(error), mimetype='application/json')
-    
+    logger.info("Incoming request- add to playlist with parameters device_id " + str(device_id) + ", music_track_id " + str(music_track_id) + ", location_id " + str(location_id))
     voting_service = VotingService()
     try: 
         updated_playlist_items = voting_service.addToPlaylist(device_id, location_id, music_track_id)
+        logger.info("added music track " + str(music_track_id) + " to playlist for location " + str(location_id))
+    # Improve exception handling.
     except (KeyError, PlaylistNotFoundError) as pnf:
         error = utils.internalServerErrorResponse(pnf.value)
+        logger.error(pnf.value)
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track': {'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
 
@@ -69,13 +73,17 @@ def voteUp(request):
         music_track_id = request.GET['music_track_id']
     except KeyError:
         error = utils.internalServerErrorResponse("Invalid request: User id and track id required for adding to playlist.")
+        logger.warning("Invalid request: User id and track id required for adding to playlist.")
         return HttpResponse( simplejson.dumps(error), mimetype='application/json')
     
+    logger.info("Incoming request- vote up with parameters device_id " + str(device_id) + ", location_id " + str(location_id) + ", music_track_id " + str(music_track_id))
     voting_service = VotingService()
     try: 
         updated_playlist_items = voting_service.voteUp(device_id, location_id, music_track_id)
+        logger.info("Updated playlist after vote up for music track " + str(music_track_id) + " at location " + str(location_id) + " from device " + str(device_id))
     except UnableToVoteError as utv:
         error = utils.internalServerErrorResponse(utv.value)
+        logger.error(utv.value)
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
 
@@ -88,8 +96,9 @@ def refreshPlaylist(request):
         location_id = request.GET['location_id'] 
     except KeyError:
         error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for refreshing playlist.")
+        logger.warning("Invalid request: Device Id and Location Id required for refreshing playlist.")
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-
+    logger.info("Incoming request- refresh playlist with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
     # Use location id to fetch current playlist
     return HttpResponse(serializers.serialize("json", PlaylistItem.objects.all(), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
@@ -101,7 +110,9 @@ def getLibrary(request):
         location_id = request.GET['location_id']
     except KeyError:
         error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for requesting library.")
+        logger.warning("Invalid request: Device Id and Location Id required for requesting library.")
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+    logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
     return HttpResponse(serializers.serialize("json", MusicTrack.objects.all(), relations={'album', 'category', 'artist'}), mimetype='application/json')
 
 
@@ -113,13 +124,16 @@ def getVoteHistory(request):
         location_id = request.GET['location_id'] 
     except KeyError:
         error = utils.internalServerErrorResponse("Invalid request: Device Id and password required for sign up.")
+        logger.warning("Invalid request: Device Id and password required for sign up.")
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
 
+    logger.info("Incoming request- get vote history with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
     voting_service = VotingService()
     try:
         votes = voting_service.getVoteHistory(device_id)
     except InvalidDeviceError as ide:
         error = utils.internalServerErrorResponse(ide.value)
+        logger.error(ide.value)
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     playlist_item_list = []
     for vote in votes:
