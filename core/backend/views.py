@@ -99,7 +99,7 @@ def voteUp(request):
         logger.warning("Invalid request: Customer id and track id required for adding to playlist.")
         return HttpResponse( simplejson.dumps(error), mimetype='application/json')
     
-    music_track_id += 1
+    music_track_id = int(music_track_id) + 1
     logger.info("Incoming request- vote up with parameters device_id " + str(device_id) + ", location_id " + str(location_id) + ", music_track_id " + str(music_track_id))
     voting_service = VotingService()
     try: 
