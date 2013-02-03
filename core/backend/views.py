@@ -65,7 +65,7 @@ def addToPlaylist(request):
     return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track': {'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
 
 
-def voteUp(request):
+def voteUpAndroid(request):
     
     try:
         device_id = request.GET['device_id']
@@ -86,6 +86,31 @@ def voteUp(request):
         logger.error(utv.value)
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
+
+
+def voteUp(request):
+    
+    try:
+        device_id = request.GET['device_id']
+        location_id = request.GET['location_id']
+        music_track_id = request.GET['music_track_id']
+    except KeyError:
+        error = utils.internalServerErrorResponse("Invalid request: Customer id and track id required for adding to playlist.")
+        logger.warning("Invalid request: Customer id and track id required for adding to playlist.")
+        return HttpResponse( simplejson.dumps(error), mimetype='application/json')
+    
+    music_track_id += 1
+    logger.info("Incoming request- vote up with parameters device_id " + str(device_id) + ", location_id " + str(location_id) + ", music_track_id " + str(music_track_id))
+    voting_service = VotingService()
+    try: 
+        updated_playlist_items = voting_service.voteUp(device_id, location_id, music_track_id)
+        logger.info("Updated playlist after vote up for music track " + str(music_track_id) + " at location " + str(location_id) + " from device " + str(device_id))
+    except UnableToVoteError as utv:
+        error = utils.internalServerErrorResponse(utv.value)
+        logger.error(utv.value)
+        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+    return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
+
 
 
 
