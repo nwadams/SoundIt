@@ -6,5 +6,5 @@ admin.autodiscover()
 urlpatterns = patterns('',
     
     url(r'^backend/', include('backend.urls')),
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', include(admin.site.urls)),
 )
