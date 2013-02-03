@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import simplejson
 
-class User(models.Model):
+class Customer(models.Model):
     # Setting null=True for email address since we're not asking for it yet.
     email_address = models.CharField(max_length=255, null=True)
     device_id = models.CharField(max_length=255, null=True)
@@ -12,7 +12,7 @@ class User(models.Model):
     is_deleted = models.BooleanField(default=False)
     
     def __unicode__(self):
-        return "User{" + \
+        return "Customer{" + \
     "id=" + str(self.pk) + \
     ", email_address='" + str(self.email_address) + '\'' + \
     ", device_id='" + str(self.device_id) + '\'' + \
@@ -36,7 +36,7 @@ class User(models.Model):
         return result
 
 class Consumer(models.Model):
-    user = models.ForeignKey(User)
+    customer = models.ForeignKey(Customer)
     facebook_id = models.IntegerField(null=True)
     device_id = models.IntegerField()
     date_created = models.DateTimeField(auto_now_add=True, null=True)
@@ -46,7 +46,7 @@ class Consumer(models.Model):
     def __unicode__(self):
         return "Consumer{" + \
     "id=" + str(self.pk) + \
-    ", user='" + self.user + '\'' + \
+    ", customer='" + self.customer + '\'' + \
     ", facebook_id='" + self.facebook_id + "\'" + \
     ", device_id=" + self.device_id + "\'" + \
     ", date_created=" + str(self.date_created) + \
@@ -57,7 +57,7 @@ class Consumer(models.Model):
     def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
-        result.append({"user": self.user})
+        result.append({"customer": self.customer})
         result.append({"facebook_id": self.facebook_id})
         result.append({"device_id": self.device_id})
         result.append({"date_created": str(self.date_created)})
@@ -66,7 +66,7 @@ class Consumer(models.Model):
         return simplejson.dumps(result)
     
 class Location(models.Model):
-    user = models.ForeignKey(User)
+    customer = models.ForeignKey(Customer)
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=50)
@@ -77,7 +77,7 @@ class Location(models.Model):
     def __unicode__(self):
         return "Location{" + \
     "id=" + str(self.pk) + \
-    ", user='" + str(self.user) + '\'' + \
+    ", customer='" + str(self.customer) + '\'' + \
     ", name='" + str(self.name) + "\'" + \
     ", location=" + str(self.location) + "\'" + \
     ", phone_number=" + str(self.phone_number) + "\'" + \
@@ -89,7 +89,7 @@ class Location(models.Model):
     def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
-        result.append({"user": self.user})
+        result.append({"customer": self.customer})
         result.append({"name": self.name})
         result.append({"location": self.location})
         result.append({"phone_number": self.phone_number})
@@ -281,7 +281,7 @@ class PlaylistItem(models.Model):
 
 class Vote(models.Model):
     playlist_item = models.ForeignKey(PlaylistItem)
-    user = models.ForeignKey(User)
+    customer = models.ForeignKey(Customer)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
@@ -290,7 +290,7 @@ class Vote(models.Model):
         return "Vote{" + \
     "id=" + str(self.pk) + \
     ", playlist_item='" + str(self.playlist_item) + '\'' + \
-    ", user='" + str(self.user) + '\'' + \
+    ", customer='" + str(self.customer) + '\'' + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -300,7 +300,7 @@ class Vote(models.Model):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"playlist_item": self.playlist_item})
-        result.append({"user": self.user})
+        result.append({"customer": self.customer})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})

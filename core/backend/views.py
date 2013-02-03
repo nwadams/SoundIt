@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.utils import simplejson
 import utils
-from services.user_service import UserService
+from services.customer_service import CustomerService
 from services.voting_service import VotingService
 from django.core import serializers
 from models import PlaylistItem
@@ -24,19 +24,19 @@ def signUp(request):
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     logger.info("Incoming request- sign up with credentials: " + str(device_id) + "/ " + password)
     
-    # Check if user is already signed up
-    user_service = UserService()
-    is_current_user = user_service.checkIfCurrentUser(device_id)
-    if is_current_user:
-        is_logged_in = user_service.login(device_id, password)
+    # Check if customer is already signed up
+    customer_service = CustomerService()
+    is_current_customer = customer_service.checkIfCurrentCustomer(device_id)
+    if is_current_customer:
+        is_logged_in = customer_service.login(device_id, password)
         if is_logged_in:
-            logger.info("User logged in, returning playlist to device " + str(device_id))
+            logger.info("Customer logged in, returning playlist to device " + str(device_id))
         else:
             # TODO: this should return false. but returning playlist right now since iOS will not be able to handle it. Will deal with dupes later.
-            logger.info("User login failed, returning playlist to device " + str(device_id))
+            logger.info("Customer login failed, returning playlist to device " + str(device_id))
     else:
-        logger.info("Setting up new user, returning playlist to device " + str(device_id))
-        user_service.register(device_id, password)
+        logger.info("Setting up new customer, returning playlist to device " + str(device_id))
+        customer_service.register(device_id, password)
     return HttpResponse(serializers.serialize("json", PlaylistItem.objects.all(), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
 
@@ -49,8 +49,8 @@ def addToPlaylist(request):
         music_track_id = request.GET['music_track_id']
         location_id = request.GET['location_id']
     except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: User id, location id and track id required for adding to playlist.")
-        logger.warning("Invalid request: User id, location id and track id required for adding to playlist.")
+        error = utils.internalServerErrorResponse("Invalid request: Customer id, location id and track id required for adding to playlist.")
+        logger.warning("Invalid request: Customer id, location id and track id required for adding to playlist.")
         return HttpResponse( simplejson.dumps(error), mimetype='application/json')
     logger.info("Incoming request- add to playlist with parameters device_id " + str(device_id) + ", music_track_id " + str(music_track_id) + ", location_id " + str(location_id))
     voting_service = VotingService()
@@ -72,8 +72,8 @@ def voteUp(request):
         location_id = request.GET['location_id']
         music_track_id = request.GET['music_track_id']
     except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: User id and track id required for adding to playlist.")
-        logger.warning("Invalid request: User id and track id required for adding to playlist.")
+        error = utils.internalServerErrorResponse("Invalid request: Customer id and track id required for adding to playlist.")
+        logger.warning("Invalid request: Customer id and track id required for adding to playlist.")
         return HttpResponse( simplejson.dumps(error), mimetype='application/json')
     
     logger.info("Incoming request- vote up with parameters device_id " + str(device_id) + ", location_id " + str(location_id) + ", music_track_id " + str(music_track_id))
@@ -139,3 +139,5 @@ def getVoteHistory(request):
     for vote in votes:
         playlist_item_list.append(vote.playlist_item)
     return HttpResponse(serializers.serialize("json", playlist_item_list, relations={'music_track': {'relations': ('album', 'category', 'artist')}}), mimetype='application/json')
+
+

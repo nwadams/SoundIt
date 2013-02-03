@@ -7,7 +7,7 @@ Created on Jan 21, 2013
 from backend.models import MusicTrack
 from backend.models import Playlist
 from backend.models import PlaylistItem
-from backend.models import User
+from backend.models import Customer
 from backend.models import Location
 from backend.models import Vote
 from xcptions.Errors import TrackAlreadyInPlaylistError
@@ -22,18 +22,18 @@ class VotingService:
     def addToPlaylist(self, device_id, location_id, music_track_id):
         
         try :
-            user = User.objects.get(device_id=device_id)
+            customer = Customer.objects.get(device_id=device_id)
             if location_id == "thepit":
                 location = Location.objects.get(pk=1)
             else:        
                 location = Location.objects.get(pk=location_id)
             music_track = MusicTrack.objects.get(pk=music_track_id)
         except KeyError:
-            raise UnableToAddMusicError("Could not add music track " + str(music_track_id) + ", location " + str(location_id) + ", user " + str(device_id))
+            raise UnableToAddMusicError("Could not add music track " + str(music_track_id) + ", location " + str(location_id) + ", customer " + str(device_id))
         except Location.DoesNotExist:
             raise UnableToAddMusicError("Could not find location for id " + str(location_id))
-        except User.DoesNotExist:
-            raise UnableToAddMusicError("Could not find user for device id " + str(device_id))
+        except Customer.DoesNotExist:
+            raise UnableToAddMusicError("Could not find customer for device id " + str(device_id))
         except MusicTrack.DoesNotExist:
             raise UnableToAddMusicError("Could not find music track for id " + str(music_track_id))
         
@@ -66,14 +66,14 @@ class VotingService:
     def voteUp(self, device_id, location_id, music_track_id):
         
         try:
-            user = User.objects.get(device_id=device_id)
+            customer = Customer.objects.get(device_id=device_id)
             music_track = MusicTrack.objects.get(pk=music_track_id)
             # hack for ios: thepit
             if location_id == "thepit":
                 location = Location.objects.get(pk=1)
             else:
                 location = Location.objects.get(pk=location_id)
-        except (KeyError, Location.DoesNotExist, User.DoesNotExist, MusicTrack.DoesNotExist):
+        except (KeyError, Location.DoesNotExist, Customer.DoesNotExist, MusicTrack.DoesNotExist):
             raise UnableToVoteError("Could not find objects for parameters- device_id: " + str(device_id) + ", location_id: " + str(location_id) + ", music_track_id: " + str(music_track_id))
         
         # Fetch playlist and playlist item from location and music_track
@@ -85,7 +85,7 @@ class VotingService:
             if playlist_item.music_track.id == music_track.id:
                 playlist_item.votes += 1
                 playlist_item.save()
-                vote = Vote(playlist_item_id=playlist_item.id, user_id=user.id)
+                vote = Vote(playlist_item_id=playlist_item.id, customer_id=customer.id)
                 vote.save()
         
         # Sort playlist by votes in descending order.
@@ -95,9 +95,9 @@ class VotingService:
     
     def getVoteHistory(self, device_id):
         try:
-            user = User.objects.get(device_id = device_id)
-        except (KeyError, User.DoesNotExist):
-            raise InvalidDeviceError("Could not find user for device " + str(device_id))
-        return Vote.objects.filter(user_id = user.id)
+            customer = Customer.objects.get(device_id = device_id)
+        except (KeyError, Customer.DoesNotExist):
+            raise InvalidDeviceError("Could not find customer for device " + str(device_id))
+        return Vote.objects.filter(customer_id = customer.id)
         
             
