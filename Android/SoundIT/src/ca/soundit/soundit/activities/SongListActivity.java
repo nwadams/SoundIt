@@ -9,6 +9,7 @@ import android.widget.Toast;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
+import ca.soundit.soundit.back.asynctask.GetVoteHistoryAsyncTask;
 import ca.soundit.soundit.back.asynctask.RefreshPlaylistAsyncTask;
 import ca.soundit.soundit.fragments.CurrentSongFragment;
 import ca.soundit.soundit.fragments.SongListFragment;
@@ -16,20 +17,26 @@ import ca.soundit.soundit.fragments.SongListFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.Window;
 
 public class SongListActivity extends SherlockFragmentActivity {
 
 	private Timer mRefreshTimer;
 	private boolean mRefreshingPlaylist;
 	
+	private MenuItem mRefreshMenuItem;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
                 
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);  
+
         setContentView(R.layout.activity_song_list);
         
         mRefreshTimer = new Timer();
         mRefreshingPlaylist = false;        
+        
     }
     
     @Override
@@ -42,9 +49,12 @@ public class SongListActivity extends SherlockFragmentActivity {
 
 			@Override
 			public void run() {
-				 refreshPlaylist();
+				 refreshPlaylist(false);
 			}  		
     	}, 0, 1000 * Constants.REFRESH_INTERVAL); //run every minute
+    	
+        notifiyRefresh(Constants.OK);
+
     }
     
     @Override
@@ -62,6 +72,8 @@ public class SongListActivity extends SherlockFragmentActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
        	this.getSupportMenuInflater().inflate(R.menu.activity_song_list, menu);
        	
+       	mRefreshMenuItem = menu.findItem(R.id.menu_refresh);
+       	
         return true;
     }
     
@@ -73,7 +85,7 @@ public class SongListActivity extends SherlockFragmentActivity {
         case R.id.menu_settings:
             return true;
         case R.id.menu_refresh:
-            refreshPlaylist();
+            refreshPlaylist(true);
             return true;
         case R.id.menu_add_song:
         	startAddSongActivity();
@@ -86,20 +98,34 @@ public class SongListActivity extends SherlockFragmentActivity {
 		startActivity(new Intent(this, AddSongActivity.class));
 	}
 
-	private void refreshPlaylist() {
-		if (!mRefreshingPlaylist) {
+	private void refreshPlaylist(boolean force) {
+		if (!mRefreshingPlaylist || force) {
 			mRefreshingPlaylist = true;
+			
 			runOnUiThread(new Runnable() {
 			    public void run() {
+			    	if (mRefreshMenuItem != null) 
+						mRefreshMenuItem.setVisible(!mRefreshingPlaylist);
+					
+					setSupportProgressBarIndeterminateVisibility(mRefreshingPlaylist);
+					
 			    	new RefreshPlaylistAsyncTask(SongListActivity.this).execute();
+			    	new GetVoteHistoryAsyncTask(SongListActivity.this).execute();
 			    }
 			});		
 		}
 		
 	}
+	
+	public void forceRefresh() {
+		refreshPlaylist(true);
+	}
 
 	public void notifiyRefresh(String result) {
 		mRefreshingPlaylist = false;
+		this.setSupportProgressBarIndeterminateVisibility(mRefreshingPlaylist);
+		if (mRefreshMenuItem != null) 
+			mRefreshMenuItem.setVisible(!mRefreshingPlaylist);
 
 		if (!Constants.OK.equals(result)) {
 			Toast.makeText(this, result, Toast.LENGTH_SHORT).show();

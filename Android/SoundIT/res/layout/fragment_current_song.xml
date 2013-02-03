@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dip" >
+    android:layout_height="100dip" 
+    android:background="@drawable/abs__ab_solid_dark_holo">
 
     <ImageView 
         android:id="@+id/album_art_image"
@@ -20,7 +21,7 @@
         android:layout_alignParentTop="true"
         android:gravity="center_horizontal"
         android:text="Song Title"
-        android:textSize="16sp"
+        android:textSize="20sp"
     />
     
     <TextView
@@ -31,10 +32,11 @@
         android:layout_below="@id/song_title"
         android:gravity="center_horizontal"
         android:text="Artist Name"
-        android:textSize="16sp"
+        android:textSize="20sp"
     />
     
-    <LinearLayout 
+    <LinearLayout
+        android:id="@+id/progress_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/artist_name"
@@ -43,7 +45,8 @@
         android:orientation="horizontal"
         android:paddingLeft="10dip"
         android:paddingRight="10dip"
-    >
+        android:visibility="gone" >
+
     	<TextView
     	    android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -68,5 +71,17 @@
 	    />
     	
     </LinearLayout>
+    
+    <TextView
+        android:id="@+id/current_playing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/album_art_image"
+        android:gravity="center_horizontal"
+        android:text="@string/current_playing"
+        android:paddingBottom="5dp"
+        android:textSize="20sp"
+    />
 
 </RelativeLayout>
