@@ -109,8 +109,8 @@ public class SongListArrayAdapter extends ArrayAdapter<Song> {
 				Song song = mSongList.get(position);
 				
 				new VoteUpAsyncTask(mFragment).execute(song.getMusicTrackID());
-				v.setEnabled(false);
 				
+				song.setVotedOn(true);
 				song.setVotes(song.getVotes() + 1);
 				SongListArrayAdapter.this.notifyDataSetChanged();
 			}
