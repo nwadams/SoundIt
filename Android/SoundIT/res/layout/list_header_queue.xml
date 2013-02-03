@@ -1,0 +1,11 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:textSize="18sp"
+    android:padding="5dp"
+    android:background="#e02020"
+    android:gravity="center"
+    android:textColor="@android:color/white"
+    android:text="@string/song_list_next">
+
+</TextView>

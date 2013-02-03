@@ -1,6 +1,8 @@
 package ca.soundit.soundit.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,11 @@ public class CurrentSongFragment extends SherlockFragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
         Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_current_song, container, false);
+		// create ContextThemeWrapper from the original Activity Context with the custom theme
+		Context context = new ContextThemeWrapper(getActivity(), R.style.Theme_Sherlock);
+		// clone the inflater using the ContextThemeWrapper
+		LayoutInflater localInflater = inflater.cloneInContext(context);
+        return localInflater.inflate(R.layout.fragment_current_song, container, false);
         
 	}
 

@@ -6,8 +6,7 @@
      <ListView android:id="@id/android:list"
                android:layout_width="match_parent"
                android:layout_height="match_parent"
-               android:drawSelectorOnTop="false"
-               android:headerDividersEnabled="false"/>
+               android:drawSelectorOnTop="false"/>
 
      <TextView android:id="@id/android:empty"
                android:layout_width="match_parent"

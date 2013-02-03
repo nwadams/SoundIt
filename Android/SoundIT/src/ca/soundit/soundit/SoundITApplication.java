@@ -10,6 +10,12 @@ import android.app.Application;
 
 public class SoundITApplication extends Application {
 	
+	private static SoundITApplication mInstance;
+	
+	public static SoundITApplication getInstance() {
+			return mInstance;
+    }
+	
 	private Song mCurrentPlayingSong;
 	private List<Song> mSongQueue;
 
@@ -47,5 +53,7 @@ public class SoundITApplication extends Application {
 	@Override
     public void onCreate() {
         super.onCreate();
+        
+        mInstance = this;
     }
 }

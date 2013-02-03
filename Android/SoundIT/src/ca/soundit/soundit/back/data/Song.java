@@ -12,8 +12,10 @@ public class Song {
 	
 	private int mCurrentRanking;
 	private int mVotes;
+	private boolean mVotedOn;
 	
 	private int mState;
+	private int mMusicTrackID;
 
 	public String getName() {
 		return mName;
@@ -85,6 +87,22 @@ public class Song {
 
 	public void setState(int mState) {
 		this.mState = mState;
+	}
+
+	public int getMusicTrackID() {
+		return mMusicTrackID;
+	}
+
+	public void setMusicTrackID(int mMusicTrackID) {
+		this.mMusicTrackID = mMusicTrackID;
+	}
+
+	public boolean isVotedOn() {
+		return mVotedOn;
+	}
+
+	public void setVotedOn(boolean mVotedOn) {
+		this.mVotedOn = mVotedOn;
 	}
 	
 }
