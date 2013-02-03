@@ -8,7 +8,7 @@
         android:layout_height="60dip"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/splash_logo"
+        android:src="@drawable/default_album_300"
     />
     
     <Button
@@ -46,7 +46,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"    
 	        android:text="Song Title"
-	        android:textSize="16sp"
+	        android:textSize="18sp"
 	    />
 	    
 	    <TextView
@@ -54,7 +54,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="Artist Name"
-	        android:textSize="16sp"
+	        android:textSize="14sp"
 	    />
     </LinearLayout>
     

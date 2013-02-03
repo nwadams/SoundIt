@@ -53,16 +53,16 @@ public class Song {
 		return mTrackURL;
 	}
 
-	public void setAlbumURL(String mTrackURL) {
-		this.mTrackURL = mTrackURL;
+	public void setAlbumURL(String mAlbumURL) {
+		this.mAlbumURL = mAlbumURL;
 	}
 	
 	public String getAlbumURL() {
 		return mAlbumURL;
 	}
 
-	public void setTrackURL(String mAlbumURL) {
-		this.mAlbumURL = mAlbumURL;
+	public void setTrackURL(String mTrackURL) {
+		this.mTrackURL = mTrackURL;
 	}
 
 	public int getCurrentRanking() {

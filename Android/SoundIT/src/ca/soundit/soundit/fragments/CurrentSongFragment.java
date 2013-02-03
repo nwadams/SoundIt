@@ -1,6 +1,10 @@
 package ca.soundit.soundit.fragments;
 
+import java.util.Hashtable;
+
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -9,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ca.soundit.soundit.R;
+import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.data.Song;
+import ca.soundit.soundit.back.http.HTTPHelper;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -26,7 +32,7 @@ public class CurrentSongFragment extends SherlockFragment {
         
 	}
 
-	public void updateSong(Song currentPlayingSong) {
+	public void updateSong(final Song currentPlayingSong) {
 		View v = this.getView();
 		
 		TextView songTitle = (TextView) v.findViewById(R.id.song_title);
@@ -35,8 +41,32 @@ public class CurrentSongFragment extends SherlockFragment {
 		TextView artistName = (TextView) v.findViewById(R.id.artist_name);
 		artistName.setText(currentPlayingSong.getArtist());
 		
-		ImageView albumArt = (ImageView) v.findViewById(R.id.album_art_image);
-		//display image
+		final ImageView albumArt = (ImageView) v.findViewById(R.id.album_art_image);
+		if (currentPlayingSong.getAlbumURL() != null && !currentPlayingSong.getAlbumURL().equals("none")) {
+        	if (SoundITApplication.getInstance().getBitmapCache().get(currentPlayingSong.getAlbumURL()) != null) {
+        		albumArt.setImageBitmap(SoundITApplication.getInstance().getBitmapCache().get(currentPlayingSong.getAlbumURL()));
+        	} else {
+        		albumArt.setImageResource(R.drawable.default_album_300);
+                new AsyncTask<String, Void, Void>() {
+					@Override
+					protected Void doInBackground(String... params) {
+						Hashtable<String,String> paramsTable = new Hashtable<String,String>();
+						Bitmap bitmap = HTTPHelper.HTTPImageGetRequest(params[0], paramsTable);
+						if (bitmap != null)
+							SoundITApplication.getInstance().getBitmapCache().put(params[0], bitmap);
+						return null;
+					}
+					
+					@Override
+					protected void onPostExecute(Void result) {
+						albumArt.setImageBitmap(SoundITApplication.getInstance().getBitmapCache().get(currentPlayingSong.getAlbumURL()));
+					}
+                	
+                }.execute(currentPlayingSong.getAlbumURL());
+        	}
+		} else {
+        	albumArt.setImageResource(R.drawable.default_album_300);
+        }
 	}
 
 }

@@ -12,7 +12,7 @@ public class Constants {
 	public static final String URL_GET_LIBRARY = "getLibrary/";
 	public static final String URL_ADD_TO_PLAYLIST = "addToPlaylist/";
 	public static final String URL_GET_VOTE_HISTORY = "getVoteHistory/";
-	public static final String URL_VOTE_UP = "voteUp/";
+	public static final String URL_VOTE_UP = "voteUpAndroid/";
 	
 	public static final String API_DEVICE_ID_KEY = "device_id";
 	public static final String API_LOCATION_ID_KEY = "location_id";

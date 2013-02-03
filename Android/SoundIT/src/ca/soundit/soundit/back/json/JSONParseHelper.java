@@ -37,8 +37,10 @@ public class JSONParseHelper {
 					song.setMusicTrackID(musicTrack.getInt(Constants.JSON_PK));
 					fields = musicTrack.getJSONObject(Constants.JSON_FIELDS);
 					
-					if (Constants.JSON_NONE.equals(fields.getString(Constants.JSON_TRACK_URL)))
-						song.setTrackURL(fields.getString(Constants.JSON_TRACK_URL));
+					if (!Constants.JSON_NONE.equals(fields.getString(Constants.JSON_TRACK_URL)))
+						song.setAlbumURL(fields.getString(Constants.JSON_TRACK_URL));
+					else 
+						song.setAlbumURL(null);
 					
 					song.setName(fields.getString(Constants.JSON_TRACK_NAME));
 					
@@ -46,8 +48,10 @@ public class JSONParseHelper {
 					album = album.getJSONObject(Constants.JSON_FIELDS);
 					song.setAlbum(album.getString(Constants.JSON_ALBUM_NAME));
 					
-					if (Constants.JSON_NONE.equals(album.getString(Constants.JSON_ALBUM_URL)))
+					if (!Constants.JSON_NONE.equals(album.getString(Constants.JSON_ALBUM_URL)))
 						song.setAlbumURL(album.getString(Constants.JSON_ALBUM_URL));
+					else 
+						song.setAlbumURL(null);
 					
 					JSONObject category = fields.getJSONObject(Constants.JSON_CATEOGORY);
 					category = category.getJSONObject(Constants.JSON_FIELDS);
