@@ -12,31 +12,23 @@
     />
     
     <Button
-        android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"  
+        android:layout_width="80dp"
+	    android:layout_height="40dp"  
 	    android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:id="@+id/vote_button"
+        android:layout_margin="5dp"
+        android:background="@drawable/btn_vote"
+        android:gravity="center"
         android:text="vote"
+        android:textColor="@android:color/white"
         />
-    
-    <TextView 
-        android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"  
-	    android:layout_toLeftOf="@id/vote_button"
-        android:layout_centerVertical="true"
-        android:id="@+id/number_votes"
-        android:textSize="16sp"
-        android:paddingRight="5dip"
-        android:text="#votes"
-     />
     
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:orientation="vertical"
         android:layout_toRightOf="@id/album_art_image"
-        android:layout_toLeftOf="@id/number_votes"
         android:gravity="center_vertical"
         android:paddingLeft="20dip"
         >

@@ -57,7 +57,6 @@ public class SongListArrayAdapter extends ArrayAdapter<Song> {
             holder.albumArt = (ImageView)row.findViewById(R.id.album_art_image);
             holder.songTitle = (TextView)row.findViewById(R.id.song_title);
             holder.artistName = (TextView)row.findViewById(R.id.artist_name);
-            holder.numVotes = (TextView)row.findViewById(R.id.number_votes);
             holder.voteButton = (Button)row.findViewById(R.id.vote_button);
             
             row.setTag(holder);
@@ -97,9 +96,9 @@ public class SongListArrayAdapter extends ArrayAdapter<Song> {
         
         holder.songTitle.setText(song.getName());
         holder.artistName.setText(song.getArtist());
-        holder.numVotes.setText(String.valueOf(song.getVotes()));
         
         holder.voteButton.setTag(position);
+        holder.voteButton.setText(String.valueOf(song.getVotes()));
         holder.voteButton.setEnabled(!song.isVotedOn());
         holder.voteButton.setOnClickListener(new OnClickListener() {
 
@@ -125,7 +124,6 @@ public class SongListArrayAdapter extends ArrayAdapter<Song> {
         ImageView albumArt;
         TextView songTitle;
         TextView artistName;
-        TextView numVotes;
         Button voteButton;
     }
 }
