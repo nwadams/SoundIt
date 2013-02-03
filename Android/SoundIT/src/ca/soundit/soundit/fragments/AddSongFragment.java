@@ -9,20 +9,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
-import ca.soundit.soundit.SoundITApplication;
-import ca.soundit.soundit.activities.SongListActivity;
-import ca.soundit.soundit.adapter.SongListArrayAdapter;
+import ca.soundit.soundit.adapter.SongLibraryListArrayAdapter;
+import ca.soundit.soundit.back.asynctask.AddToPlaylistAsyncTask;
 import ca.soundit.soundit.back.data.Song;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
-public class SongListFragment extends SherlockFragment {
+public class AddSongFragment extends SherlockFragment {
 	
 	private ListView mListView;
-	private SongListArrayAdapter mArrayAdapter;
+	private SongLibraryListArrayAdapter mArrayAdapter;
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
@@ -32,26 +34,27 @@ public class SongListFragment extends SherlockFragment {
         
         mListView = (ListView) view.findViewById(android.R.id.list);
         
-        mArrayAdapter = new SongListArrayAdapter(this,getActivity(),R.layout.list_item_song_queue,R.id.song_title, new ArrayList<Song>());
+        mArrayAdapter = new SongLibraryListArrayAdapter(getActivity(),R.layout.list_item_song_library,R.id.song_title, new ArrayList<Song>());
         mArrayAdapter.setNotifyOnChange(false);
-                        
-        View currentSongHeaderView = inflater.inflate(R.layout.header_current_song, null, false);
-        mListView.addHeaderView(currentSongHeaderView, null, false);
-        mListView.setHeaderDividersEnabled(false);
-        
-        View nextView = inflater.inflate(R.layout.list_header_queue, null, false);
-        mListView.addHeaderView(nextView);
         
         mListView.setAdapter(mArrayAdapter);
         
+        mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {			
+				addToPlaylist(position);
+			}
+        	
+        });
+        
         return view;
     }
-	
-	@Override
-	public void onResume() {
-		super.onResume();
+
+	protected void addToPlaylist(int position) {
+		Song song = mArrayAdapter.getItem(position);
 		
-		updateList(SoundITApplication.getInstance().getSongQueue());
+		new AddToPlaylistAsyncTask(this).execute(song.getMusicTrackID());
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -67,15 +70,13 @@ public class SongListFragment extends SherlockFragment {
 		mArrayAdapter.notifyDataSetChanged();
 	}
 
-	public void notifiyVoteComplete(String result) {
+	public void notifiyComplete(String result) {
 		if (Constants.OK.equals(result)) {
-			updateList(SoundITApplication.getInstance().getSongQueue());
-			SongListActivity activity = (SongListActivity) this.getActivity();
-			activity.forceRefresh();
+			Toast.makeText(this.getSherlockActivity(), R.string.toast_song_added_to_queue, Toast.LENGTH_SHORT).show();			
 		} else {
-			
+			Toast.makeText(this.getSherlockActivity(), R.string.toast_song_already_in_queue, Toast.LENGTH_SHORT).show();
 		}
-		
+		this.getSherlockActivity().finish();		
 	}
 	
 }
