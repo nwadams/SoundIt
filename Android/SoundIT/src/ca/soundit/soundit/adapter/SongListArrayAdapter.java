@@ -3,6 +3,8 @@ package ca.soundit.soundit.adapter;
 import java.util.Hashtable;
 import java.util.List;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
@@ -106,6 +108,8 @@ public class SongListArrayAdapter extends ArrayAdapter<Song> {
 			public void onClick(View v) {
 				int position = (Integer) v.getTag();
 				Song song = mSongList.get(position);
+				
+				EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_APP_FLOW, Constants.GA_VOTE_UP, String.valueOf(song.getMusicTrackID()), null);
 				
 				new VoteUpAsyncTask(mFragment).execute(song.getMusicTrackID());
 				

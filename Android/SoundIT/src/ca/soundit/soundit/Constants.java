@@ -44,4 +44,17 @@ public class Constants {
 	
 	public static final String PREFS_NAME = "USER_DATA_PREFS";
 	public static final String PREFS_PASSWORD = "password";
+	
+	public static final String GA_CATEGORY_APP_FLOW = "app_flow";
+	public static final String GA_APP_FLOW_SIGN_UP = "sign_up";
+	public static final String GA_APP_FLOW_ADD_SONG = "add_song";
+	public static final String GA_APP_FLOW_SETTINGS = "settings";
+	public static final String GA_APP_FLOW_REFRESH = "refresh";
+	public static final String GA_APP_FLOW_ABOUT = "about";
+	public static final String GA_APP_FLOW_CANCEL = "cancel";
+	public static final String GA_CANCEL_ADD_SONG = "cancel_add_song";
+	public static final String GA_START_ACTIVITY = "start_activity";
+	public static final String GA_CATEGORY_MENU_OPTION = "menu_option";
+	public static final String GA_APP_FLOW_ADD_SONG_COMPLETE = "add_song_complete";
+	public static final String GA_VOTE_UP = "vote_up";
 }
