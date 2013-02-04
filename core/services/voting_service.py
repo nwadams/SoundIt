@@ -122,7 +122,9 @@ class VotingService:
         try:
             customer = Customer.objects.get(device_id = device_id)
         except (KeyError, Customer.DoesNotExist):
+            # TODO: Consolidate this exception into something else. Or start using this elsewhere. 
             raise InvalidDeviceError("Could not find customer for device " + str(device_id))
+        logger.debug("Found customer for device " + str(device_id) + ", returning votes.")
         return Vote.objects.filter(customer_id = customer.id)
         
             

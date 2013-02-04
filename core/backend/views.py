@@ -113,8 +113,6 @@ def voteUp(request):
     return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
 
 
-
-
 def refreshPlaylist(request):
     
     try: 
@@ -182,6 +180,3 @@ def getVoteHistory(request):
     for vote in votes:
         playlist_item_list.append(vote.playlist_item)
     return HttpResponse(serializers.serialize("json", playlist_item_list, relations={'music_track': {'relations': ('album', 'category', 'artist')}}), mimetype='application/json')
-
-
-
