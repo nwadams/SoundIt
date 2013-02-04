@@ -10,6 +10,7 @@ import logging
 from xcptions.Errors import InvalidDeviceError
 from xcptions.Errors import UnableToVoteError
 from xcptions.Errors import PlaylistNotFoundError
+from xcptions.Errors import UnableToAddMusicError
 
 logger = logging.getLogger('core.backend')
 
@@ -58,9 +59,9 @@ def addToPlaylist(request):
         updated_playlist_items = voting_service.addToPlaylist(device_id, location_id, music_track_id)
         logger.info("added music track " + str(music_track_id) + " to playlist for location " + str(location_id))
     # Improve exception handling.
-    except (KeyError, PlaylistNotFoundError) as pnf:
-        error = utils.internalServerErrorResponse(pnf.value)
-        logger.error(pnf.value)
+    except (KeyError, PlaylistNotFoundError, UnableToAddMusicError) as exception:
+        error = utils.internalServerErrorResponse(exception.value)
+        logger.error(exception.value)
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track': {'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
 

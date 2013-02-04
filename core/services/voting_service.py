@@ -25,6 +25,7 @@ class VotingService:
     def addToPlaylist(self, device_id, location_id, music_track_id):
         
         try :
+            # TODO: Improve data model so that customer that is adding playlist is checked for session.
             customer = Customer.objects.get(device_id=device_id)
             if location_id == "thepit":
                 location = Location.objects.get(pk=1)
@@ -41,23 +42,27 @@ class VotingService:
             raise UnableToAddMusicError("Could not find music track for id " + str(music_track_id))
         
         # Fetch current playlist for that location.
-        playlist = Playlist.objects.get(location_id=location.id)
+        try:
+            playlist = Playlist.objects.get(location_id=location.id)
+        except Playlist.DoesNotExist:
+            raise UnableToAddMusicError("Could not find playlist for location " + str(location.id))
         playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
-        current_playlist = Playlist.objects.get(pk=1)
         
         if playlist == None:
             raise PlaylistNotFoundError("Could not find playlist for location id: " + str(location_id))
         
-        # Check if current current_playlist already has that track. Raise exception if so.
+        # Check if current playlist already has that track. Raise exception if so.
         for playlist_item in playlist_items:
             if playlist_item.music_track == music_track:
-                raise TrackAlreadyInPlaylistError("Music track: " + str(music_track_id) + " is already in current_playlist: " + str(current_playlist.id))
+                raise TrackAlreadyInPlaylistError("Music track: " + str(music_track_id) + " is already in playlist: " + str(playlist.id))
         
-        # If not already in current_playlist, add it.
+        # If not already in playlist, add it.
+        logger.debug("Creating new playlist item with music track " + str(music_track_id) + " for location " + str(location.id))
         new_playlist_item = PlaylistItem()
-        new_playlist_item.playlist = current_playlist
+        new_playlist_item.playlist = playlist
         new_playlist_item.music_track = music_track
         new_playlist_item.votes = 0
+        # TODO: This is weird. Fix.
         new_playlist_item.rank_played = -1
         # Assuming playlist starts from 1 and goes to n. Not 0 to n-1.
         new_playlist_item.current_ranking = len(playlist_items) + 1
