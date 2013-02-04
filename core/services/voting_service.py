@@ -48,6 +48,7 @@ class VotingService:
             raise UnableToAddMusicError("Could not find playlist for location " + str(location.id))
         playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
         
+        # TODO: verify that this is redundant. Remove.
         if playlist == None:
             raise PlaylistNotFoundError("Could not find playlist for location id: " + str(location_id))
         
@@ -81,12 +82,18 @@ class VotingService:
                 location = Location.objects.get(pk=1)
             else:
                 location = Location.objects.get(pk=location_id)
-        except (KeyError, Location.DoesNotExist, Customer.DoesNotExist, MusicTrack.DoesNotExist):
+            playlist = Playlist.objects.get(location_id=location.id)
+            playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
+        except KeyError:
             raise UnableToVoteError("Could not find objects for parameters- device_id: " + str(device_id) + ", location_id: " + str(location_id) + ", music_track_id: " + str(music_track_id))
-        
-        # Fetch playlist and playlist item from location and music_track
-        playlist = Playlist.objects.get(location_id=location.id)
-        playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
+        except Location.DoesNotExist:
+            raise UnableToVoteError("Could not find location for id " + str(location_id))
+        except Customer.DoesNotExist:
+            raise UnableToVoteError("Could not find customer for id " + str(device_id))
+        except MusicTrack.DoesNotExist:
+            raise UnableToVoteError("Could not find music track for id " + str(music_track-id))
+        except Playlist.DoesNotExist:
+            raise UnableToVoteError("Could not find playlist for location " + str(location.id))
         
         # Vote that music track up
         voted = False
@@ -100,6 +107,7 @@ class VotingService:
                     vote.save()
                     playlist_item.votes += 1
                     playlist_item.save()
+                    logger.info("Voted for music track " + str(music_track_id))
                 voted = True
                 break
         
@@ -108,7 +116,6 @@ class VotingService:
             raise UnableToVoteError("Could not find music track id " + str(music_track_id) + " at location " + str(location_id))
         # Sort playlist by votes in descending order.
         sorted_playlist_items = sorted(playlist_items, key=lambda PlaylistItem: PlaylistItem.votes, reverse=True)
-        
         return sorted_playlist_items 
     
     def getVoteHistory(self, device_id):

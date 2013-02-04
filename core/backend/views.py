@@ -73,8 +73,8 @@ def voteUpAndroid(request):
         location_id = request.GET['location_id']
         music_track_id = request.GET['music_track_id']
     except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: Customer id and track id required for adding to playlist.")
-        logger.warning("Invalid request: Customer id and track id required for adding to playlist.")
+        error = utils.internalServerErrorResponse("Invalid request: device id and track id required for adding to playlist.")
+        logger.warning("Invalid request: device id and track id required for adding to playlist.")
         return HttpResponse( simplejson.dumps(error), mimetype='application/json')
     
     logger.info("Incoming request- vote up with parameters device_id " + str(device_id) + ", location_id " + str(location_id) + ", music_track_id " + str(music_track_id))
@@ -96,8 +96,8 @@ def voteUp(request):
         location_id = request.GET['location_id']
         music_track_id = request.GET['music_track_id']
     except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: Customer id and track id required for adding to playlist.")
-        logger.warning("Invalid request: Customer id and track id required for adding to playlist.")
+        error = utils.internalServerErrorResponse("Invalid request: Device id and track id required for adding to playlist.")
+        logger.warning("Invalid request: Device id and track id required for adding to playlist.")
         return HttpResponse( simplejson.dumps(error), mimetype='application/json')
     
     music_track_id = int(music_track_id) + 1
