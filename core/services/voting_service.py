@@ -10,11 +10,14 @@ from backend.models import PlaylistItem
 from backend.models import Customer
 from backend.models import Location
 from backend.models import Vote
+import logging
 from xcptions.Errors import TrackAlreadyInPlaylistError
 from xcptions.Errors import PlaylistNotFoundError
 from xcptions.Errors import InvalidDeviceError
 from xcptions.Errors import UnableToVoteError
 from xcptions.Errors import UnableToAddMusicError
+
+logger = logging.getLogger('core.backend')
 
 class VotingService:
     
@@ -81,13 +84,23 @@ class VotingService:
         playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
         
         # Vote that music track up
+        voted = False
         for playlist_item in playlist_items:
             if playlist_item.music_track.id == music_track.id:
-                playlist_item.votes += 1
-                playlist_item.save()
-                vote = Vote(playlist_item_id=playlist_item.id, customer_id=customer.id)
-                vote.save()
+                try: 
+                    Vote.objects.get(playlist_item_id = playlist_item.id, customer_id = customer.id)
+                    logger.warning("Device " + str(device_id) + " has already voted for music track " + str(music_track_id))
+                except Vote.DoesNotExist:
+                    vote = Vote(playlist_item_id=playlist_item.id, customer_id=customer.id)
+                    vote.save()
+                    playlist_item.votes += 1
+                    playlist_item.save()
+                voted = True
+                break
         
+        if voted == False:
+            logger.error("Could not find music track id " + str(music_track_id) + " at location " + str(location_id))
+            raise UnableToVoteError("Could not find music track id " + str(music_track_id) + " at location " + str(location_id))
         # Sort playlist by votes in descending order.
         sorted_playlist_items = sorted(playlist_items, key=lambda PlaylistItem: PlaylistItem.votes, reverse=True)
         
