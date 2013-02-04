@@ -12,7 +12,7 @@
     <string name="toast_song_added_to_queue">Song added to queue </string>
     <string name="toast_song_already_in_queue">Song already in queue</string>
     <string name="current_playing">Currently Playing </string>
-    <string name="song_list_next">Next</string>
+    <string name="song_list_next">Next Song</string>
     <string name="activity_title_add_song">Add Song</string>
 
 </resources>

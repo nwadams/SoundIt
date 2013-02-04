@@ -7,6 +7,8 @@ import java.util.List;
 
 import ca.soundit.soundit.back.data.Song;
 import android.app.Application;
+import android.graphics.Bitmap;
+import android.support.v4.util.LruCache;
 
 public class SoundITApplication extends Application {
 	
@@ -15,6 +17,9 @@ public class SoundITApplication extends Application {
 	public static SoundITApplication getInstance() {
 			return mInstance;
     }
+	
+	private int cacheSize = 50; // 4 * 1024 * 1024; //4MB
+	private LruCache<String, Bitmap> mBitmapCache;
 	
 	private Song mCurrentPlayingSong;
 	private List<Song> mSongQueue;
@@ -55,5 +60,16 @@ public class SoundITApplication extends Application {
         super.onCreate();
         
         mInstance = this;
+        
+        setBitmapCache(new LruCache<String, Bitmap>(cacheSize));
+
     }
+
+	public LruCache<String, Bitmap> getBitmapCache() {
+		return mBitmapCache;
+	}
+
+	public void setBitmapCache(LruCache<String, Bitmap> mBitmapCache) {
+		this.mBitmapCache = mBitmapCache;
+	}
 }

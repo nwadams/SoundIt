@@ -17,6 +17,9 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 public class HTTPHelper {
 
 	public static String HTTPGetRequest(String url, Hashtable<String,String> params) {
@@ -60,7 +63,43 @@ public class HTTPHelper {
 		return result;
 	}
 	
+public static Bitmap HTTPImageGetRequest(String url, Hashtable<String,String> params) {
+		url = addParametersToURL(url, params);
+		Bitmap result = null;
+		
+		HttpURLConnection urlConnection = null;
+		
+		try {
+			urlConnection = (HttpURLConnection) new URL(url).openConnection();
+			urlConnection.setRequestProperty("content-type", "application/JSON");
+			
+			if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK)
+			{	
+				InputStream in = urlConnection.getInputStream();
+				
+
+	            /** Creating a bitmap from the stream returned from the url */
+	            result = BitmapFactory.decodeStream(in);			
+			}
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (urlConnection != null)
+				urlConnection.disconnect();
+		}
+		
+		return result;
+	}
+	
 	private static String addParametersToURL(String url, Hashtable<String,String> params) {
+		if (params.size() == 0)
+			return url;
+		
 		if(!url.endsWith("?"))
 	        url += "?";
 

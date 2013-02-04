@@ -1,9 +1,12 @@
 package ca.soundit.soundit.adapter;
 
+import java.util.Hashtable;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +14,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ca.soundit.soundit.R;
+import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.data.Song;
+import ca.soundit.soundit.back.http.HTTPHelper;
 
 public class SongLibraryListArrayAdapter extends ArrayAdapter<Song> {
 	
@@ -53,8 +58,31 @@ public class SongLibraryListArrayAdapter extends ArrayAdapter<Song> {
         
         Song song = mSongList.get(position);
         
-        //if (song.getAlbumURL() != null) 
-        //	holder.albumArt.set
+        if (song.getAlbumURL() != null && !song.getAlbumURL().equals("none")) {
+        	if (SoundITApplication.getInstance().getBitmapCache().get(song.getAlbumURL()) != null) {
+        		holder.albumArt.setImageBitmap(SoundITApplication.getInstance().getBitmapCache().get(song.getAlbumURL()));
+        	} else {
+        		holder.albumArt.setImageResource(R.drawable.default_album_300);
+                new AsyncTask<String, Void, Void>() {
+					@Override
+					protected Void doInBackground(String... params) {
+						Hashtable<String,String> paramsTable = new Hashtable<String,String>();
+						Bitmap bitmap = HTTPHelper.HTTPImageGetRequest(params[0], paramsTable);
+						if (bitmap != null)
+							SoundITApplication.getInstance().getBitmapCache().put(params[0], bitmap);
+						return null;
+					}
+					
+					@Override
+					protected void onPostExecute(Void result) {
+						notifyDataSetChanged();
+					}
+                	
+                }.execute(song.getAlbumURL());
+        	}
+        } else {
+        	holder.albumArt.setImageResource(R.drawable.default_album_300);
+        }
         
         holder.songTitle.setText(song.getName());
         holder.artistName.setText(song.getArtist());

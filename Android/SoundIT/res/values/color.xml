@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <color name="yellow">#FFFF33</color>
+        <color name="header_red">#e02020</color>
+        <color name="btn_disabled_red_1">#e06060</color>
+        <color name="btn_disabled_red_2">#e09090</color>
+        <color name="btn_enabled_red_1">#e06060</color>
+        <color name="btn_enabled_red_2">#e02020</color>
+        <color name="btn_pressed_red_1">#ff3030</color>
+        <color name="btn_pressed_red_2">#ff7070</color>
+    </resources>
