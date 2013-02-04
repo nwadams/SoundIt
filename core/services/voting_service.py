@@ -107,7 +107,7 @@ class VotingService:
                     vote.save()
                     playlist_item.votes += 1
                     playlist_item.save()
-                    logger.info("Voted for music track " + str(music_track_id))
+                    logger.debug("Voted for music track " + str(music_track_id))
                 voted = True
                 break
         
