@@ -11,13 +11,18 @@ import random
 class CustomerService:
     
     def login(self, device_id, password):
-        customer = Customer.objects.get(device_id=device_id)
+        try:
+            customer = Customer.objects.get(device_id=device_id)
+        except Customer.DoesNotExist:
+            return False
+        # this might be redundant. Verify.
         if customer is None:
             return False
         hashed_password = hashlib.md5(customer.salt + password).hexdigest()
         return hashed_password == customer.password
 
     def register(self, device_id, password):
+        # TODO: Improve password salting
         salt = str(random.randint(10,99))
         hashed_password = hashlib.md5(salt + password).hexdigest()
         new_customer = Customer(device_id=device_id, password=hashed_password, salt=salt)
