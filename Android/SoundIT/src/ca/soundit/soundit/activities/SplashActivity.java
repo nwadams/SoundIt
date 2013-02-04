@@ -14,8 +14,9 @@ import ca.soundit.soundit.back.http.HTTPHelper;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
+import com.google.analytics.tracking.android.EasyTracker;
 
-public class SplashActivity extends SherlockFragmentActivity {
+public class SplashActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public class SplashActivity extends SherlockFragmentActivity {
 	}
 
 	protected void finishSplashActivity() {
+		EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_APP_FLOW, Constants.GA_APP_FLOW_SIGN_UP, "", null);
 		startActivity(new Intent(SplashActivity.this, SongListActivity.class));
 		finish();
 	}

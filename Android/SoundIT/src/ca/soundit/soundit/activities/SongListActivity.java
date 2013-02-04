@@ -18,8 +18,9 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
+import com.google.analytics.tracking.android.EasyTracker;
 
-public class SongListActivity extends SherlockFragmentActivity {
+public class SongListActivity extends BaseActivity {
 
 	private Timer mRefreshTimer;
 	private boolean mRefreshingPlaylist;
@@ -83,18 +84,25 @@ public class SongListActivity extends SherlockFragmentActivity {
         case android.R.id.home:
         	return true;
         case R.id.menu_settings:
+        	EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_MENU_OPTION, Constants.GA_APP_FLOW_SETTINGS, "", null);
             return true;
         case R.id.menu_refresh:
+        	EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_MENU_OPTION, Constants.GA_APP_FLOW_REFRESH, "", null);
             refreshPlaylist(true);
             return true;
         case R.id.menu_add_song:
+        	EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_MENU_OPTION, Constants.GA_APP_FLOW_ADD_SONG, "", null);
         	startAddSongActivity();
+        case R.id.menu_about:
+        	EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_MENU_OPTION, Constants.GA_APP_FLOW_ABOUT, "", null);
+        	return true;
         default:
             return super.onOptionsItemSelected(item);
         }
     }
 
 	private void startAddSongActivity() {
+		
 		startActivity(new Intent(this, AddSongActivity.class));
 	}
 

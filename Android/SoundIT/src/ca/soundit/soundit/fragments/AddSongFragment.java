@@ -20,6 +20,7 @@ import ca.soundit.soundit.back.asynctask.AddToPlaylistAsyncTask;
 import ca.soundit.soundit.back.data.Song;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class AddSongFragment extends SherlockFragment {
 	
@@ -42,7 +43,9 @@ public class AddSongFragment extends SherlockFragment {
         mListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {			
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_APP_FLOW, Constants.GA_APP_FLOW_ADD_SONG,
+						String.valueOf(mArrayAdapter.getItem(position).getMusicTrackID()), null);
 				addToPlaylist(position);
 			}
         	
@@ -76,6 +79,7 @@ public class AddSongFragment extends SherlockFragment {
 		} else {
 			Toast.makeText(this.getSherlockActivity(), R.string.toast_song_already_in_queue, Toast.LENGTH_SHORT).show();
 		}
+		EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_APP_FLOW, Constants.GA_APP_FLOW_ADD_SONG_COMPLETE, "", null);
 		this.getSherlockActivity().finish();		
 	}
 	
