@@ -125,9 +125,26 @@ def refreshPlaylist(request):
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     logger.info("Incoming request- refresh playlist with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
     # Use location id to fetch current playlist
-    return HttpResponse(serializers.serialize("json", PlaylistItem.objects.all(), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
+    playlist_items = __reorderPlaylistForIOS__(PlaylistItem.objects.all())
+    return HttpResponse(serializers.serialize("json", playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
-
+# hack for iOS. Items must be ordered such that 0th item is currently playing, rest are ordered by votes.
+def __reorderPlaylistForIOS__(playlist_items):
+    
+    reordered_list = []
+    for item in playlist_items:
+        if item.item_state == 1:
+            reordered_list.append(item)
+            break
+    
+    playlist_items = sorted(playlist_items, key=lambda PlaylistItem: PlaylistItem.votes, reverse=True)
+    if len(reordered_list) == 1:
+        for item in playlist_items:
+            if item != reordered_list[0]:
+                reordered_list.append(item)
+    else:
+        reordered_list = playlist_items
+    return reordered_list
 
 def getLibrary(request):
     try:
@@ -164,5 +181,6 @@ def getVoteHistory(request):
     for vote in votes:
         playlist_item_list.append(vote.playlist_item)
     return HttpResponse(serializers.serialize("json", playlist_item_list, relations={'music_track': {'relations': ('album', 'category', 'artist')}}), mimetype='application/json')
+
 
 
