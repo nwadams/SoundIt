@@ -14,7 +14,6 @@ import ca.soundit.soundit.back.asynctask.RefreshPlaylistAsyncTask;
 import ca.soundit.soundit.fragments.CurrentSongFragment;
 import ca.soundit.soundit.fragments.SongListFragment;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;

@@ -3,21 +3,10 @@ package ca.soundit.soundit.adapter;
 import java.util.Hashtable;
 import java.util.List;
 
-import com.google.analytics.tracking.android.EasyTracker;
-
-import ca.soundit.soundit.Constants;
-import ca.soundit.soundit.R;
-import ca.soundit.soundit.SoundITApplication;
-import ca.soundit.soundit.back.asynctask.VoteUpAsyncTask;
-import ca.soundit.soundit.back.data.Song;
-import ca.soundit.soundit.back.http.HTTPHelper;
-import ca.soundit.soundit.fragments.SongListFragment;
-
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -26,7 +15,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.app.Activity;
+import ca.soundit.soundit.Constants;
+import ca.soundit.soundit.R;
+import ca.soundit.soundit.SoundITApplication;
+import ca.soundit.soundit.back.asynctask.VoteUpAsyncTask;
+import ca.soundit.soundit.back.data.Song;
+import ca.soundit.soundit.back.http.HTTPHelper;
+import ca.soundit.soundit.fragments.SongListFragment;
+
+import com.google.analytics.tracking.android.EasyTracker;
 
 public class SongListArrayAdapter extends ArrayAdapter<Song> {
 	
