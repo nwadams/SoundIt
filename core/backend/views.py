@@ -156,9 +156,9 @@ def refreshPlaylistiOS(request):
     # Use location id to fetch current playlist
     voting_service = VotingService()
     playlist_items = voting_service.getPlaylistVotes(device_id, location_id)
-    playlist_items = __reorderPlaylistForIOSvotes__(playlist_items)
+    playlist_items_sorted = __reorderPlaylistForIOSvotes__(playlist_items)
     #playlist_items = __reorderPlaylistForIOS__(PlaylistItem.objects.all())
-    return HttpResponse(serializers.serialize("json", playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
+    return HttpResponse(serializers.serialize("json", playlist_items_sorted, relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
 # hack for iOS. Items must be ordered such that 0th item is currently playing, rest are ordered by votes.
 def __reorderPlaylistForIOS__(playlist_items):
