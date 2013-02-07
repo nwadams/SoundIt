@@ -30,7 +30,8 @@ public class VoteUpAsyncTask extends
 		
 		if (result != null)
 		{
-			return JSONParseHelper.RefreshPlaylist(result, mSongListFragment.getActivity());
+			return Constants.OK;
+			//return JSONParseHelper.RefreshPlaylist(result, mSongListFragment.getActivity());
 		}
 		
 		return null;

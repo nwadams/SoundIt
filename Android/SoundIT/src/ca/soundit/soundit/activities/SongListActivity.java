@@ -117,7 +117,7 @@ public class SongListActivity extends BaseActivity {
 					setSupportProgressBarIndeterminateVisibility(mRefreshingPlaylist);
 					
 			    	new RefreshPlaylistAsyncTask(SongListActivity.this).execute();
-			    	new GetVoteHistoryAsyncTask(SongListActivity.this).execute();
+			    	//new GetVoteHistoryAsyncTask(SongListActivity.this).execute();
 			    }
 			});		
 		}

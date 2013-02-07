@@ -23,7 +23,7 @@ class PlaylistItemVotes(models.Model):
     is_voted = models.BooleanField(default=False)
     
     def __unicode__(self):
-        return "PlaylistItem{" + \
+        return "PlaylistItemVotes{" + \
     "id=" + str(self.pk) + \
     ", playlist='" + str(self.playlist) + '\'' + \
     ", music_track='" + str(self.music_track) + '\'' + \

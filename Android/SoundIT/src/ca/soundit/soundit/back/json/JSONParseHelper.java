@@ -30,6 +30,7 @@ public class JSONParseHelper {
 					JSONObject fields = json.getJSONObject(Constants.JSON_FIELDS);
 					
 					song.setVotes(fields.getInt(Constants.JSON_VOTES));
+					song.setVotedOn(fields.optBoolean(Constants.JSON_IS_VOTED));
 					song.setState(fields.getInt(Constants.JSON_ITEM_STATE));
 					song.setCurrentRanking(fields.getInt(Constants.JSON_CURRENT_RANKING));
 					

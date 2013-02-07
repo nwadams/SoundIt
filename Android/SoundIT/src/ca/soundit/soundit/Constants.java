@@ -7,7 +7,7 @@ public class Constants {
 	public static final int REFRESH_INTERVAL = 60;
 	
 	public static final String URL_ROOT = "http://api.soundit.ca/backend/";
-	public static final String URL_REFRESH_PLAYLIST = "refreshPlaylist/";
+	public static final String URL_REFRESH_PLAYLIST = "refreshPlaylistAndroid/";
 	public static final String URL_SIGNUP = "signUp/";
 	public static final String URL_GET_LIBRARY = "getLibrary/";
 	public static final String URL_ADD_TO_PLAYLIST = "addToPlaylist/";
@@ -24,6 +24,7 @@ public class Constants {
 	public static final String JSON_CURRENT_RANKING = "current_ranking";
 	public static final String JSON_ITEM_STATE = "item_state";
 	public static final String JSON_VOTES = "votes";
+	public static final String JSON_IS_VOTED = "is_voted";
 	public static final String JSON_MUSIC_TRACK = "music_track";
 	public static final String JSON_TRACK_URL = "track_URL";
 	public static final String JSON_TRACK_NAME = "name";

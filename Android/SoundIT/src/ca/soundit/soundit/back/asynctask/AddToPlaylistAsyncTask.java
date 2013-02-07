@@ -30,7 +30,8 @@ public class AddToPlaylistAsyncTask extends
 		
 		if (result != null)
 		{
-			return JSONParseHelper.RefreshPlaylist(result, mAddSongFragment.getActivity());
+			return Constants.OK;
+			//return JSONParseHelper.RefreshPlaylist(result, mSongListFragment.getActivity());
 		}
 		
 		return null;
