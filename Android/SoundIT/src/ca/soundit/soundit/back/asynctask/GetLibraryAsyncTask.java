@@ -46,8 +46,8 @@ public class GetLibraryAsyncTask extends
 
 					JSONObject fields = json.getJSONObject(Constants.JSON_FIELDS);
 					
-					if (Constants.JSON_NONE.equals(fields.getString(Constants.JSON_TRACK_URL)))
-						song.setTrackURL(fields.getString(Constants.JSON_TRACK_URL));
+					if (!Constants.JSON_NONE.equals(fields.getString(Constants.JSON_TRACK_URL)))
+						song.setAlbumURL(fields.getString(Constants.JSON_TRACK_URL));
 					
 					song.setName(fields.getString(Constants.JSON_TRACK_NAME));
 					
@@ -55,7 +55,7 @@ public class GetLibraryAsyncTask extends
 					album = album.getJSONObject(Constants.JSON_FIELDS);
 					song.setAlbum(album.getString(Constants.JSON_ALBUM_NAME));
 					
-					if (Constants.JSON_NONE.equals(album.getString(Constants.JSON_ALBUM_URL)))
+					if (!Constants.JSON_NONE.equals(album.getString(Constants.JSON_ALBUM_URL)))
 						song.setAlbumURL(album.getString(Constants.JSON_ALBUM_URL));
 					
 					JSONObject category = fields.getJSONObject(Constants.JSON_CATEOGORY);

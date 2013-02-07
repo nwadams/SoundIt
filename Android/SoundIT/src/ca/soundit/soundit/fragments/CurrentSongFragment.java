@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.data.Song;
@@ -42,24 +43,28 @@ public class CurrentSongFragment extends SherlockFragment {
 		artistName.setText(currentPlayingSong.getArtist());
 		
 		final ImageView albumArt = (ImageView) v.findViewById(R.id.album_art_image);
-		if (currentPlayingSong.getAlbumURL() != null && !currentPlayingSong.getAlbumURL().equals("none")) {
+		if (currentPlayingSong.getAlbumURL() != null && !currentPlayingSong.getAlbumURL().equals("none") && !currentPlayingSong.getAlbumURL().equals("null")) {
         	if (SoundITApplication.getInstance().getBitmapCache().get(currentPlayingSong.getAlbumURL()) != null) {
         		albumArt.setImageBitmap(SoundITApplication.getInstance().getBitmapCache().get(currentPlayingSong.getAlbumURL()));
         	} else {
         		albumArt.setImageResource(R.drawable.default_album_300);
-                new AsyncTask<String, Void, Void>() {
+                new AsyncTask<String, Void, String>() {
 					@Override
-					protected Void doInBackground(String... params) {
+					protected String doInBackground(String... params) {
 						Hashtable<String,String> paramsTable = new Hashtable<String,String>();
 						Bitmap bitmap = HTTPHelper.HTTPImageGetRequest(params[0], paramsTable);
-						if (bitmap != null)
+						if (bitmap != null) {
 							SoundITApplication.getInstance().getBitmapCache().put(params[0], bitmap);
+							return Constants.OK;
+						}
+							
 						return null;
 					}
 					
 					@Override
-					protected void onPostExecute(Void result) {
-						albumArt.setImageBitmap(SoundITApplication.getInstance().getBitmapCache().get(currentPlayingSong.getAlbumURL()));
+					protected void onPostExecute(String result) {
+						if (Constants.OK.equals(result))
+							albumArt.setImageBitmap(SoundITApplication.getInstance().getBitmapCache().get(currentPlayingSong.getAlbumURL()));
 					}
                 	
                 }.execute(currentPlayingSong.getAlbumURL());

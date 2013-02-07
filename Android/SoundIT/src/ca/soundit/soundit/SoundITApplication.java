@@ -18,7 +18,7 @@ public class SoundITApplication extends Application {
 			return mInstance;
     }
 	
-	private int cacheSize = 50; // 4 * 1024 * 1024; //4MB
+	private int cacheSize = 20; // 4 * 1024 * 1024; //4MB
 	private LruCache<String, Bitmap> mBitmapCache;
 	
 	private Song mCurrentPlayingSong;

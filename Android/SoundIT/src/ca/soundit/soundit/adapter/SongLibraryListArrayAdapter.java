@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.data.Song;
@@ -58,24 +59,27 @@ public class SongLibraryListArrayAdapter extends ArrayAdapter<Song> {
         
         Song song = mSongList.get(position);
         
-        if (song.getAlbumURL() != null && !song.getAlbumURL().equals("none")) {
+        if (song.getAlbumURL() != null && !song.getAlbumURL().equals("none") && !song.getAlbumURL().equals("null")) {
         	if (SoundITApplication.getInstance().getBitmapCache().get(song.getAlbumURL()) != null) {
         		holder.albumArt.setImageBitmap(SoundITApplication.getInstance().getBitmapCache().get(song.getAlbumURL()));
         	} else {
         		holder.albumArt.setImageResource(R.drawable.default_album_300);
-                new AsyncTask<String, Void, Void>() {
+                new AsyncTask<String, Void, String>() {
 					@Override
-					protected Void doInBackground(String... params) {
+					protected String doInBackground(String... params) {
 						Hashtable<String,String> paramsTable = new Hashtable<String,String>();
 						Bitmap bitmap = HTTPHelper.HTTPImageGetRequest(params[0], paramsTable);
-						if (bitmap != null)
+						if (bitmap != null) {
 							SoundITApplication.getInstance().getBitmapCache().put(params[0], bitmap);
+							return Constants.OK;
+						}
 						return null;
 					}
 					
 					@Override
-					protected void onPostExecute(Void result) {
-						notifyDataSetChanged();
+					protected void onPostExecute(String result) {
+						if (Constants.OK.equals(result))
+							notifyDataSetChanged();
 					}
                 	
                 }.execute(song.getAlbumURL());

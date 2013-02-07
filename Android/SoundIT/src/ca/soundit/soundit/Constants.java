@@ -4,7 +4,7 @@ public class Constants {
 	
 	public static final String TAG = "SoundIT";
 
-	public static final int REFRESH_INTERVAL = 60;
+	public static final int REFRESH_INTERVAL = 30;
 	
 	public static final String URL_ROOT = "http://api.soundit.ca/backend/";
 	public static final String URL_REFRESH_PLAYLIST = "refreshPlaylistAndroid/";
