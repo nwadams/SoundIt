@@ -13,7 +13,9 @@
 @interface PlaylistSongCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIButton *upVoteButton;
+@property (strong, nonatomic) IBOutlet UILabel *votesLabel;
 @property (strong, nonatomic) IBOutlet UILabel *songNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *artistNameLabel;
+@property (strong, nonatomic) NSMutableString *music_track_id;
 
 @end

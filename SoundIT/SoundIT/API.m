@@ -11,7 +11,7 @@
 #import "SBJson.h"
 
 //the web location of the service
-#define kAPIHost @"http://ec2-107-22-139-35.compute-1.amazonaws.com:11080"//change to ip or uploading of photos
+#define kAPIHost @"http://api.soundit.ca"//change to ip or uploading of photos
 #define kAPIPath @"backend"
 //#define kAPIHost @"http://localhost"
 //#define kAPIPath @"/~samuelchan/Web/ios_interface/"
@@ -69,12 +69,17 @@
 {
     //build our urlCommandString with Host + Path first
     NSMutableString *urlCommandString = [NSMutableString stringWithFormat:@"%@/%@/%@/?", kAPIHost, kAPIPath, command];
+    NSLog(@"urlCommandString reads:%@", urlCommandString);
+    
+    NSLog(@"params description:%@", [params description]);
     
     for(id key in params){
         [urlCommandString appendString:key];
         [urlCommandString appendString:@"="];
-        [urlCommandString appendString:[params objectForKey:key]];
+        [urlCommandString appendString:[[params objectForKey:key] description]];
         [urlCommandString appendString:@"&"];
+        
+        NSLog(@"urlCommandString reads:%@", urlCommandString);
         
     }
     

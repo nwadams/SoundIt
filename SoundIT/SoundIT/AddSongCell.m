@@ -1,26 +1,23 @@
 //
-//  PlaylistSongCell.m
-//  SoundIT
+//  AddSongCell.m
+//  SoundIT Canada
 //
-//  Created by Samuel Chan on 2013-01-20.
+//  Created by Samuel Chan on 2013-02-07.
 //  Copyright (c) 2013 SoundIT. All rights reserved.
 //
 
-#import "PlaylistSongCell.h"
+#import "AddSongCell.h"
 
-@implementation PlaylistSongCell
+@implementation AddSongCell
 
-@synthesize songNameLabel = _songNameLabel;
-@synthesize artistNameLabel = _artistNameLabel;
-@synthesize votesLabel = _votesLabel;
-@synthesize music_track_id = _music_track_id;
+@synthesize songName = _songName;
+@synthesize artistName = _artistName;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        //do initialization here
-
+        // Initialization code
     }
     return self;
 }
