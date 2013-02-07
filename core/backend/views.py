@@ -143,6 +143,22 @@ def refreshPlaylistAndroid(request):
     #playlist_items = __reorderPlaylistForIOS__(PlaylistItem.objects.all())
     return HttpResponse(serializers.serialize("json", playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
+def refreshPlaylistiOS(request):
+    
+    try: 
+        device_id = request.GET['device_id']
+        location_id = request.GET['location_id'] 
+    except KeyError:
+        error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for refreshing playlist.")
+        logger.warning("Invalid request: Device Id and Location Id required for refreshing playlist.")
+        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+    logger.info("Incoming request- refresh playlist with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
+    # Use location id to fetch current playlist
+    voting_service = VotingService()
+    playlist_items = voting_service.getPlaylistVotes(device_id, location_id)
+    playlist_items = __reorderPlaylistForIOSvotes__(playlist_items)
+    #playlist_items = __reorderPlaylistForIOS__(PlaylistItem.objects.all())
+    return HttpResponse(serializers.serialize("json", playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
 # hack for iOS. Items must be ordered such that 0th item is currently playing, rest are ordered by votes.
 def __reorderPlaylistForIOS__(playlist_items):
@@ -154,6 +170,24 @@ def __reorderPlaylistForIOS__(playlist_items):
             break
     
     playlist_items = sorted(playlist_items, key=lambda PlaylistItem: PlaylistItem.votes, reverse=True)
+    if len(reordered_list) == 1:
+        for item in playlist_items:
+            if item != reordered_list[0]:
+                reordered_list.append(item)
+    else:
+        reordered_list = playlist_items
+    return reordered_list
+
+# hack for iOS. Items must be ordered such that 0th item is currently playing, rest are ordered by votes.
+def __reorderPlaylistForIOSvotes__(playlist_items):
+    
+    reordered_list = []
+    for item in playlist_items:
+        if item.item_state == 1:
+            reordered_list.append(item)
+            break
+    
+    playlist_items = sorted(playlist_items, key=lambda PlaylistItemVotes: PlaylistItemVotes.votes, reverse=True)
     if len(reordered_list) == 1:
         for item in playlist_items:
             if item != reordered_list[0]:
