@@ -135,7 +135,7 @@ class VotingService:
         try:
             playlist = Playlist.objects.get(location_id = location_id)
             customer = Customer.objects.get(device_id = device_id)
-            playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id, item_state__in=[0,1])
+            playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id, item_state__in=[2,1])
             vote_history = Vote.objects.filter(customer_id = customer.id, playlist_item_id__in=playlist_items)
             for item in playlist_items:
                 playlist_item_vote = PlaylistItemVotes()
