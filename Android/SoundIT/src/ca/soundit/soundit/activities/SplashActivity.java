@@ -12,7 +12,6 @@ import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.back.http.HTTPHelper;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Window;
 import com.google.analytics.tracking.android.EasyTracker;
 

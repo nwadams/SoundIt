@@ -43,12 +43,12 @@ public class SoundITApplication extends Application {
 
 			@Override
 			public int compare(Song lhs, Song rhs) {
-				if (lhs.getCurrentRanking() > rhs.getCurrentRanking())
-					return 1;
-				else if (lhs.getCurrentRanking() == rhs.getCurrentRanking())
+				if (lhs.getVotes() > rhs.getVotes())
+					return -1;
+				else if (lhs.getVotes() == rhs.getVotes())
 					return 0;
 				else
-					return -1;
+					return 1;
 			}
 			
 		});

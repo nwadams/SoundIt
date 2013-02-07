@@ -7,6 +7,7 @@ Created on Jan 21, 2013
 from backend.models import MusicTrack
 from backend.models import Playlist
 from backend.models import PlaylistItem
+from backend.data_transfer_models import PlaylistItemVotes
 from backend.models import Customer
 from backend.models import Location
 from backend.models import Vote
@@ -16,6 +17,7 @@ from xcptions.Errors import PlaylistNotFoundError
 from xcptions.Errors import InvalidDeviceError
 from xcptions.Errors import UnableToVoteError
 from xcptions.Errors import UnableToAddMusicError
+from xcptions.Errors import UnableToGetVoteHistoryError
 
 logger = logging.getLogger('core.backend')
 
@@ -127,4 +129,38 @@ class VotingService:
         logger.debug("Found customer for device " + str(device_id) + ", returning votes.")
         return Vote.objects.filter(customer_id = customer.id)
         
-            
+      
+    def getPlaylistVotes(self, device_id, location_id):
+        playlist_votes_list = []
+        try:
+            playlist = Playlist.objects.get(location_id = location_id)
+            customer = Customer.objects.get(device_id = device_id)
+            playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
+            vote_history = Vote.objects.filter(customer_id = customer.id, playlist_item_id__in=playlist_items)
+            for item in playlist_items:
+                playlist_item = PlaylistItemVotes()
+                playlist_item.playlist = playlist
+                playlist_item.music_track = item.music_track
+                playlist_item.votes = item.votes
+                playlist_item.rank_played = item.rank_played
+                playlist_item.current_ranking = item.current_ranking
+                playlist_item.date_created = item.date_created
+                playlist_item.date_modified = item.date_modified
+                playlist_item.is_deleted = item.is_deleted
+                playlist_item.item_state = item.item_state
+                vote = vote_history.filter(playlist_item = item)
+                if not vote:
+                    playlist_item.is_voted = False
+                else:
+                    playlist_item.is_voted = True
+ 
+                playlist_votes_list.append(playlist_item)
+                
+        except (Playlist.DoesNotExist, KeyError):
+            raise UnableToGetVoteHistoryError("Could not find vote history for: " + str(device_id) 
+                                              + " " + str(location_id))
+        logger.debug("Found vote history and playlist items for " + str(device_id) 
+                                              + " " + str(location_id))
+        
+        return playlist_votes_list
+        

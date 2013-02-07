@@ -9,7 +9,6 @@ import ca.soundit.soundit.back.asynctask.GetLibraryAsyncTask;
 import ca.soundit.soundit.back.data.Song;
 import ca.soundit.soundit.fragments.AddSongFragment;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
 import com.google.analytics.tracking.android.EasyTracker;

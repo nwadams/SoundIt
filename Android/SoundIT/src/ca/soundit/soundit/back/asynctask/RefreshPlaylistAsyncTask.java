@@ -1,23 +1,13 @@
 package ca.soundit.soundit.back.asynctask;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import ca.soundit.soundit.Constants;
-import ca.soundit.soundit.R;
-import ca.soundit.soundit.SoundITApplication;
-import ca.soundit.soundit.activities.SongListActivity;
-import ca.soundit.soundit.back.data.Song;
-import ca.soundit.soundit.back.http.HTTPHelper;
-import ca.soundit.soundit.back.json.JSONParseHelper;
 
 import android.os.AsyncTask;
 import android.provider.Settings;
+import ca.soundit.soundit.Constants;
+import ca.soundit.soundit.activities.SongListActivity;
+import ca.soundit.soundit.back.http.HTTPHelper;
+import ca.soundit.soundit.back.json.JSONParseHelper;
 
 public class RefreshPlaylistAsyncTask extends
 		AsyncTask<Void, Void, String> {
