@@ -127,6 +127,23 @@ def refreshPlaylist(request):
     playlist_items = __reorderPlaylistForIOS__(PlaylistItem.objects.all())
     return HttpResponse(serializers.serialize("json", playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
+def refreshPlaylistAndroid(request):
+    
+    try: 
+        device_id = request.GET['device_id']
+        location_id = request.GET['location_id'] 
+    except KeyError:
+        error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for refreshing playlist.")
+        logger.warning("Invalid request: Device Id and Location Id required for refreshing playlist.")
+        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+    logger.info("Incoming request- refresh playlist with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
+    # Use location id to fetch current playlist
+    voting_service = VotingService()
+    playlist_items = voting_service.getPlaylistVotes(device_id, location_id)
+    #playlist_items = __reorderPlaylistForIOS__(PlaylistItem.objects.all())
+    return HttpResponse(serializers.serialize("json", playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
+
+
 # hack for iOS. Items must be ordered such that 0th item is currently playing, rest are ordered by votes.
 def __reorderPlaylistForIOS__(playlist_items):
     
