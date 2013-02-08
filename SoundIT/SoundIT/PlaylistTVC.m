@@ -26,6 +26,8 @@
 @synthesize voteHistory = _voteHistory;
 @synthesize thisDeviceUniqueIdentifier = _thisDeviceUniqueIdentifier;
 @synthesize delegate = _delegate;
+@synthesize loadingIndicatorView = _loadingIndicatorView;
+@synthesize overlayView = _overlayView;
 
 #pragma mark viewDidLoad
 //iOS method
@@ -38,7 +40,19 @@
     imgView.autoresizingMask=UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     imgView.contentMode=UIViewContentModeScaleAspectFit;
     self.navigationItem.titleView = imgView;
-
+    
+    //add indicatorView
+    self.loadingIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.loadingIndicatorView.frame = self.tableView.bounds;
+    self.loadingIndicatorView.hidesWhenStopped = YES;
+    
+    self.overlayView = [[UIView alloc] initWithFrame:self.tableView.bounds];
+    self.overlayView.backgroundColor = [UIColor grayColor];
+    self.overlayView.alpha = 0.25f;
+    self.overlayView.hidden = YES;
+    
+    [self.tableView addSubview:self.overlayView];
+    [self.tableView addSubview:self.loadingIndicatorView];
 }
 
 #pragma mark viewDidAppear
@@ -145,6 +159,9 @@
 //DESCRIPTOIN: method that creates a API call to the web backend to get the current playlist
 //USAGE: just call it
 -(void)refreshPlaylist{
+    self.overlayView.hidden = NO;
+    [self.loadingIndicatorView startAnimating];
+    
     //grab our deviceID
     NSString *thisDeviceUniqueIDentifier = [UIDevice currentDevice].identifierForVendor.UUIDString;
     NSLog(@"thisDeviceUniqueIDentifier reads: %@", thisDeviceUniqueIDentifier);
@@ -169,7 +186,8 @@
                                    self.playlistItems = json;
                                    [self refreshCurrentSong];
                                    [self.tableView reloadData];//for now; since getVoteHistory not implemented yet
-                                   
+                                   [self.loadingIndicatorView stopAnimating];
+                                   self.overlayView.hidden = YES;
                                }
                                
                            }];

@@ -31,11 +31,13 @@
 @property (strong, nonatomic) NSArray *playlistItems;
 @property (strong, nonatomic) NSArray *voteHistory;
 @property (strong, nonatomic) NSString *thisDeviceUniqueIdentifier;
+@property (strong, nonatomic) id <PlaylistTVCDelegate> delegate;
+@property (strong, nonatomic) UIView *overlayView;
+@property (strong, nonatomic) UIActivityIndicatorView *loadingIndicatorView;
 
 - (IBAction)didPressVoteUpButton:(UIButton *)sender;
 - (IBAction)didPressRefreshButton:(UIBarButtonItem *)sender;
 - (IBAction)didPressAddSongButton:(id)sender;
-@property (strong, nonatomic) id <PlaylistTVCDelegate> delegate;
 
 -(void)refreshPlaylist;
 -(void)getVoteHistory;

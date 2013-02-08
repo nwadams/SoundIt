@@ -15,6 +15,8 @@
 @implementation AddSongTVC
 
 @synthesize addSongListItems = _addSongListItems;
+@synthesize loadingIndicator = _loadingIndicator;
+@synthesize overlayView = _overlayView;
 
 - (void)viewDidLoad{
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"soundIT_white_logoName"]];
@@ -74,6 +76,8 @@
 //DESCRIPTION: we construct our addToPlaylist API call here and handle the success and failure appropriately
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.tableView.userInteractionEnabled = NO;
+    
     //grab music_track_id for song
     AddSongCell *selectedSong = (AddSongCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     NSString *music_track_id = selectedSong.music_track_id;
@@ -100,9 +104,12 @@
                                if([[json objectAtIndex:0] objectForKey:@"Error Message"] != nil){
                                    //if fail, show alert view and don't segue
 //                                   [UIAlertView error:(NSString *)[[json objectAtIndex:0] valueForKey:@"Error Message"]];
+                                   self.tableView.userInteractionEnabled = YES;
                                    [UIAlertView error:@"Song is already in playlist!"];
                                    
                                } else {
+                                   self.tableView.userInteractionEnabled = YES;
+                                   
                                    //if success, show alert view and segue back to playlistTVC
                                    UIAlertView *alert = [[UIAlertView alloc] init];
                                    [alert setTitle:@"Song added successfully!"];

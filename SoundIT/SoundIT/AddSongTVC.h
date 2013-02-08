@@ -14,8 +14,11 @@
 @interface AddSongTVC : UITableViewController <UIAlertViewDelegate>
 
 @property NSArray *addSongListItems;
+@property UIActivityIndicatorView *loadingIndicator;
+@property UIView *overlayView;
 
 -(void)refreshAddSongList;
+
 - (IBAction)didPressRefreshAddSongList:(id)sender;
 
 @end
