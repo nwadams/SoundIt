@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class AddSongFragment extends SherlockFragment {
 	
 	private ListView mListView;
 	private SongLibraryListArrayAdapter mArrayAdapter;
+	private ProgressDialog mProgressDialog;
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, 
@@ -58,6 +60,7 @@ public class AddSongFragment extends SherlockFragment {
 		Song song = mArrayAdapter.getItem(position);
 		
 		new AddToPlaylistAsyncTask(this).execute(song.getMusicTrackID());
+		mProgressDialog = ProgressDialog.show(this.getSherlockActivity(), "Please wait", "Adding song");
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -80,6 +83,10 @@ public class AddSongFragment extends SherlockFragment {
 			Toast.makeText(this.getSherlockActivity(), R.string.toast_song_already_in_queue, Toast.LENGTH_SHORT).show();
 		}
 		EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_APP_FLOW, Constants.GA_APP_FLOW_ADD_SONG_COMPLETE, "", null);
+		
+		if (mProgressDialog != null)
+			mProgressDialog.cancel();
+		
 		this.getSherlockActivity().finish();		
 	}
 	

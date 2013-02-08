@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     # ex: /refreshPlaylist?user_id=id&location_id=id
     url(r'^refreshPlaylist/$', views.refreshPlaylist, name='refreshPlaylist'),
     url(r'^refreshPlaylistAndroid/$', views.refreshPlaylistAndroid, name='refreshPlaylistAndroid'),
+    url(r'^refreshPlaylistiOS/$', views.refreshPlaylistiOS, name='refreshPlaylistiOS'),
 
     
     # ex: /getLibrary?device_id=id&location_id=id

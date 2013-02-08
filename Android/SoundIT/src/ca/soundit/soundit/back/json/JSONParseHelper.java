@@ -64,7 +64,7 @@ public class JSONParseHelper {
 					
 					if (song.getState() == Constants.STATE_CURRENT_PLAYING)
 						myApplication.setCurrentPlayingSong(song);
-					else if (song.getState() == Constants.STATE_TO_BE_PLAYED || song.getState() == 0) //debug
+					else if (song.getState() == Constants.STATE_TO_BE_PLAYED)
 						songList.add(song);
 				}
 				
