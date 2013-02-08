@@ -28,7 +28,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *nowPlayingAlbumImageView;
 @property (strong, nonatomic) IBOutlet UIView *gradientBgForNowPlayingInformationLabel;
 
-
 @property (strong, nonatomic) NSArray *playlistItems;
 @property (strong, nonatomic) NSArray *voteHistory;
 @property (strong, nonatomic) NSString *thisDeviceUniqueIdentifier;
@@ -42,7 +41,8 @@
 -(void)getVoteHistory;
 -(void)voteUp:(NSMutableString *)music_track_id;
 -(void)refreshCurrentSong;
--(void)drawGradientForLabel:(UIView *)viewToDrawGradientFor;
+-(void)drawGradientForView:(UIView *)viewToDrawGradientFor;
+-(void)drawGradientForButton:(UIButton *)buttonToDrawGradientFor;
 -(void)displayAlbumArtForURL:(NSURL *)urlOfImageToDisplay;
 
 @end

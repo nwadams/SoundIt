@@ -38,17 +38,6 @@
     imgView.autoresizingMask=UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     imgView.contentMode=UIViewContentModeScaleAspectFit;
     self.navigationItem.titleView = imgView;
-    
-//    [self.navigationController.navigationBar.topItem setTitleView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"soundIT_white_logoName"]]];
-    
-//    CGPoint originx = (CGPoint)self.navigationController.navigationBar.bounds.origin.x;
-//    CGPoint originy = (CGPoint)self.navigationController.navigationBar.bounds.origin.y;
-//    CGPoint widthx  = (CGPoint)self.navigationController.navigationBar.bounds.size.width;
-//    CGPoint heighty = (CGPoint)self.navigationController.navigationBar.bounds.size.height;
-    
-//    CGPoint origin = self.navigationController.navigationBar.bounds.origin;
-//    CGSize size = self.navigationController.navigationBar.bounds.size;
-//    self.navigationItem.titleView.bounds = CGRectMake(origin.x += 10.0f, origin.y -= 10.0f, size.width -= 200.0f, size.height -= 20.0f);
 
 }
 
@@ -57,18 +46,10 @@
 //NOTES:
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:YES];
-    [self drawGradientForLabel:self.gradientBgForNowPlayingInformationLabel];
+    [self drawGradientForView:self.gradientBgForNowPlayingInformationLabel];
     [self refreshPlaylist];
     
 }
-
-#pragma mark tableView: heightForRowAtIndexPath:
-//iOS method
-//NOTES:
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return 60.0f;
-//    
-//}
 
 #pragma mark - Table view data source
 //iOS method
@@ -87,6 +68,7 @@
     //return the number of playlistItems in our playlist
     NSLog(@"self.playlistItems.count holds %i", self.playlistItems.count);
     return self.playlistItems.count - 1;
+    
 }
 
 #pragma mark tableView: cellForRowAtIndexPath:
@@ -102,9 +84,30 @@
         
     }
     
+    //graphics stuff
+    cell.upVoteButton.layer.cornerRadius = 10.0f;
+    cell.upVoteButton.clipsToBounds = YES;
+//    [self drawGradientForButton:cell.upVoteButton];
+    
     NSMutableDictionary *playlistItemFields = [self.playlistItems[indexPath.row + 1] objectForKey:@"fields"];//+1 as the first element is the currently playing song
     //debug
     NSLog(@"playlistItemFields description:%@", [playlistItemFields description]);
+    
+    //disable button if voted already
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    //debug
+    NSLog(@"playlistItemFields valueForKey:is_voted holds:%@", [[playlistItemFields valueForKey:@"is_voted"] description]);
+    if ([[[playlistItemFields valueForKey:@"is_voted"] description] isEqualToString:@"1"]) {
+        cell.upVoteButton.enabled = NO;
+        cell.upVoteButton.backgroundColor = [UIColor grayColor];
+        cell.frontFaderView.alpha = 0.5f;
+        
+    } else {
+        cell.upVoteButton.backgroundColor = [UIColor redColor];
+        cell.upVoteButton.enabled = YES;
+        cell.frontFaderView.alpha = 0.0f;
+        
+    }
     
     //grab music_track_id for later if we end up voting up
     NSMutableDictionary *musicTrack = [playlistItemFields objectForKey:@"music_track"];
@@ -150,10 +153,10 @@
     NSLog(@"Shooting deviceID to Anuj right now of string %@", thisDeviceUniqueIDentifier);
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    thisDeviceUniqueIDentifier, @"device_id",
-                                   @"thepit", @"location_id",
+                                   @"1", @"location_id",
                                    nil];
     
-    [[API sharedInstance] callAPIMethod:@"refreshPlaylist"
+    [[API sharedInstance] callAPIMethod:@"refreshPlaylistiOS"
                              withParams:params
                            onCompletion:^(NSArray *json){
                                NSLog(@"%@", [json description]);
@@ -166,8 +169,6 @@
                                    self.playlistItems = json;
                                    [self refreshCurrentSong];
                                    [self.tableView reloadData];//for now; since getVoteHistory not implemented yet
-                                   
-//                                   [self getVoteHistory];//getVoteHistory will call [self.tableView reloadData]
                                    
                                }
                                
@@ -329,10 +330,10 @@
     
 }
 
-#pragma mark drawGradientForLabel
+#pragma mark drawGradientForView
 //drawGradientForLabel - private mutator
 //DESCRIPTION: helper method for drawing neat gradients left to right for UIViews
--(void)drawGradientForLabel:(UIView *)viewToDrawGradientFor{
+-(void)drawGradientForView:(UIView *)viewToDrawGradientFor{
     CAGradientLayer *bgLayer = [CAGradientLayer layer];
     bgLayer.frame = viewToDrawGradientFor.bounds;
     bgLayer.colors = [NSArray arrayWithObjects:(id)[UIColor redColor].CGColor,
@@ -340,8 +341,8 @@
                       (id)[UIColor yellowColor].CGColor,
                       nil];
     bgLayer.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0f],
-                         [NSNumber numberWithFloat:0.75f],
-                         [NSNumber numberWithFloat:0.95f],
+                         [NSNumber numberWithFloat:0.85f],
+                         [NSNumber numberWithFloat:1.0f],
                          nil];
     
     //left to right gradient draw
@@ -350,6 +351,28 @@
     
     [viewToDrawGradientFor.layer insertSublayer:bgLayer atIndex:0];
 
+}
+
+#pragma mark drawGradientForButton
+//drawGradientForButton:(UIButton *)buttonToDrawGradientFor - private mutator
+//DESCRIPTION: helper method for drawing graidents left to right for UIButtons
+-(void)drawGradientForButton:(UIButton *)buttonToDrawGradientFor{
+    CAGradientLayer *bgLayer = [CAGradientLayer layer];
+    bgLayer.frame = buttonToDrawGradientFor.bounds;
+    bgLayer.colors = [NSArray arrayWithObjects:(id)[UIColor redColor].CGColor,
+                      (id)[UIColor orangeColor].CGColor,
+                      (id)[UIColor yellowColor].CGColor,
+                      nil];
+    bgLayer.locations = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0f],
+                         [NSNumber numberWithFloat:0.90f],
+                         [NSNumber numberWithFloat:1.0f],
+                         nil];
+    
+    //left to right gradient draw
+    bgLayer.startPoint = CGPointMake(0.0, 0.5);
+    bgLayer.endPoint = CGPointMake(1.0, 0.5);
+    
+    [buttonToDrawGradientFor.layer insertSublayer:bgLayer atIndex:1];
 }
 
 #pragma mark displayAlbumArtForCurrentSong

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "API.h"
 #import "UIAlertView+error.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface PlaylistSongCell : UITableViewCell
 
@@ -17,5 +18,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *songNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *artistNameLabel;
 @property (strong, nonatomic) NSMutableString *music_track_id;
+@property (strong, nonatomic) IBOutlet UIView *frontFaderView;
 
 @end

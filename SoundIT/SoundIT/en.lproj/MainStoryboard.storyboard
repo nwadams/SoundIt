@@ -77,14 +77,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="upArrow_less.png" translatesAutoresizingMaskIntoConstraints="NO" id="6dT-Mv-ik5">
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="64" id="BUo-wb-hlN"/>
-                                                <constraint firstAttribute="height" constant="21" id="WiG-HM-dTe"/>
-                                            </constraints>
-                                        </imageView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k78-Yh-ZZy" userLabel="voteUpButton">
                                             <color key="backgroundColor" red="0.99215692281723022" green="0.38823533058166504" blue="0.16078431904315948" alpha="1" colorSpace="deviceRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="64" id="35y-nG-GmN"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                             <state key="normal">
                                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -99,7 +96,7 @@
                                         </button>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7C-v1-YRS" userLabel="votesLabel">
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="24" id="Obn-aH-FpT"/>
+                                                <constraint firstAttribute="height" constant="45" id="gKY-Km-epI"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="deviceRGB"/>
@@ -122,28 +119,33 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
+                                        <view opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Dx-SD-z8r">
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="IFp-Mv-Qic" firstAttribute="top" secondItem="pQ0-8S-5Yb" secondAttribute="top" constant="7" id="1fN-yM-oVw"/>
                                     <constraint firstItem="IFp-Mv-Qic" firstAttribute="trailing" secondItem="AF0-iT-kuD" secondAttribute="trailing" type="default" id="3dm-Ui-lAT"/>
+                                    <constraint firstItem="c7C-v1-YRS" firstAttribute="bottom" secondItem="k78-Yh-ZZy" secondAttribute="bottom" type="default" id="43D-Sw-gfp"/>
                                     <constraint firstItem="IFp-Mv-Qic" firstAttribute="leading" secondItem="pQ0-8S-5Yb" secondAttribute="leading" constant="20" type="default" id="8o6-Mw-xa3"/>
+                                    <constraint firstAttribute="bottom" secondItem="AF0-iT-kuD" secondAttribute="bottom" constant="3" id="Cu0-hF-EVB"/>
                                     <constraint firstItem="AF0-iT-kuD" firstAttribute="leading" secondItem="pQ0-8S-5Yb" secondAttribute="leading" constant="20" type="default" id="Iy4-a8-QMD"/>
-                                    <constraint firstItem="c7C-v1-YRS" firstAttribute="leading" secondItem="k78-Yh-ZZy" secondAttribute="leading" type="default" id="O6y-Bs-y77"/>
-                                    <constraint firstItem="k78-Yh-ZZy" firstAttribute="bottom" secondItem="c7C-v1-YRS" secondAttribute="bottom" type="default" id="Ppc-JP-Fue"/>
-                                    <constraint firstAttribute="bottom" secondItem="AF0-iT-kuD" secondAttribute="bottom" constant="3" id="Te8-OP-ZAE"/>
-                                    <constraint firstItem="c7C-v1-YRS" firstAttribute="leading" secondItem="6dT-Mv-ik5" secondAttribute="leading" type="default" id="UFr-jq-rId"/>
-                                    <constraint firstItem="IFp-Mv-Qic" firstAttribute="top" secondItem="pQ0-8S-5Yb" secondAttribute="top" constant="7" id="cqn-mZ-JDs"/>
-                                    <constraint firstItem="c7C-v1-YRS" firstAttribute="top" secondItem="k78-Yh-ZZy" secondAttribute="top" type="default" id="dNG-On-nSV"/>
+                                    <constraint firstItem="k78-Yh-ZZy" firstAttribute="top" secondItem="IFp-Mv-Qic" secondAttribute="top" type="default" id="M6w-Yl-CLL"/>
+                                    <constraint firstItem="7Dx-SD-z8r" firstAttribute="trailing" secondItem="pQ0-8S-5Yb" secondAttribute="trailing" type="default" id="Rpz-4v-vlO"/>
+                                    <constraint firstItem="c7C-v1-YRS" firstAttribute="top" secondItem="k78-Yh-ZZy" secondAttribute="top" type="default" id="bnr-PA-Srw"/>
                                     <constraint firstAttribute="trailing" secondItem="k78-Yh-ZZy" secondAttribute="trailing" constant="20" type="default" id="esh-iO-yw5"/>
-                                    <constraint firstAttribute="trailing" secondItem="6dT-Mv-ik5" secondAttribute="trailing" constant="20" type="default" id="kpz-3k-ARe"/>
-                                    <constraint firstItem="k78-Yh-ZZy" firstAttribute="top" secondItem="pQ0-8S-5Yb" secondAttribute="top" constant="29" id="mH0-ga-A2e"/>
-                                    <constraint firstItem="IFp-Mv-Qic" firstAttribute="top" secondItem="6dT-Mv-ik5" secondAttribute="top" type="default" id="pDg-cf-A0X"/>
-                                    <constraint firstAttribute="trailing" secondItem="c7C-v1-YRS" secondAttribute="trailing" constant="20" type="default" id="wDE-qu-jUy"/>
+                                    <constraint firstItem="k78-Yh-ZZy" firstAttribute="centerY" secondItem="7Dx-SD-z8r" secondAttribute="centerY" type="default" id="ewb-Q3-nlc"/>
+                                    <constraint firstItem="7Dx-SD-z8r" firstAttribute="top" secondItem="pQ0-8S-5Yb" secondAttribute="top" type="default" id="fgs-7H-30Z"/>
+                                    <constraint firstItem="7Dx-SD-z8r" firstAttribute="leading" secondItem="pQ0-8S-5Yb" secondAttribute="leading" type="default" id="hx5-Oi-7rm"/>
+                                    <constraint firstAttribute="trailing" secondItem="c7C-v1-YRS" secondAttribute="trailing" constant="20" type="default" id="nkI-hU-VEx"/>
+                                    <constraint firstItem="c7C-v1-YRS" firstAttribute="leading" secondItem="k78-Yh-ZZy" secondAttribute="leading" type="default" id="vRt-qb-lVx"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="artistNameLabel" destination="AF0-iT-kuD" id="sy2-Qp-HpV"/>
+                                    <outlet property="frontFaderView" destination="7Dx-SD-z8r" id="r1y-Ui-3lH"/>
                                     <outlet property="songNameLabel" destination="IFp-Mv-Qic" id="7uk-ss-QUK"/>
                                     <outlet property="upVoteButton" destination="k78-Yh-ZZy" id="xIo-bI-5aa"/>
                                     <outlet property="votesLabel" destination="c7C-v1-YRS" id="MsL-Ap-D2U"/>
@@ -322,7 +324,6 @@
     </scenes>
     <resources>
         <image name="testAlbumArt.jpg" width="604" height="604"/>
-        <image name="upArrow_less.png" width="163" height="47"/>
         <image name="updated_logo_2_no_bg_blackText.png" width="891" height="902"/>
     </resources>
     <classes>
