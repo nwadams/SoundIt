@@ -36,7 +36,7 @@
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cl4-vp-Ps9" userLabel="gradientBgView">
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="    Now Playing:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAU-6G-EfR">
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="    Now Playing:                           Votes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAU-6G-EfR">
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -347,6 +347,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlaylistSongCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="artistNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="frontFaderView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="songNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="upVoteButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="votesLabel" candidateClass="UILabel"/>

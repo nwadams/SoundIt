@@ -99,7 +99,7 @@
     NSLog(@"playlistItemFields valueForKey:is_voted holds:%@", [[playlistItemFields valueForKey:@"is_voted"] description]);
     if ([[[playlistItemFields valueForKey:@"is_voted"] description] isEqualToString:@"1"]) {
         cell.upVoteButton.enabled = NO;
-        cell.upVoteButton.backgroundColor = [UIColor grayColor];
+        cell.upVoteButton.backgroundColor = [UIColor colorWithRed:50.0f/255.0f green:205.0f/255.0f blue:50.0f/255.0f alpha:1.0f];
         cell.frontFaderView.alpha = 0.5f;
         
     } else {
