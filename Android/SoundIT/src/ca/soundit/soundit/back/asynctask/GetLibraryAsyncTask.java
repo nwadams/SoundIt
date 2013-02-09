@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import android.os.AsyncTask;
 import android.provider.Settings;
 import ca.soundit.soundit.Constants;
+import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.activities.AddSongActivity;
 import ca.soundit.soundit.back.data.Song;
 import ca.soundit.soundit.back.http.HTTPHelper;
@@ -82,6 +83,7 @@ public class GetLibraryAsyncTask extends
 	@Override
 	protected void onPostExecute(List<Song> result)
     {
+		SoundITApplication.getInstance().setSongLibrary(result);
 		mAddSongActivity.notifiyRefresh(result);
     }
 
