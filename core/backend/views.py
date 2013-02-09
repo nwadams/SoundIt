@@ -198,7 +198,7 @@ def __reorderPlaylistForIOSvotes__(playlist_items):
     return reordered_list
 
 def getLibrary(request):
-    error = utils.internalServerErrorResponse(0)
+    error = utils.internalServerErrorResponse("Error, disabled")
     return HttpResponse(simplejson.dumps(error), mimetype='application/json')
 #    try:
 #        device_id = request.GET['device_id']
