@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.utils import simplejson
 import utils
 from services.customer_service import CustomerService
+from services.venue_service import VenueService
 from services.voting_service import VotingService
 from django.core import serializers
 from models import PlaylistItem
@@ -231,3 +232,9 @@ def getVoteHistory(request):
     for vote in votes:
         playlist_item_list.append(vote.playlist_item)
     return HttpResponse(serializers.serialize("json", playlist_item_list, relations={'music_track': {'relations': ('album', 'category', 'artist')}}), mimetype='application/json')
+
+
+def venueGetNextSong(request):
+    venue_service = VenueService()
+    result =  venue_service.updateCurrentPlaying()
+    return HttpResponse(result.music_track.name)
