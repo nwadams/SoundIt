@@ -198,15 +198,17 @@ def __reorderPlaylistForIOSvotes__(playlist_items):
     return reordered_list
 
 def getLibrary(request):
-    try:
-        device_id = request.GET['device_id']
-        location_id = request.GET['location_id']
-    except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for requesting library.")
-        logger.warning("Invalid request: Device Id and Location Id required for requesting library.")
-        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
-    return HttpResponse(serializers.serialize("json", MusicTrack.objects.all(), relations={'album', 'category', 'artist'}), mimetype='application/json')
+    error = utils.internalServerErrorResponse(0)
+    return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+#    try:
+#        device_id = request.GET['device_id']
+#        location_id = request.GET['location_id']
+#    except KeyError:
+#        error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for requesting library.")
+#        logger.warning("Invalid request: Device Id and Location Id required for requesting library.")
+#        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+#    logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
+#    return HttpResponse(serializers.serialize("json", MusicTrack.objects.all(), relations={'album', 'category', 'artist'}), mimetype='application/json')
 
 
 
