@@ -47,7 +47,7 @@ public class SoundITApplication extends Application {
 				if (lhs.getVotes() > rhs.getVotes())
 					return -1;
 				else if (lhs.getVotes() == rhs.getVotes())
-					return 0;
+					return lhs.getName().compareTo(rhs.getName());
 				else
 					return 1;
 			}
