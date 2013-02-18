@@ -15,7 +15,7 @@
 @implementation AddSongTVC
 
 @synthesize addSongListItems = _addSongListItems;
-@synthesize loadingIndicator = _loadingIndicator;
+@synthesize loadingIndicatorView = _loadingIndicator;
 @synthesize overlayView = _overlayView;
 
 - (void)viewDidLoad{
@@ -24,6 +24,20 @@
     imgView.contentMode=UIViewContentModeScaleAspectFit;
     self.navigationItem.titleView = imgView;
 //    self.navigationItem.backBarButtonItem.tintColor = [UIColor grayColor];
+    
+    //add indicatorView
+    self.loadingIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.loadingIndicatorView.frame = self.tableView.bounds;
+    self.loadingIndicatorView.hidesWhenStopped = YES;
+    
+    //add overlay
+    self.overlayView = [[UIView alloc] initWithFrame:self.tableView.bounds];
+    self.overlayView.backgroundColor = [UIColor grayColor];
+    self.overlayView.alpha = 0.25f;
+    self.overlayView.hidden = YES;
+    
+    [self.tableView addSubview:self.overlayView];
+    [self.tableView addSubview:self.loadingIndicatorView];
     
 }
 
@@ -128,6 +142,9 @@
 //DESCRIPTION: fetches a JSON containinga all the possible songs a user can add to the playlist (will return songs arleady in the playlist, we handle duplicates later)
 //USAGE: call it when you want to do a COMPLETE fetch of all song JSOn data from the backend
 - (void)refreshAddSongList{
+    self.overlayView.hidden = NO;
+    [self.loadingIndicatorView startAnimating];
+    
     NSString *thisDeviceUniqueIDentifier = [UIDevice currentDevice].identifierForVendor.UUIDString;
     NSLog(@"thisDeviceUniqueIDentifier reads: %@", thisDeviceUniqueIDentifier);
     
@@ -151,6 +168,8 @@
                                    NSLog(@"addSongListItems holds:%@", [self.addSongListItems description]);
                                    [self.tableView reloadData];
                                    
+                                   [self.loadingIndicatorView stopAnimating];
+                                   self.overlayView.hidden = YES;
                                }
                                
                            }];

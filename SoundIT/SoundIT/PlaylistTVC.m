@@ -46,6 +46,7 @@
     self.loadingIndicatorView.frame = self.tableView.bounds;
     self.loadingIndicatorView.hidesWhenStopped = YES;
     
+    //add overlay
     self.overlayView = [[UIView alloc] initWithFrame:self.tableView.bounds];
     self.overlayView.backgroundColor = [UIColor grayColor];
     self.overlayView.alpha = 0.25f;
