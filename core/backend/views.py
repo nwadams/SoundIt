@@ -5,6 +5,7 @@ from services.customer_service import CustomerService
 from services.venue_service import VenueService
 from services.voting_service import VotingService
 from django.core import serializers
+from django.db.models import Q
 from models import PlaylistItem
 from models import MusicTrack
 import logging
@@ -209,7 +210,7 @@ def getLibrary(request):
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
     library = MusicTrack.objects.all()
-    upcoming_playlist = PlaylistItem.objects.filter(item_state = 2)
+    upcoming_playlist = PlaylistItem.objects.filter(Q(item_state = 2) | Q(item_state=1))
     current_playlist = remove_items_in_playlist(library, upcoming_playlist)
             
     return HttpResponse(serializers.serialize("json", current_playlist, relations={'album', 'category', 'artist'}), mimetype='application/json')
