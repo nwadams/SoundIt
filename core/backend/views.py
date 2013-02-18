@@ -218,10 +218,9 @@ def getLibrary(request):
 def remove_items_in_playlist(library, upcoming_playlist):
     
     new_playlist = []
-    for playlist_item in upcoming_playlist:
-        for library_item in library:
-            if library_item != playlist_item and library_item not in new_playlist:
-                new_playlist.append(library_item)
+    for library_item in library:
+        if library_item not in upcoming_playlist and library_item not in new_playlist:
+            new_playlist.append(library_item)
     return new_playlist
                 
 def getVoteHistory(request):
