@@ -15,6 +15,8 @@
 @implementation AddSongTVC
 
 @synthesize addSongListItems = _addSongListItems;
+@synthesize loadingIndicatorView = _loadingIndicator;
+@synthesize overlayView = _overlayView;
 
 - (void)viewDidLoad{
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"soundIT_white_logoName"]];
@@ -22,6 +24,20 @@
     imgView.contentMode=UIViewContentModeScaleAspectFit;
     self.navigationItem.titleView = imgView;
 //    self.navigationItem.backBarButtonItem.tintColor = [UIColor grayColor];
+    
+    //add indicatorView
+    self.loadingIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.loadingIndicatorView.frame = self.tableView.bounds;
+    self.loadingIndicatorView.hidesWhenStopped = YES;
+    
+    //add overlay
+    self.overlayView = [[UIView alloc] initWithFrame:self.tableView.bounds];
+    self.overlayView.backgroundColor = [UIColor grayColor];
+    self.overlayView.alpha = 0.25f;
+    self.overlayView.hidden = YES;
+    
+    [self.tableView addSubview:self.overlayView];
+    [self.tableView addSubview:self.loadingIndicatorView];
     
 }
 
@@ -74,6 +90,8 @@
 //DESCRIPTION: we construct our addToPlaylist API call here and handle the success and failure appropriately
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.tableView.userInteractionEnabled = NO;
+    
     //grab music_track_id for song
     AddSongCell *selectedSong = (AddSongCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     NSString *music_track_id = selectedSong.music_track_id;
@@ -100,9 +118,12 @@
                                if([[json objectAtIndex:0] objectForKey:@"Error Message"] != nil){
                                    //if fail, show alert view and don't segue
 //                                   [UIAlertView error:(NSString *)[[json objectAtIndex:0] valueForKey:@"Error Message"]];
+                                   self.tableView.userInteractionEnabled = YES;
                                    [UIAlertView error:@"Song is already in playlist!"];
                                    
                                } else {
+                                   self.tableView.userInteractionEnabled = YES;
+                                   
                                    //if success, show alert view and segue back to playlistTVC
                                    UIAlertView *alert = [[UIAlertView alloc] init];
                                    [alert setTitle:@"Song added successfully!"];
@@ -121,6 +142,9 @@
 //DESCRIPTION: fetches a JSON containinga all the possible songs a user can add to the playlist (will return songs arleady in the playlist, we handle duplicates later)
 //USAGE: call it when you want to do a COMPLETE fetch of all song JSOn data from the backend
 - (void)refreshAddSongList{
+    self.overlayView.hidden = NO;
+    [self.loadingIndicatorView startAnimating];
+    
     NSString *thisDeviceUniqueIDentifier = [UIDevice currentDevice].identifierForVendor.UUIDString;
     NSLog(@"thisDeviceUniqueIDentifier reads: %@", thisDeviceUniqueIDentifier);
     
@@ -144,6 +168,8 @@
                                    NSLog(@"addSongListItems holds:%@", [self.addSongListItems description]);
                                    [self.tableView reloadData];
                                    
+                                   [self.loadingIndicatorView stopAnimating];
+                                   self.overlayView.hidden = YES;
                                }
                                
                            }];
