@@ -23,6 +23,7 @@ public class SoundITApplication extends Application {
 	
 	private Song mCurrentPlayingSong;
 	private List<Song> mSongQueue;
+	private List<Song> mSongLibrary;
 
 	public Song getCurrentPlayingSong() {
 		return mCurrentPlayingSong;
@@ -46,7 +47,7 @@ public class SoundITApplication extends Application {
 				if (lhs.getVotes() > rhs.getVotes())
 					return -1;
 				else if (lhs.getVotes() == rhs.getVotes())
-					return 0;
+					return lhs.getName().compareTo(rhs.getName());
 				else
 					return 1;
 			}
@@ -71,5 +72,13 @@ public class SoundITApplication extends Application {
 
 	public void setBitmapCache(LruCache<String, Bitmap> mBitmapCache) {
 		this.mBitmapCache = mBitmapCache;
+	}
+
+	public List<Song> getSongLibrary() {
+		return mSongLibrary;
+	}
+
+	public void setSongLibrary(List<Song> mSongLibrary) {
+		this.mSongLibrary = mSongLibrary;
 	}
 }

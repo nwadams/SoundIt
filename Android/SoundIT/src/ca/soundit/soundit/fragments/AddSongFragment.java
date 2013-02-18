@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
+import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.adapter.SongLibraryListArrayAdapter;
 import ca.soundit.soundit.back.asynctask.AddToPlaylistAsyncTask;
 import ca.soundit.soundit.back.data.Song;
@@ -55,6 +56,14 @@ public class AddSongFragment extends SherlockFragment {
         
         return view;
     }
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		if (SoundITApplication.getInstance().getSongLibrary() != null)
+			updateList(SoundITApplication.getInstance().getSongLibrary());
+	}
 
 	protected void addToPlaylist(int position) {
 		Song song = mArrayAdapter.getItem(position);

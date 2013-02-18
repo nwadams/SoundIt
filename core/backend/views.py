@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.utils import simplejson
 import utils
 from services.customer_service import CustomerService
+from services.venue_service import VenueService
 from services.voting_service import VotingService
 from django.core import serializers
 from models import PlaylistItem
@@ -197,15 +198,17 @@ def __reorderPlaylistForIOSvotes__(playlist_items):
     return reordered_list
 
 def getLibrary(request):
-    try:
-        device_id = request.GET['device_id']
-        location_id = request.GET['location_id']
-    except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for requesting library.")
-        logger.warning("Invalid request: Device Id and Location Id required for requesting library.")
-        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
-    return HttpResponse(serializers.serialize("json", MusicTrack.objects.all(), relations={'album', 'category', 'artist'}), mimetype='application/json')
+    error = utils.internalServerErrorResponse("Error, disabled")
+    return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+#    try:
+#        device_id = request.GET['device_id']
+#        location_id = request.GET['location_id']
+#    except KeyError:
+#        error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for requesting library.")
+#        logger.warning("Invalid request: Device Id and Location Id required for requesting library.")
+#        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+#    logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
+#    return HttpResponse(serializers.serialize("json", MusicTrack.objects.all(), relations={'album', 'category', 'artist'}), mimetype='application/json')
 
 
 
@@ -231,3 +234,9 @@ def getVoteHistory(request):
     for vote in votes:
         playlist_item_list.append(vote.playlist_item)
     return HttpResponse(serializers.serialize("json", playlist_item_list, relations={'music_track': {'relations': ('album', 'category', 'artist')}}), mimetype='application/json')
+
+
+def venueGetNextSong(request):
+    venue_service = VenueService()
+    result =  venue_service.updateCurrentPlaying()
+    return HttpResponse(result.music_track.name)
