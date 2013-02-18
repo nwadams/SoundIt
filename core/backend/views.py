@@ -209,7 +209,7 @@ def getLibrary(request):
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
     library = MusicTrack.objects.all()
-    upcoming_playlist = PlaylistItem.objects.filter(item_state = 0)
+    upcoming_playlist = PlaylistItem.objects.filter(item_state = 2)
     current_playlist = remove_items_in_playlist(library, upcoming_playlist)
             
     return HttpResponse(serializers.serialize("json", current_playlist, relations={'album', 'category', 'artist'}), mimetype='application/json')
