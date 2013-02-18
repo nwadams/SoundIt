@@ -218,8 +218,11 @@ def getLibrary(request):
 def remove_items_in_playlist(library, upcoming_playlist):
     
     new_playlist = []
+    playlist_tracks = []
+    for item in upcoming_playlist:
+        playlist_tracks.append(item.music_track)
     for library_item in library:
-        if library_item not in upcoming_playlist and library_item not in new_playlist:
+        if library_item not in playlist_tracks and library_item not in new_playlist:
             new_playlist.append(library_item)
     return new_playlist
                 
