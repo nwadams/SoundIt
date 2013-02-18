@@ -208,10 +208,22 @@ def getLibrary(request):
         logger.warning("Invalid request: Device Id and Location Id required for requesting library.")
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
-    return HttpResponse(serializers.serialize("json", MusicTrack.objects.all(), relations={'album', 'category', 'artist'}), mimetype='application/json')
+    library = MusicTrack.objects.all()
+    current_playlist = PlaylistItem.objects.filter(item_state = 2)
+    current_playlist = remove_items_in_playlist(library, current_playlist)
+            
+    return HttpResponse(serializers.serialize("json", current_playlist, relations={'album', 'category', 'artist'}), mimetype='application/json')
 
 
-
+def remove_items_in_playlist(library, current_playlist):
+    
+    new_playlist = []
+    for playlist_item in current_playlist:
+        for library_item in library:
+            if library_item != playlist_item:
+                new_playlist.append(library_item)
+    return new_playlist
+                
 def getVoteHistory(request):
     
     try: 
