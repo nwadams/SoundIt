@@ -5,6 +5,7 @@ from services.customer_service import CustomerService
 from services.venue_service import VenueService
 from services.voting_service import VotingService
 from django.core import serializers
+from django.db.models import Q
 from models import PlaylistItem
 from models import MusicTrack
 import logging
@@ -209,19 +210,21 @@ def getLibrary(request):
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
     library = MusicTrack.objects.all()
-    current_playlist = PlaylistItem.objects.filter(item_state = 0)
-    current_playlist = remove_items_in_playlist(library, current_playlist)
+    upcoming_playlist = PlaylistItem.objects.filter(Q(item_state = 2) | Q(item_state=1))
+    current_playlist = remove_items_in_playlist(library, upcoming_playlist)
             
     return HttpResponse(serializers.serialize("json", current_playlist, relations={'album', 'category', 'artist'}), mimetype='application/json')
 
 
-def remove_items_in_playlist(library, current_playlist):
+def remove_items_in_playlist(library, upcoming_playlist):
     
     new_playlist = []
-    for playlist_item in current_playlist:
-        for library_item in library:
-            if library_item != playlist_item:
-                new_playlist.append(library_item)
+    playlist_tracks = []
+    for item in upcoming_playlist:
+        playlist_tracks.append(item.music_track)
+    for library_item in library:
+        if library_item not in playlist_tracks and library_item not in new_playlist:
+            new_playlist.append(library_item)
     return new_playlist
                 
 def getVoteHistory(request):
