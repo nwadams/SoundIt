@@ -1,1 +1,8 @@
 *.pyc
+
+# Mac crap
+.DS_Store
+
+
+# Logfiles 
+logfile*
