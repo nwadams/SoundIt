@@ -36,9 +36,13 @@ class Customer(models.Model):
         return result
 
 class Consumer(models.Model):
-    customer = models.ForeignKey(Customer)
     facebook_id = models.IntegerField(null=True)
-    device_id = models.IntegerField()
+    google_id = models.IntegerField(null=True)
+    email_address = models.CharField(max_length=255, null=True)
+    name = models.CharField(max_length=255, null=True)
+    device_id = models.CharField(max_length=255, null=True)
+    password = models.CharField(max_length=255)
+    salt = models.CharField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
@@ -46,7 +50,6 @@ class Consumer(models.Model):
     def __unicode__(self):
         return "Consumer{" + \
     "id=" + str(self.pk) + \
-    ", customer='" + self.customer + '\'' + \
     ", facebook_id='" + self.facebook_id + "\'" + \
     ", device_id=" + self.device_id + "\'" + \
     ", date_created=" + str(self.date_created) + \
@@ -57,7 +60,6 @@ class Consumer(models.Model):
     def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
-        result.append({"customer": self.customer})
         result.append({"facebook_id": self.facebook_id})
         result.append({"device_id": self.device_id})
         result.append({"date_created": str(self.date_created)})
