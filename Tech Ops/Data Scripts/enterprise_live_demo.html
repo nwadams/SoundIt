@@ -3,20 +3,60 @@
 		<title>
 			SoundIT Live Demo
 		</title>
+		 <script type="text/javascript" src="jquery.js"></script>
+		 <style>
+ 	 	 body 
+		 {
+			background-color:#000000;
+		 }
+		 </style>
 	</head>
 	<body>
-		Anuj was here.
+		<center>
+		<img src="soundit_logo_small.png" style="padding-top: 200px">
 		<br>
-		
-		<audio controls height="100" width="100">
-		  	<source src="horse.mp3" type="audio/mpeg">
+		<audio id="player" controls height="100" width="100">
+		  	<source src="donomar.m4a" type="audio/mpeg">
 		  	<source src="horse.ogg" type="audio/ogg">
-		  	<embed height="50" width="100" src="/Users/anuj/Documents/workspace/SoundIt/Billie_Jean.m4a">
+		  	<embed height="50" width="100" src="donomar.m4a">
 		</audio>
-
-
+		<br />
+		<div id="currently_playing" style="color: #FF6633; padding-top:20px">
+			Currently Playing: 
+			<span id="track_name">Danza Kuduro</span>
+		</div>
+		</center>
+		<script>
+		var audio = document.getElementById("player");
+		audio.addEventListener("ended", function() {
+    		$.get("http://api.soundit.ca/backend/venue/getNextSong/", function(data) {
+       					if (data.toLowerCase() == "beautiful day") {
+       						audio.src = "u2.m4a"
+       						$("#track_name").html(data)
+       					} else if (data.toLowerCase() == "danza kuduro") {
+       						audio.src = "donomar.m4a"
+       					} else if (data.toLowerCase() == "we found love"){
+       						audio.src = "rihanna.m4a"
+       					} else if (data.toLowerCase() == "gangnam style") {
+       						audio.src = "psy.m4a"
+       					} else if (data.toLowerCase() == "party in the usa") {
+       						audio.src = "miley-cyrus.m4a"
+       					} else if (data.toLowerCase() == "moves like jagger") {
+       						audio.src = "maroon5.m4a"
+       					} else if (data.toLowerCase() == "hotel california") {
+       						audio.src = "eagles.m4a"
+       					} else if (data.toLowerCase() == "livin on a prayer") {
+       						audio.src = "bonjovi.m4a"
+       					} else if (data.toLowerCase() == "billie jean") {
+       						audio.src = "billie-jean.m4a"
+       					} else if (data.toLowerCase() == "skyfall") {
+       						audio.src = "adele.m4a"
+       					}  
+       					if (data != false) {
+       						audio.play();
+       					} 
+    				});
+		});
+		</script>
 	</body>
 </html>
-Anuj was here
-
-
