@@ -1,0 +1,2 @@
+UPDATE backend_playlistitem SET item_state=0 WHERE item_state=1;
+select id, votes from backend_playlistitem where votes=(select max(votes) from backend_playlistitem);

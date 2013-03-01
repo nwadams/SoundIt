@@ -1,0 +1,18 @@
+import csv
+
+
+album_list = set()
+album_list_upper = set()
+
+
+with open('thepit.csv', 'rb') as csvfile:
+	csvreader = csv.reader(csvfile, delimiter=',')
+	for row in csvreader:
+		album_list.add(row[2].lower())
+		album_list_upper.add(row[2])
+
+for album in album_list_upper:
+	print "INSERT INTO backend_album (name, date_created, date_modified, is_deleted) VALUES (\"" + album + "\", now(), now(), 0);"
+
+
+
