@@ -78,7 +78,7 @@ def register(request):
     return HttpResponse(200)
 
 def getLocations(request):     
-    return HttpResponse(HttpResponse(serializers.serialize("json", Location.objects.all(), fields=('pk', 'customer', 'name', 'location', 'phone_number')), mimetype='application/json'))
+    return HttpResponse(HttpResponse(serializers.serialize("json", Location.objects.all(), fields=('customer', 'name', 'location', 'phone_number')), mimetype='application/json'))
 
 def addToPlaylist(request):
     
