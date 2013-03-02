@@ -25,7 +25,7 @@ class ConsumerService:
         hashed_password = hashlib.md5(customer.salt + password).hexdigest()
         return hashed_password == customer.password
 
-    def register(self, device_id, password, email_address):
+    def register(self, device_id, password, email_address, name):
         consumer = self.checkIfCurrentUser(device_id)
         
         if consumer is None: 
@@ -37,6 +37,7 @@ class ConsumerService:
         salt = str(random.randint(10,99))
         hashed_password = hashlib.md5(salt + password).hexdigest()
         
+        consumer.name = name
         consumer.api_token = api_token
         consumer.email_address = email_address
         consumer.salt = salt

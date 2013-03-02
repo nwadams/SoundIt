@@ -38,7 +38,8 @@ def signUp(request):
     if not auth_token:
         password = params.get('password', '')
         email_address = params.get('email', '')
-        consumer = consumer_service.register(device_id, password, email_address)
+        name = params.get('name', '')
+        consumer = consumer_service.register(device_id, password, email_address, name)
     else:
         token_type = params.get('token_type', None)
         if not token_type:
@@ -51,7 +52,7 @@ def signUp(request):
     consumer_list = []
     consumer_list.append(consumer)
     
-    return HttpResponse(serializers.serialize("json", consumer_list, fields=('id','device_id','api_token','email_address')), mimetype='application/json')
+    return HttpResponse(serializers.serialize("json", consumer_list, fields=('id','device_id','api_token','email_address', 'name')), mimetype='application/json')
 
 
 
