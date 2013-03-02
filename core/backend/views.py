@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.utils import simplejson
 import utils
-from services.customer_service import CustomerService
+from services.consumer_service import ConsumerService
 from services.venue_service import VenueService
 from services.voting_service import VotingService
 from django.core import serializers
@@ -17,30 +17,41 @@ from xcptions.Errors import UnableToAddMusicError
 logger = logging.getLogger('core.backend')
 
 def signUp(request):
+    consumer = None
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
     
-    try: 
-        device_id = request.GET['device_id']
-        password = request.GET['password'] 
-    except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: Device Id and password required for sign up.")
-        logger.warning("Invalid request: Device Id and password required for sign up.")
+    consumer_service = ConsumerService()
+    
+    device_id = params.get('device_id', None)
+    if not device_id:
+        error = utils.internalServerErrorResponse("Invalid request: Device Id required for sign up.")
+        logger.warning("Invalid request: Device Id required for sign up.")
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    logger.info("Incoming request- sign up with credentials: " + str(device_id) + "/ " + password)
-    
-    # Check if customer is already signed up
-    customer_service = CustomerService()
-    is_current_customer = customer_service.checkIfCurrentCustomer(device_id)
-    if is_current_customer:
-        is_logged_in = customer_service.login(device_id, password)
-        if is_logged_in:
-            logger.info("Customer logged in, returning playlist to device " + str(device_id))
-        else:
-            # TODO: this should return false. but returning playlist right now since iOS will not be able to handle it. Will deal with dupes later.
-            logger.info("Customer login failed, returning playlist to device " + str(device_id))
+   
+    logger.info("Incoming request- sign up with credentials: " + str(device_id))
+
+    auth_token = params.get('auth_token', None)
+    if not auth_token:
+        password = params.get('password', '')
+        email_address = params.get('email', '')
+        consumer = consumer_service.register(device_id, password, email_address)
     else:
-        logger.info("Setting up new customer, returning playlist to device " + str(device_id))
-        customer_service.register(device_id, password)
-    return HttpResponse(serializers.serialize("json", PlaylistItem.objects.all(), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
+        token_type = params.get('token_type', None)
+        if not token_type:
+            error = utils.internalServerErrorResponse("Invalid token type")
+            logger.error("Invalid token type")
+            return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+        
+        consumer_service.register_with_token(device_id, auth_token, token_type) 
+    
+    consumer_list = []
+    consumer_list.append(consumer)
+    
+    return HttpResponse(serializers.serialize("json", consumer_list, fields=('id','device_id','api_token','email_address')), mimetype='application/json')
 
 
 

@@ -3,7 +3,8 @@ from django.utils import simplejson
 
 class Consumer(models.Model):
     email_address = models.CharField(max_length=255, null=True)
-    device_id = models.CharField(max_length=255, null=True)
+    name = models.CharField(max_length=255, null=True)
+    device_id = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
     salt = models.CharField(max_length=255)
     api_token = models.CharField(max_length=255)
@@ -16,13 +17,14 @@ class Consumer(models.Model):
     def __unicode__(self):
         return "Consumer{" + \
     "id=" + str(self.pk) + \
-    ", email_address='" + str(self.email_address) + '\'' + \
+    ", email_address='" + self.email_address + '\'' + \
+    ", name='" + str(self.name) + "\'" + \
     ", device_id='" + str(self.device_id) + '\'' + \
     ", password='" + self.password + "\'" + \
-    ", salt=" + str(self.salt) + "\'" + \
+    ", salt=" + self.salt + "\'" + \
     ", api_token=" + self.api_token + "\'" + \
-    ", facebook_id='" + self.facebook_id + "\'" + \
-    ", google_id='" + self.google_id + "\'" + \
+    ", facebook_id='" + str(self.facebook_id) + "\'" + \
+    ", google_id='" + str(self.google_id) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \

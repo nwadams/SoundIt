@@ -5,7 +5,6 @@ Created on Feb 2, 2013
 '''
 
 from django.contrib import admin
-from backend.models import Customer
 from backend.models import Consumer
 from backend.models import Location
 from backend.models import Artist
@@ -17,7 +16,6 @@ from backend.models import PlaylistItem
 from backend.models import Vote
  
 
-admin.site.register(Customer)
 admin.site.register(Consumer)
 admin.site.register(Location)
 admin.site.register(Artist)
