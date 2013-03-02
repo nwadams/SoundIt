@@ -1,16 +1,12 @@
 from django.http import HttpResponse
-from django.http import HttpRequest
 from django.utils import simplejson
-from django.http import QueryDict
 import utils
 from services.customer_service import CustomerService
-from services.consumer_service import ConsumerService
 from services.venue_service import VenueService
 from services.voting_service import VotingService
 from django.core import serializers
 from django.db.models import Q
 from models import PlaylistItem
-from models import Location
 from models import MusicTrack
 import logging
 from xcptions.Errors import InvalidDeviceError
@@ -47,38 +43,6 @@ def signUp(request):
     return HttpResponse(serializers.serialize("json", PlaylistItem.objects.all(), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
 
-def register(request):
-    params = None
-    if (request.method == 'GET'):
-        params = request.GET
-    elif request.method == 'POST':
-        params = request.POST
-    else:
-        return HttpResponse(200)   
-    
-    consumer_service = ConsumerService()
-    
-    device_id = params.get('device_id', '')
-    
-    auth_token = params.get('token', None)
-    if not auth_token:
-        password = params.get('password', '')
-        consumer_service.register(device_id, password)
-    else:
-        token_type = params.get('token_type', None)
-        if not token_type:
-            error = utils.internalServerErrorResponse("Invalid token type")
-            logger.error("Invalid token type")
-            return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-        
-        consumer_service.register_with_token(device_id, auth_token, token_type)
-        
-        
-    
-    return HttpResponse(200)
-
-def getLocation(request):     
-    return HttpResponse(HttpResponse(serializers.serialize("json", Location.objects.all(), fields=('customer', 'name', 'location', 'phone_number')), mimetype='application/json'))
 
 def addToPlaylist(request):
     
