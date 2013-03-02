@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.http import HttpRequest
 from django.utils import simplejson
 from django.http import QueryDict
+from django.template import Context, loader
 import utils
 from services.customer_service import CustomerService
 from services.consumer_service import ConsumerService
@@ -291,3 +292,12 @@ def venueGetNextSong(request):
     venue_service = VenueService()
     result =  venue_service.updateCurrentPlaying()
     return HttpResponse(result.music_track.name)
+
+
+def testing(request):
+    music_tracks = MusicTrack.objects.all()
+    template = loader.get_template('backend/index.html')
+    context = Context({ 
+                       'music_track_list': music_tracks,
+                       })
+    return HttpResponse(template.render(context))

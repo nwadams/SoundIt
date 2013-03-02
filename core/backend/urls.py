@@ -36,4 +36,6 @@ urlpatterns = patterns('',
     url(r'^getVoteHistory/$', views.getVoteHistory, name='getVoteHistory'),
     
     url(r'^venue/getNextSong/$', views.venueGetNextSong, name='venueGetNextSong'),
+    
+    url(r'^venue/testing/$', views.testing, name='venueTesting'),
 )

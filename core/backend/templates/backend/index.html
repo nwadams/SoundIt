@@ -1,0 +1,9 @@
+{% if music_track_list %}
+    <ul>
+    {% for track in music_track_list %}
+    	<li>{{track.name}}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No tracks are available.</p>
+{% endif %}
