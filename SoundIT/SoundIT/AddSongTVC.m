@@ -19,11 +19,11 @@
 @synthesize overlayView = _overlayView;
 
 - (void)viewDidLoad{
+    //logo view added to my navigation bar (branding FTW)
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"soundIT_white_logoName"]];
     imgView.autoresizingMask=UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     imgView.contentMode=UIViewContentModeScaleAspectFit;
     self.navigationItem.titleView = imgView;
-//    self.navigationItem.backBarButtonItem.tintColor = [UIColor grayColor];
     
     //add indicatorView
     self.loadingIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -61,7 +61,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"AddSongCell";
-    AddSongCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    AddSongCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     if(cell == nil){
         cell = [[AddSongCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -190,6 +190,15 @@
 //DESCRIPTION: handles our alertViews so that the user has to press Ok before being kicked back to the currentPlaylistTVC
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
+#pragma mark - searchBarTextDidEndEditing
+//iOS Method
+//DESCRIPTION:
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    //TODO construct a API call, fetch the results and call refreshTableView
+    NSLog(@"inside method searchBarTextDidEndEditing");
     
 }
 
