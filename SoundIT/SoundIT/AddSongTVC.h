@@ -17,6 +17,8 @@
 @property UIActivityIndicatorView *loadingIndicatorView;
 @property UIView *overlayView;
 
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+
 -(void)refreshAddSongList;
 -(void)searchLibraryFor:(NSString *)songName;
 

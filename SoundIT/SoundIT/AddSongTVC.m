@@ -17,6 +17,7 @@
 @synthesize addSongListItems = _addSongListItems;
 @synthesize loadingIndicatorView = _loadingIndicator;
 @synthesize overlayView = _overlayView;
+@synthesize searchBar = _searchBar;
 
 - (void)viewDidLoad{
     //logo view added to my navigation bar (branding FTW)
@@ -180,7 +181,7 @@
 //searchLibraryFor - public mutator
 //DESCRIPTION: method called by searchBarTextDidEndEditing to make an API call to "/backend/searchLibraryForString" and display the results in my tableView
 //USAGE: called from searchBarTextDidEndEditing; IE: when the user finishes inputting the song name to search and presses the "Search" button on the keyboard
--(void)searchLibraryFor:(NSString *)songName{
+-(void)searchLibraryFor:(NSString *)songName {
     //start the loading indicator view (the spinner to show app is "Working")
     self.overlayView.hidden = NO;
     [self.loadingIndicatorView startAnimating];
@@ -216,7 +217,7 @@
                                    //hide our indicator view (processing is all done at this point)
                                    [self.loadingIndicatorView stopAnimating];
                                    self.overlayView.hidden = YES;
-                                   
+
                                }
                                
                            }];
@@ -241,11 +242,11 @@
 }
 
 #pragma mark - searchBarTextDidEndEditing
-//iOS Method - UISearchBarDelegate
+//iOS Method - UISearchDisplayDelegate
 //DESCRIPTION:
 -(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
-    //TODO construct a API call, fetch the results and call refreshTableView
-    NSLog(@"inside method searchBarTextDidEndEditing");
+    [self searchLibraryFor:searchBar.text];
+    [self.view endEditing:YES];
     
 }
 

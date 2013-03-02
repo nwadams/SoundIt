@@ -257,6 +257,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="HKD-f5-nOn" id="oYP-41-oQV"/>
                         <outlet property="searchDisplayController" destination="bBx-Qd-GVo" id="RlO-Lc-yek"/>
                     </connections>
                 </tableViewController>
@@ -335,6 +336,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AddSongTVC.h"/>
             <relationships>
                 <relationship kind="action" name="didPressRefreshAddSongList:"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
             </relationships>
         </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
