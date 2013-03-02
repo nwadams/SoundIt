@@ -42,12 +42,13 @@ def signUp(request):
         consumer = consumer_service.register(device_id, password, email_address, name)
     else:
         token_type = params.get('token_type', None)
+        facebook_id = params.get('facebook_id', '')
         if not token_type:
             error = utils.internalServerErrorResponse("Invalid token type")
             logger.error("Invalid token type")
             return HttpResponse(simplejson.dumps(error), mimetype='application/json')
         
-        consumer = consumer_service.register_with_token(device_id, auth_token, token_type) 
+        consumer = consumer_service.register_with_token(device_id, auth_token, token_type, facebook_id) 
     
     consumer_list = []
     consumer_list.append(consumer)

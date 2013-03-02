@@ -49,7 +49,7 @@ class ConsumerService:
         consumer.save()
         return consumer
     
-    def register_with_token(self, device_id, auth_token, token_type):
+    def register_with_token(self, device_id, auth_token, token_type, facebook_id):
         consumer = self.__checkIfCurrentUser__(device_id)
         
         if consumer is None: 
@@ -69,6 +69,15 @@ class ConsumerService:
                 raise InvalidAuthTokenError(auth_token)
         elif token_type.lower() == 'facebook':
             logger.debug("Registering customer with facebook auth token")
+            r = requests.get('https://graph.facebook.com/' + facebook_id + '?access_token=' + auth_token)
+            
+            if r.status_code == 200 :
+                json = r.json()
+                consumer.name = json.get('name', '')
+                consumer.email_address = json.get('email', '')
+                consumer.facebook_id = json.get('id', '')                   
+            else :
+                raise InvalidAuthTokenError(auth_token)
         else:
             raise InvalidAuthTokenTypeError(token_type)
 
