@@ -11,7 +11,7 @@
 #import "AddSongCell.h"
 #import "UIAlertView+error.h"
 
-@interface AddSongTVC : UITableViewController <UIAlertViewDelegate, UISearchBarDelegate>
+@interface AddSongTVC : UITableViewController <UIAlertViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
 
 @property NSArray *addSongListItems;
 @property UIActivityIndicatorView *loadingIndicatorView;

@@ -194,11 +194,20 @@
 }
 
 #pragma mark - searchBarTextDidEndEditing
-//iOS Method
+//iOS Method - UISearchBarDelegate
 //DESCRIPTION:
 -(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     //TODO construct a API call, fetch the results and call refreshTableView
     NSLog(@"inside method searchBarTextDidEndEditing");
+    
+}
+
+#pragma mark - searchBarTextDidEndEditing
+//iOS Method - UISearchDisplayDelegate
+//DESCRIPTION:
+-(void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView{
+    //match the UISearchDisplayDelegate row height to the match the row height set by AddSongTVC
+    tableView.rowHeight = 60.0f;
     
 }
 
