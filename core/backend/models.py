@@ -6,9 +6,9 @@ class Consumer(models.Model):
     device_id = models.CharField(max_length=255, null=True)
     password = models.CharField(max_length=255)
     salt = models.CharField(max_length=255)
+    api_token = models.CharField(max_length=255)
     facebook_id = models.IntegerField(null=True)
     google_id = models.IntegerField(null=True)
-    device_id = models.IntegerField()
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
@@ -20,9 +20,9 @@ class Consumer(models.Model):
     ", device_id='" + str(self.device_id) + '\'' + \
     ", password='" + self.password + "\'" + \
     ", salt=" + str(self.salt) + "\'" + \
+    ", api_token=" + self.api_token + "\'" + \
     ", facebook_id='" + self.facebook_id + "\'" + \
     ", google_id='" + self.google_id + "\'" + \
-    ", device_id=" + self.device_id + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -35,9 +35,9 @@ class Consumer(models.Model):
         result.append({"device_id": self.device_id})
         result.append({"password": self.password})
         result.append({"salt": self.salt})
+        result.append({"api_token": self.api_token})
         result.append({"facebook_id": self.facebook_id})
         result.append({"google_id": self.google_id})
-        result.append({"device_id": self.device_id})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})
