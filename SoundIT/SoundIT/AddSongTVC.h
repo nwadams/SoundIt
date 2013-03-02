@@ -18,6 +18,7 @@
 @property UIView *overlayView;
 
 -(void)refreshAddSongList;
+-(void)searchLibraryFor:(NSString *)songName;
 
 - (IBAction)didPressRefreshAddSongList:(id)sender;
 
