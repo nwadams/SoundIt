@@ -47,7 +47,7 @@ def signUp(request):
             logger.error("Invalid token type")
             return HttpResponse(simplejson.dumps(error), mimetype='application/json')
         
-        consumer_service.register_with_token(device_id, auth_token, token_type) 
+        consumer = consumer_service.register_with_token(device_id, auth_token, token_type) 
     
     consumer_list = []
     consumer_list.append(consumer)

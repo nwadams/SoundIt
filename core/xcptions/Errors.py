@@ -6,6 +6,22 @@ class InvalidDeviceError(Exception):
     def __str__(self):
         return repr(self.value)
     
+class InvalidAuthTokenError(Exception):
+    
+    def __init__(self, value):
+        self.value = value
+        
+    def __str__(self):
+        return repr(self.value) 
+    
+class InvalidAuthTokenTypeError(Exception):
+    
+    def __init__(self, value):
+        self.value = value
+        
+    def __str__(self):
+        return repr(self.value) 
+    
 class LocationNotFoundError(Exception):
     
     def __init__(self, value):
