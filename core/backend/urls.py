@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     # Needs to be deprecated for now.
     # url(r'^login/$', views.login, name='login'),
     
-    url(r'^getLocations/$', views.getLocations, name='getLocations'),
+    url(r'^getLocations/$', views.getLocation, name='getLocation'),
     
     # ex: /addToPlaylist?user_id=id&location_id=id&music_track_id=id
     url(r'^addToPlaylist/$', views.addToPlaylist, name='addToPlaylist'),
