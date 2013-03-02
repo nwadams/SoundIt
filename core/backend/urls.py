@@ -36,4 +36,7 @@ urlpatterns = patterns('',
     url(r'^getVoteHistory/$', views.getVoteHistory, name='getVoteHistory'),
     
     url(r'^venue/getNextSong/$', views.venueGetNextSong, name='venueGetNextSong'),
+    
+    # ex: /searchLibraryForString?device_id=4331&location_id=thePit&string_to_search=Carly%20Rae%20Jenson
+    url(r'^searchLibraryForString/$', views.searchLibraryForString, name='searchLibraryForString'),
 )
