@@ -37,9 +37,8 @@ class Customer(models.Model):
 
 class Consumer(models.Model):
     customer = models.ForeignKey(Customer)
-    device_id = models.CharField(max_length=255, null=True)
     facebook_id = models.IntegerField(null=True)
-    google_id = models.IntegerField(null=True)
+    device_id = models.IntegerField()
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
