@@ -11,6 +11,7 @@ from django.db.models import Q
 from models import PlaylistItem
 from models import MusicTrack
 import logging
+import random
 from xcptions.Errors import InvalidDeviceError
 from xcptions.Errors import UnableToVoteError
 from xcptions.Errors import PlaylistNotFoundError
@@ -282,5 +283,6 @@ def venueGetNextSong(request):
 
 def index(request):
     music_tracks = MusicTrack.objects.all()
-    context = {'music_track_list': music_tracks}
+    background = random.randint(0,3)
+    context = {'music_track_list': music_tracks, 'background': background}
     return render(request, 'backend/index.html', context)
