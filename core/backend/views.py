@@ -144,11 +144,7 @@ def checkInLocation(request):
     location_service = LocationService()   
     location_service.checkIn(consumer, location)
     
-    response_data = {}
-    response_data['location'] = location.pk
-    response_data['status'] = 200
-    
-    return HttpResponse(HttpResponse(json.dumps(response_data), mimetype='application/json')) 
+    return __refreshPlaylistHelper__(consumer, location_id)
 
 def checkOutLocation(request):
     location = None
@@ -288,9 +284,9 @@ def refreshPlaylist(request):
 
     logger.info("Incoming request- refresh playlist with parameters device_id " + str(user_id) + ", location_id " + str(location_id))
     # Use location id to fetch current playlist
-    return __refreshPlaylistHelper(consumer, location_id)
+    return __refreshPlaylistHelper__(consumer, location_id)
 
-def __refreshPlaylistHelper(consumer, location_id):
+def __refreshPlaylistHelper__(consumer, location_id):
     playlist_service = PlaylistService()
     playlist_items = playlist_service.getPlaylistVotes(consumer, location_id)
     playlist_items_sorted = __reorderPlaylist__(playlist_items)
