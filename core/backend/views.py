@@ -288,13 +288,18 @@ def refreshPlaylist(request):
 
     logger.info("Incoming request- refresh playlist with parameters device_id " + str(user_id) + ", location_id " + str(location_id))
     # Use location id to fetch current playlist
+    return __refreshPlaylistHelper(consumer, location_id)
+
+def __refreshPlaylistHelper(consumer, location_id):
     playlist_service = PlaylistService()
     playlist_items = playlist_service.getPlaylistVotes(consumer, location_id)
     playlist_items_sorted = __reorderPlaylist__(playlist_items)
-    return HttpResponse(serializers.serialize("json", playlist_items_sorted, fields=('pk', 'playlist', 'music_track', 'name', 'album', 
-                                                                                    'artist', 'image_URL', 'track_URL', 'is_voted', 'votes', 'item_state'), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
-
-# hack for iOS. Items must be ordered such that 0th item is currently playing, rest are ordered by votes.
+    return HttpResponse(serializers.serialize("json", playlist_items_sorted, 
+        fields=('pk', 'playlist', 'music_track', 'name',  'is_voted', 'votes', 'item_state'), 
+        relations={'music_track':{'fields': ('name', 'track_URL', 'artist', 'category', 'album'),
+        'relations': {'album' : {'fields':('name', 'image_URL')}, 'category'  : {'fields':('name')}, 
+        'artist'  : {'fields':('name')},}}}), mimetype='application/json')
+       
 def __reorderPlaylist__(playlist_items):
     
     reordered_list = []
