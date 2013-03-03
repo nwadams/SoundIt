@@ -15,6 +15,8 @@ urlpatterns = patterns('',
     
     url(r'^checkInLocation/$', views.checkInLocation, name='checkInLocation'),
     
+    url(r'^checkOutLocation/$', views.checkOutLocation, name='checkOutLocation'),
+    
     # ex: /addToPlaylist?user_id=id&location_id=id&music_track_id=id
     url(r'^addToPlaylist/$', views.addToPlaylist, name='addToPlaylist'),
 

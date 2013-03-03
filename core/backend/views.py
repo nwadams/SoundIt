@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.utils import simplejson
 import utils
 from services.consumer_service import ConsumerService
-from services.LocationService import LocationService
+from services.location_service import LocationService
 from services.venue_service import VenueService
 from services.voting_service import VotingService
 from django.core import serializers
@@ -137,6 +137,32 @@ def checkInLocation(request):
     
     response_data = {}
     response_data['location'] = location.pk
+    response_data['status'] = 200
+    
+    return HttpResponse(HttpResponse(json.dumps(response_data), mimetype='application/json')) 
+
+def checkOutLocation(request):
+    location = None
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
+    
+    consumer_service = ConsumerService()
+    
+    user_id = params.get('user_id', None)
+    api_token = params.get('api_key', None)
+        
+    consumer = consumer_service.isValidUser(user_id, api_token)
+    
+    if not consumer:
+        raise InvalidUserError(user_id)
+    
+    location_service = LocationService()   
+    location_service.checkOut(consumer)
+
+    response_data = {}
     response_data['status'] = 200
     
     return HttpResponse(HttpResponse(json.dumps(response_data), mimetype='application/json')) 
