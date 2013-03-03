@@ -9,7 +9,7 @@ urlpatterns = patterns('',
 
     # ex: /login?user_id=id&password=pwd
     # Needs to be deprecated for now.
-    # url(r'^login/$', views.login, name='login'),
+    url(r'^login/$', views.login, name='login'),
     
     # ex: /addToPlaylist?user_id=id&location_id=id&music_track_id=id
     url(r'^addToPlaylist/$', views.addToPlaylist, name='addToPlaylist'),

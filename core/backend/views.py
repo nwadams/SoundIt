@@ -55,7 +55,34 @@ def signUp(request):
     
     return HttpResponse(serializers.serialize("json", consumer_list, fields=('id','device_id','api_token','email_address', 'name')), mimetype='application/json')
 
-
+def login(request):
+    consumer = None
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
+    
+    consumer_service = ConsumerService()
+    
+    device_id = params.get('device_id', None)
+    user_id = params.get('id', None)
+    api_token = params.get('api_key', None)
+    if not device_id:
+        error = utils.internalServerErrorResponse("Invalid request: Device Id, user_id and api_key required for login.")
+        logger.warning("Invalid request: Device Id, user_id and api_key required for login.")
+        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+    
+    
+   
+    logger.info("Incoming request- login credentials: " + str(device_id) + ' ' + str(user_id) + ' ' + str(api_token))
+    
+    consumer = consumer_service.login(device_id, user_id, api_token)
+    consumer_list = []
+    consumer_list.append(consumer)
+    
+    return HttpResponse(serializers.serialize("json", consumer_list, fields=('id','device_id','api_token','email_address', 'name')), mimetype='application/json')
+    
 
 def addToPlaylist(request):
     

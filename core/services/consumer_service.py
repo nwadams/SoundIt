@@ -6,6 +6,8 @@ Created on Jan 21, 2013
 from backend.models import Consumer
 from xcptions.Errors import InvalidAuthTokenError
 from xcptions.Errors import InvalidAuthTokenTypeError
+from xcptions.Errors import UserDoesNotExistError
+from xcptions.Errors import InvalidLoginError
 import hashlib
 import random
 import logging
@@ -15,18 +17,16 @@ logger = logging.getLogger('core.backend')
 
 class ConsumerService:
     
-    def login(self, device_id, api_token):
-        try:
-            customer = Consumer.objects.get(device_id=device_id)
-        except Consumer.DoesNotExist:
-            logger.warning("Could not find customer with device " + str(device_id))
-            return False
-        # this is probably redundant. Verify.
-        if customer is None:
-            logger.warning("Could not find customer with device " + str(device_id))
-            return False
-        hashed_password = hashlib.md5(customer.salt + api_token).hexdigest()
-        return hashed_password == customer.password
+    def login(self, device_id, user_id, api_token):
+        consumer = self.__checkIfCurrentUser__(device_id)
+        
+        if consumer is None: 
+            raise UserDoesNotExistError(device_id)
+        
+        if not consumer.pk == user_id and not consumer.api_token == api_token :
+            raise InvalidLoginError(user_id)
+        
+        return consumer
 
     def register(self, device_id, password, email_address, name):
         consumer = self.__checkIfCurrentUser__(device_id)
