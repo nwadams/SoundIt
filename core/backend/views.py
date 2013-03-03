@@ -19,6 +19,7 @@ from xcptions.Errors import PlaylistNotFoundError
 from xcptions.Errors import UnableToAddMusicError
 from xcptions.Errors import InvalidUserError
 from xcptions.Errors import InvalidLocationError
+from xcptions.Errors import MusicTrackNotFoundError
 
 logger = logging.getLogger('core.backend')
 
@@ -195,53 +196,54 @@ def addToPlaylist(request):
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track': {'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
 
-
-def voteUpAndroid(request):
-    
-    try:
-        device_id = request.GET['device_id']
-        location_id = request.GET['location_id']
-        music_track_id = request.GET['music_track_id']
-    except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: device id and track id required for adding to playlist.")
-        logger.warning("Invalid request: device id and track id required for adding to playlist.")
-        return HttpResponse( simplejson.dumps(error), mimetype='application/json')
-    
-    logger.info("Incoming request- vote up with parameters device_id " + str(device_id) + ", location_id " + str(location_id) + ", music_track_id " + str(music_track_id))
-    voting_service = VotingService()
-    try: 
-        updated_playlist_items = voting_service.voteUp(device_id, location_id, music_track_id)
-        logger.info("Updated playlist after vote up for music track " + str(music_track_id) + " at location " + str(location_id) + " from device " + str(device_id))
-    except UnableToVoteError as utv:
-        error = utils.internalServerErrorResponse(utv.value)
-        logger.error(utv.value)
-        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
-
-
 def voteUp(request):
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
     
-    try:
-        device_id = request.GET['device_id']
-        location_id = request.GET['location_id']
-        music_track_id = request.GET['music_track_id']
-    except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: Device id and track id required for adding to playlist.")
-        logger.warning("Invalid request: Device id and track id required for adding to playlist.")
-        return HttpResponse( simplejson.dumps(error), mimetype='application/json')
+    location_service = LocationService()
+    consumer_service = ConsumerService()
     
-    music_track_id = int(music_track_id) + 1
-    logger.info("Incoming request- vote up with parameters device_id " + str(device_id) + ", location_id " + str(location_id) + ", music_track_id " + str(music_track_id))
+    user_id = params.get('user_id', None)
+    api_token = params.get('api_key', None)
+    
+    location_id = params.get('location_id', None)
+    music_track_id = params.get('music_track_id', None)
+    
+    if not location_id:
+        raise InvalidLocationError(location_id)
+    
+    if not music_track_id:
+        raise MusicTrackNotFoundError(music_track_id)
+        
+    consumer = consumer_service.isValidUser(user_id, api_token)
+    
+    if not consumer:
+        raise InvalidUserError(user_id)
+    
+    if not location_service.isActive(location_id):
+        response_data = {}
+        location_service.checkOut(consumer)
+        response_data['message'] = 'Location is not active'
+        response_data['checked_out'] = True
+        response_data['status'] = 200
+        
+        return HttpResponse(HttpResponse(json.dumps(response_data), mimetype='application/json'))
+    
+    logger.info("Incoming request- vote up with parameters user_id " + str(user_id) + ", location_id " + str(location_id) + ", music_track_id " + str(music_track_id))
     voting_service = VotingService()
+    
     try: 
-        updated_playlist_items = voting_service.voteUp(device_id, location_id, music_track_id)
-        logger.info("Updated playlist after vote up for music track " + str(music_track_id) + " at location " + str(location_id) + " from device " + str(device_id))
+        voting_service.voteUp(consumer, location_id, music_track_id)
+        logger.info("Updated playlist after vote up for music track " + str(music_track_id) + " at location " + str(location_id) + " from user " + str(user_id))
     except UnableToVoteError as utv:
         error = utils.internalServerErrorResponse(utv.value)
         logger.error(utv.value)
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
-
+    
+    return __refreshPlaylistHelper__(consumer, location_id)
 
 def refreshPlaylist(request):
     params = None

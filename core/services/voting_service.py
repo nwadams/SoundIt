@@ -74,51 +74,40 @@ class VotingService:
         playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
         return playlist_items
         
-    def voteUp(self, device_id, location_id, music_track_id):
+    def voteUp(self, consumer, location_id, music_track_id):
         
         try:
-            consumer = Consumer.objects.get(device_id=device_id)
-            music_track = MusicTrack.objects.get(pk=music_track_id)
-            # hack for ios: thepit
-            if location_id == "thepit":
-                location = Location.objects.get(pk=1)
-            else:
-                location = Location.objects.get(pk=location_id)
-            playlist = Playlist.objects.get(location_id=location.id)
-            playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
+            location = Location.objects.get(pk=location_id)
+            playlist = Playlist.objects.get(location=location)
+            playlist_item = PlaylistItem.objects.get(playlist_id = playlist.id,music_track_id= music_track_id)
         except KeyError:
-            raise UnableToVoteError("Could not find objects for parameters- device_id: " + str(device_id) + ", location_id: " + str(location_id) + ", music_track_id: " + str(music_track_id))
+            raise UnableToVoteError("Could not find objects for parameters- user_id: " + str(consumer.pk) + ", location_id: " + str(location_id) + ", music_track_id: " + str(music_track_id))
         except Location.DoesNotExist:
             raise UnableToVoteError("Could not find location for id " + str(location_id))
         except Consumer.DoesNotExist:
-            raise UnableToVoteError("Could not find consumer for id " + str(device_id))
-        except MusicTrack.DoesNotExist:
-            raise UnableToVoteError("Could not find music track for id " + str(music_track-id))
+            raise UnableToVoteError("Could not find consumer for id " + str(consumer.pk))
         except Playlist.DoesNotExist:
             raise UnableToVoteError("Could not find playlist for location " + str(location.id))
         
         # Vote that music track up
         voted = False
-        for playlist_item in playlist_items:
-            if playlist_item.music_track.id == music_track.id:
-                try: 
-                    Vote.objects.get(playlist_item_id = playlist_item.id, consumer = consumer.pk)
-                    logger.warning("Device " + str(device_id) + " has already voted for music track " + str(music_track_id))
-                except Vote.DoesNotExist:
-                    vote = Vote(playlist_item_id=playlist_item.id, consumer=consumer.pk)
-                    vote.save()
-                    playlist_item.votes += 1
-                    playlist_item.save()
-                    logger.debug("Voted for music track " + str(music_track_id))
-                voted = True
-                break
+        try: 
+            Vote.objects.get(playlist_item_id = playlist_item.id, consumer = consumer)
+            logger.warning("user " + str(consumer.pk) + " has already voted for music track " + str(music_track_id))
+            raise UnableToVoteError("has already voted for music track " + str(music_track_id) + " at location " + str(location_id))
+        except Vote.DoesNotExist:
+            vote = Vote(playlist_item_id=playlist_item.id, consumer=consumer)
+            vote.save()
+            playlist_item.votes += 1
+            playlist_item.save()
+            logger.debug("Voted for music track " + str(music_track_id))
+            voted = True
         
         if voted == False:
             logger.error("Could not find music track id " + str(music_track_id) + " at location " + str(location_id))
             raise UnableToVoteError("Could not find music track id " + str(music_track_id) + " at location " + str(location_id))
-        # Sort playlist by votes in descending order.
-        sorted_playlist_items = sorted(playlist_items, key=lambda PlaylistItem: PlaylistItem.votes, reverse=True)
-        return sorted_playlist_items 
+
+        return
     
     def getVoteHistory(self, device_id):
         try:
