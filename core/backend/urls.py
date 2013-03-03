@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     
     url(r'^getLocations/$', views.getLocations, name='getLocation'),
     
+    url(r'^checkInLocation/$', views.checkInLocation, name='checkInLocation'),
+    
     # ex: /addToPlaylist?user_id=id&location_id=id&music_track_id=id
     url(r'^addToPlaylist/$', views.addToPlaylist, name='addToPlaylist'),
 

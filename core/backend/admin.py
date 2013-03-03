@@ -14,10 +14,12 @@ from backend.models import MusicTrack
 from backend.models import Playlist
 from backend.models import PlaylistItem
 from backend.models import Vote
+from backend.models import LocationMap
  
 
 admin.site.register(Consumer)
 admin.site.register(Location)
+admin.site.register(LocationMap)
 admin.site.register(Artist)
 admin.site.register(Album)
 admin.site.register(MusicCategory)

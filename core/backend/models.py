@@ -90,6 +90,42 @@ class Location(models.Model):
         result.append({"is_deleted": str(self.is_deleted)})
         return simplejson.dumps(result)
     
+class LocationMap(models.Model):
+    consumer = models.ForeignKey(Consumer)
+    location = models.ForeignKey(Location)
+    is_active = models.BooleanField(default=False)
+    check_in_time = models.DateTimeField(auto_now_add=True, null=True)
+    check_out_time = models.DateTimeField(auto_now=False, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
+    is_deleted = models.BooleanField(default=False)
+    
+    def __unicode__(self):
+        return "Location{" + \
+    "id=" + str(self.pk) + \
+    ", consumer='" + str(self.consumer) + '\'' + \
+    ", location='" + str(self.location) + '\'' + \
+    ", is_active=" + str(self.is_active) + \
+    ", check_in_time=" + str(self.check_in_time) + \
+    ", check_out_time=" + str(self.check_out_time) + \
+    ", date_created=" + str(self.date_created) + \
+    ", date_modified=" + str(self.date_modified) + \
+    ", is_deleted=" + str(self.is_deleted) + \
+    "}"  
+
+    def toDict(self):
+        result = []
+        result.append({"id": str(self.pk)})
+        result.append({"consumer": self.consumer})
+        result.append({"location": self.location})
+        result.append({"is_active": str(self.is_active)})
+        result.append({"check_in_time": str(self.check_in_time)})
+        result.append({"check_out_time": str(self.check_out_time)})
+        result.append({"date_created": str(self.date_created)})
+        result.append({"date_modified": str(self.date_modified)})
+        result.append({"is_deleted": str(self.is_deleted)})
+        return simplejson.dumps(result)
+    
 class Artist(models.Model):
     name = models.CharField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True, null=True)

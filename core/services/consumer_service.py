@@ -94,15 +94,16 @@ class ConsumerService:
         return consumer
         
     def isValidUser(self, user_id, api_token):
+        consumer = None
         try: 
-            consumer = Consumer.objects.get(pk= user_id)
+            consumer = Consumer.objects.get(pk=user_id)
         except (KeyError, Consumer.DoesNotExist):
-            return False
+            return None
         
         if not consumer.api_token == api_token :
-            return True
+            return None
         
-        return True
+        return consumer
             
     def __checkIfCurrentUser__(self, device_id):
         logger.debug("Checking if user with device id " + str(device_id) + " already exists.")

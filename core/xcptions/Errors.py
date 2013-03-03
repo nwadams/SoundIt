@@ -29,6 +29,15 @@ class UserDoesNotExistError(Exception):
         
     def __str__(self):
         return repr(self.value)
+
+class InvalidLocationError(Exception):
+    
+    def __init__(self, value):
+        self.value = value
+        
+    def __str__(self):
+        return repr(self.value)
+
     
 class InvalidUserError(Exception):    
     def __init__(self, value):

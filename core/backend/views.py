@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.utils import simplejson
 import utils
 from services.consumer_service import ConsumerService
+from services.LocationService import LocationService
 from services.venue_service import VenueService
 from services.voting_service import VotingService
 from django.core import serializers
@@ -9,12 +10,14 @@ from django.db.models import Q
 from models import PlaylistItem
 from models import MusicTrack
 from models import Location
+import json
 import logging
 from xcptions.Errors import InvalidDeviceError
 from xcptions.Errors import UnableToVoteError
 from xcptions.Errors import PlaylistNotFoundError
 from xcptions.Errors import UnableToAddMusicError
 from xcptions.Errors import InvalidUserError
+from xcptions.Errors import InvalidLocationError
 
 logger = logging.getLogger('core.backend')
 
@@ -68,7 +71,7 @@ def login(request):
     consumer_service = ConsumerService()
     
     device_id = params.get('device_id', None)
-    user_id = params.get('id', None)
+    user_id = params.get('user_id', None)
     api_token = params.get('api_key', None)
     if not device_id:
         error = utils.internalServerErrorResponse("Invalid request: Device Id, user_id and api_key required for login.")
@@ -92,7 +95,7 @@ def getLocations(request):
     
     consumer_service = ConsumerService()
     
-    user_id = params.get('id', None)
+    user_id = params.get('user_id', None)
     api_token = params.get('api_key', None)
     
     if not consumer_service.isValidUser(user_id, api_token):
@@ -100,6 +103,43 @@ def getLocations(request):
         #raise InvalidUserError(user_id)
     
     return HttpResponse(HttpResponse(serializers.serialize("json", Location.objects.all().filter(is_active = True), fields=('pk', 'name', 'location', 'phone_number')), mimetype='application/json'))
+
+def checkInLocation(request):
+    location = None
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
+    
+    consumer_service = ConsumerService()
+    
+    user_id = params.get('user_id', None)
+    api_token = params.get('api_key', None)
+    
+    location_id = params.get('location_id', None)
+    
+    consumer = consumer_service.isValidUser(user_id, api_token)
+    
+    if not consumer:
+        raise InvalidUserError(user_id)
+    
+    try: 
+        location = Location.objects.get(pk=location_id)
+    except (KeyError, Location.DoesNotExist):
+        raise InvalidLocationError(location_id)
+    
+    if not location.is_active:
+        raise InvalidLocationError(location_id)
+    
+    location_service = LocationService()   
+    location_service.checkIn(consumer, location)
+    
+    response_data = {}
+    response_data['location'] = location.pk
+    response_data['status'] = 200
+    
+    return HttpResponse(HttpResponse(json.dumps(response_data), mimetype='application/json')) 
 
 def addToPlaylist(request):
     
