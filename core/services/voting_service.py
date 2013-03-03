@@ -27,19 +27,19 @@ class VotingService:
     def addToPlaylist(self, device_id, location_id, music_track_id):
         
         try :
-            # TODO: Improve data model so that customer that is adding playlist is checked for session.
-            customer = Consumer.objects.get(device_id=device_id)
+            # TODO: Improve data model so that consumer that is adding playlist is checked for session.
+            consumer = Consumer.objects.get(device_id=device_id)
             if location_id == "thepit":
                 location = Location.objects.get(pk=1)
             else:        
                 location = Location.objects.get(pk=location_id)
             music_track = MusicTrack.objects.get(pk=music_track_id)
         except KeyError:
-            raise UnableToAddMusicError("Could not add music track " + str(music_track_id) + ", location " + str(location_id) + ", customer " + str(device_id))
+            raise UnableToAddMusicError("Could not add music track " + str(music_track_id) + ", location " + str(location_id) + ", consumer " + str(device_id))
         except Location.DoesNotExist:
             raise UnableToAddMusicError("Could not find location for id " + str(location_id))
         except Consumer.DoesNotExist:
-            raise UnableToAddMusicError("Could not find customer for device id " + str(device_id))
+            raise UnableToAddMusicError("Could not find consumer for device id " + str(device_id))
         except MusicTrack.DoesNotExist:
             raise UnableToAddMusicError("Could not find music track for id " + str(music_track_id))
         
@@ -77,7 +77,7 @@ class VotingService:
     def voteUp(self, device_id, location_id, music_track_id):
         
         try:
-            customer = Consumer.objects.get(device_id=device_id)
+            consumer = Consumer.objects.get(device_id=device_id)
             music_track = MusicTrack.objects.get(pk=music_track_id)
             # hack for ios: thepit
             if location_id == "thepit":
@@ -91,7 +91,7 @@ class VotingService:
         except Location.DoesNotExist:
             raise UnableToVoteError("Could not find location for id " + str(location_id))
         except Consumer.DoesNotExist:
-            raise UnableToVoteError("Could not find customer for id " + str(device_id))
+            raise UnableToVoteError("Could not find consumer for id " + str(device_id))
         except MusicTrack.DoesNotExist:
             raise UnableToVoteError("Could not find music track for id " + str(music_track-id))
         except Playlist.DoesNotExist:
@@ -102,10 +102,10 @@ class VotingService:
         for playlist_item in playlist_items:
             if playlist_item.music_track.id == music_track.id:
                 try: 
-                    Vote.objects.get(playlist_item_id = playlist_item.id, customer_id = customer.id)
+                    Vote.objects.get(playlist_item_id = playlist_item.id, consumer = consumer.pk)
                     logger.warning("Device " + str(device_id) + " has already voted for music track " + str(music_track_id))
                 except Vote.DoesNotExist:
-                    vote = Vote(playlist_item_id=playlist_item.id, customer_id=customer.id)
+                    vote = Vote(playlist_item_id=playlist_item.id, consumer=consumer.pk)
                     vote.save()
                     playlist_item.votes += 1
                     playlist_item.save()
@@ -122,21 +122,21 @@ class VotingService:
     
     def getVoteHistory(self, device_id):
         try:
-            customer = Consumer.objects.get(device_id = device_id)
+            consumer = Consumer.objects.get(device_id = device_id)
         except (KeyError, Consumer.DoesNotExist):
             # TODO: Consolidate this exception into something else. Or start using this elsewhere. 
-            raise InvalidDeviceError("Could not find customer for device " + str(device_id))
-        logger.debug("Found customer for device " + str(device_id) + ", returning votes.")
-        return Vote.objects.filter(customer_id = customer.id)
+            raise InvalidDeviceError("Could not find consumer for device " + str(device_id))
+        logger.debug("Found consumer for device " + str(device_id) + ", returning votes.")
+        return Vote.objects.filter(consumer = consumer.id)
         
       
     def getPlaylistVotes(self, device_id, location_id):
         playlist_votes_list = []
         try:
             playlist = Playlist.objects.get(location_id = location_id)
-            customer = Consumer.objects.get(device_id = device_id)
+            consumer = Consumer.objects.get(device_id = device_id)
             playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id, item_state__in=[2,1])
-            vote_history = Vote.objects.filter(customer_id = customer.id, playlist_item_id__in=playlist_items)
+            vote_history = Vote.objects.filter(consumer = consumer.pk, playlist_item_id__in=playlist_items)
             for item in playlist_items:
                 playlist_item_vote = PlaylistItemVotes()
                 playlist_item_vote.playlist = playlist
