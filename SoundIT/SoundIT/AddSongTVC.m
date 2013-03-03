@@ -17,13 +17,14 @@
 @synthesize addSongListItems = _addSongListItems;
 @synthesize loadingIndicatorView = _loadingIndicator;
 @synthesize overlayView = _overlayView;
+@synthesize searchBar = _searchBar;
 
 - (void)viewDidLoad{
+    //logo view added to my navigation bar (branding FTW)
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"soundIT_white_logoName"]];
     imgView.autoresizingMask=UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     imgView.contentMode=UIViewContentModeScaleAspectFit;
     self.navigationItem.titleView = imgView;
-//    self.navigationItem.backBarButtonItem.tintColor = [UIColor grayColor];
     
     //add indicatorView
     self.loadingIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -61,7 +62,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"AddSongCell";
-    AddSongCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    AddSongCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     if(cell == nil){
         cell = [[AddSongCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -176,6 +177,53 @@
     
 }
 
+#pragma mark - searchLibraryFor
+//searchLibraryFor - public mutator
+//DESCRIPTION: method called by searchBarTextDidEndEditing to make an API call to "/backend/searchLibraryForString" and display the results in my tableView
+//USAGE: called from searchBarTextDidEndEditing; IE: when the user finishes inputting the song name to search and presses the "Search" button on the keyboard
+-(void)searchLibraryFor:(NSString *)songName {
+    //start the loading indicator view (the spinner to show app is "Working")
+    self.overlayView.hidden = NO;
+    [self.loadingIndicatorView startAnimating];
+    
+    //grab our device_id
+    NSString *thisDeviceUniqueIDentifier = [UIDevice currentDevice].identifierForVendor.UUIDString;
+    NSLog(@"thisDeviceUniqueIDentifier reads: %@", thisDeviceUniqueIDentifier);
+    
+    //construct all our parameters required for the API contract
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   thisDeviceUniqueIDentifier, @"device_id",
+                                   @"thepit", @"location_id",
+                                   songName, @"string_to_search",
+                                   nil];
+    
+    //make call to API method "searchLibraryForString"
+    [[API sharedInstance] callAPIMethod:@"searchLibraryForString"
+                             withParams:params
+                           onCompletion:^(NSArray *json){
+                               NSLog(@"%@", [json description]);//debug
+                               
+                               //handle error response
+                               if([[json objectAtIndex:0] objectForKey:@"Error Message"] != nil){
+                                   //show an AlertView with our Error Message
+                                   [UIAlertView error:(NSString *)[[json objectAtIndex:0] valueForKey:@"Error Message"]];
+                                   
+                               } else {//grab our json and hide our indicator view
+                                   self.addSongListItems = json;
+                                   
+                                   NSLog(@"addSongListItems holds:%@", [self.addSongListItems description]);
+                                   [self.tableView reloadData];
+                                   
+                                   //hide our indicator view (processing is all done at this point)
+                                   [self.loadingIndicatorView stopAnimating];
+                                   self.overlayView.hidden = YES;
+
+                               }
+                               
+                           }];
+    
+}
+
 #pragma mark - didPressRefreshAddSongList
 //didPressRefreshAddSongList - public mutator
 //DESCRIPTION: action outlet attached to storyboard/view listening for refresh navigation bar button presses
@@ -190,6 +238,24 @@
 //DESCRIPTION: handles our alertViews so that the user has to press Ok before being kicked back to the currentPlaylistTVC
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
+#pragma mark - searchBarTextDidEndEditing
+//iOS Method - UISearchDisplayDelegate
+//DESCRIPTION:
+-(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    [self searchLibraryFor:searchBar.text];
+    [self.view endEditing:YES];
+    
+}
+
+#pragma mark - searchBarTextDidEndEditing
+//iOS Method - UISearchDisplayDelegate
+//DESCRIPTION:
+-(void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView{
+    //match the UISearchDisplayDelegate row height to the match the row height set by AddSongTVC
+    tableView.rowHeight = 60.0f;
     
 }
 

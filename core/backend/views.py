@@ -69,6 +69,27 @@ def addToPlaylist(request):
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track': {'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
 
+# METHOD - searchLibraryForString
+# INPUT - JSON request "request"
+# OUTPUT - JSON response with list of songs to display
+# DESCRIPTION - API method that takes a search request from Android/iOS app 
+def searchLibraryForString(request):
+	#check inputs
+	try:
+		device_id = request.GET['device_id']
+		location_id = request.GET['location_id']
+		string_to_search = request.GET['string_to_search']
+		
+	except KeyError:
+		error = utils.internalServerErrorResponse("Invalid request: you require device_id, location_id and string_to_search to search for songs in the Library.")
+		logger.warning("Invalid request: device_id, location_id, and string_to_search required for adding to a Library.")
+		return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+		
+	logger.info("Incoming request - searchLibraryForString with params device_id:" + str(device_id) + ",location_id:" + str(location_id) + "string_to_search:" + str(string_to_search) )
+	
+	#for now do a case insensitive string match
+	responseLibrary = MusicTrack.objects.filter(Q(name__icontains=string_to_search))
+	return HttpResponse(serializers.serialize("json", responseLibrary, relations={'album', 'category', 'artist'}), mimetype='application/json')
 
 def voteUpAndroid(request):
     
