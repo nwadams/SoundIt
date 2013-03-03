@@ -5,6 +5,7 @@ from services.consumer_service import ConsumerService
 from services.location_service import LocationService
 from services.venue_service import VenueService
 from services.voting_service import VotingService
+from services.playlist_service import PlaylistService
 from django.core import serializers
 from django.db.models import Q
 from models import PlaylistItem
@@ -58,7 +59,10 @@ def signUp(request):
     consumer_list = []
     consumer_list.append(consumer)
     
-    return HttpResponse(serializers.serialize("json", consumer_list, fields=('id','device_id','api_token','email_address', 'name')), mimetype='application/json')
+    json = serializers.serialize("json", consumer_list, fields=('id','device_id','api_token','email_address', 'name'))
+    json_obj = json[1:len(json)-1]
+    
+    return HttpResponse(json_obj, mimetype='application/json')
 
 def login(request):
     consumer = None
@@ -84,7 +88,10 @@ def login(request):
     consumer_list = []
     consumer_list.append(consumer)
     
-    return HttpResponse(serializers.serialize("json", consumer_list, fields=('id','device_id','api_token','email_address', 'name')), mimetype='application/json')
+    json = serializers.serialize("json", consumer_list, fields=('id','device_id','api_token','email_address', 'name'))
+    json_obj = json[1:len(json)-1]
+    
+    return HttpResponse(json_obj, mimetype='application/json')
     
 def getLocations(request):
     params = None
@@ -118,6 +125,8 @@ def checkInLocation(request):
     api_token = params.get('api_key', None)
     
     location_id = params.get('location_id', None)
+    if not location_id:
+        raise InvalidLocationError(location_id)
     
     consumer = consumer_service.isValidUser(user_id, api_token)
     
@@ -239,20 +248,51 @@ def voteUp(request):
 
 
 def refreshPlaylist(request):
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
     
-    try: 
-        device_id = request.GET['device_id']
-        location_id = request.GET['location_id'] 
-    except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for refreshing playlist.")
-        logger.warning("Invalid request: Device Id and Location Id required for refreshing playlist.")
-        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    logger.info("Incoming request- refresh playlist with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
+    location_service = LocationService()
+    consumer_service = ConsumerService()
+    
+    user_id = params.get('user_id', None)
+    api_token = params.get('api_key', None)
+    
+    location_id = params.get('location_id', None)
+    
+    if not location_id:
+        raise InvalidLocationError(location_id)
+        
+    consumer = consumer_service.isValidUser(user_id, api_token)
+    
+    if not consumer:
+        raise InvalidUserError(user_id)
+    
+    if not location_service.isActive(location_id):
+        response_data = {}
+        location_service.checkOut(consumer)
+        response_data['message'] = 'Location is not active'
+        response_data['checked_out'] = True
+        response_data['status'] = 200
+        
+        return HttpResponse(HttpResponse(json.dumps(response_data), mimetype='application/json'))
+    
+    location_map = location_service.getLocationMap(consumer)
+    if not location_map:
+        logger.warn("user with user_id" + str(user_id) + " not checked in")
+        
+    if location_map and not location_map.location.pk == location_id:
+        logger.warn("user with user_id" + str(user_id) + " not checked in to correct location: " + location_id)
+
+    logger.info("Incoming request- refresh playlist with parameters device_id " + str(user_id) + ", location_id " + str(location_id))
     # Use location id to fetch current playlist
-    voting_service = VotingService()
-    playlist_items = voting_service.getPlaylistVotes(device_id, location_id)
+    playlist_service = PlaylistService()
+    playlist_items = playlist_service.getPlaylistVotes(consumer, location_id)
     playlist_items_sorted = __reorderPlaylist__(playlist_items)
-    return HttpResponse(serializers.serialize("json", playlist_items_sorted, relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
+    return HttpResponse(serializers.serialize("json", playlist_items_sorted, fields=('pk', 'playlist', 'music_track', 'name', 'album', 
+                                                                                    'artist', 'image_URL', 'track_URL', 'is_voted', 'votes', 'item_state'), relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
 
 # hack for iOS. Items must be ordered such that 0th item is currently playing, rest are ordered by votes.
 def __reorderPlaylist__(playlist_items):

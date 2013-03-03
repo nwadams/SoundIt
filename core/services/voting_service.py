@@ -129,39 +129,3 @@ class VotingService:
         logger.debug("Found consumer for device " + str(device_id) + ", returning votes.")
         return Vote.objects.filter(consumer = consumer.id)
         
-      
-    def getPlaylistVotes(self, device_id, location_id):
-        playlist_votes_list = []
-        try:
-            playlist = Playlist.objects.get(location_id = location_id)
-            consumer = Consumer.objects.get(device_id = device_id)
-            playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id, item_state__in=[2,1])
-            vote_history = Vote.objects.filter(consumer = consumer.pk, playlist_item_id__in=playlist_items)
-            for item in playlist_items:
-                playlist_item_vote = PlaylistItemVotes()
-                playlist_item_vote.playlist = playlist
-                playlist_item_vote.pk = item.pk
-                playlist_item_vote.music_track = item.music_track
-                playlist_item_vote.votes = item.votes
-                playlist_item_vote.rank_played = item.rank_played
-                playlist_item_vote.current_ranking = item.current_ranking
-                playlist_item_vote.date_created = item.date_created
-                playlist_item_vote.date_modified = item.date_modified
-                playlist_item_vote.is_deleted = item.is_deleted
-                playlist_item_vote.item_state = item.item_state
-                vote = vote_history.filter(playlist_item = item)
-                if not vote:
-                    playlist_item_vote.is_voted = False
-                else:
-                    playlist_item_vote.is_voted = True
- 
-                playlist_votes_list.append(playlist_item_vote)
-                
-        except (Playlist.DoesNotExist, KeyError):
-            raise UnableToGetVoteHistoryError("Could not find vote history for: " + str(device_id) 
-                                              + " " + str(location_id))
-        logger.debug("Found vote history and playlist items for " + str(device_id) 
-                                              + " " + str(location_id))
-        
-        return playlist_votes_list
-        

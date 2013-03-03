@@ -41,3 +41,24 @@ class LocationService:
         location_map.check_out_time = datetime.datetime.now()
         
         location_map.save()
+        
+    def isActive(self, location_id):
+        location = None
+        try: 
+            location = Location.objects.get(pk=location_id)
+        except (KeyError, Location.DoesNotExist):
+            return False
+        
+        if location.is_active:
+            return True;
+        
+        return False
+    
+    def getLocationMap(self, consumer):
+        location_map = None
+        try: 
+            location_map = LocationMap.objects.get(consumer=consumer, is_active=True)
+        except (KeyError, LocationMap.DoesNotExist):
+            return None
+        
+        return location_map
