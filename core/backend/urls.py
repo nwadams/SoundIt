@@ -34,5 +34,5 @@ urlpatterns = patterns('',
     
     url(r'^venue/getNextSong/$', views.venueGetNextSong, name='venueGetNextSong'),
     
-    url(r'^venue/testing/$', views.testing, name='venueTesting'),
+    url(r'^venue/index.html', views.index, name='venueTesting'),
 )

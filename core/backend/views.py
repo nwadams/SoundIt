@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.http import QueryDict
-from django.template import Context, loader
+from django.shortcuts import render
 import utils
 from services.customer_service import CustomerService
 from services.venue_service import VenueService
@@ -259,10 +259,7 @@ def venueGetNextSong(request):
     return HttpResponse(result.music_track.name)
 
 
-def testing(request):
+def index(request):
     music_tracks = MusicTrack.objects.all()
-    template = loader.get_template('backend/index.html')
-    context = Context({ 
-                       'music_track_list': music_tracks,
-                       })
-    return HttpResponse(template.render(context))
+    context = {'music_track_list': music_tracks}
+    return render(request, 'backend/index.html', context)

@@ -1,9 +1,20 @@
-{% if music_track_list %}
-    <ul>
-    {% for track in music_track_list %}
-    	<li>{{track.name}}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No tracks are available.</p>
-{% endif %}
+{% extends "base.html" %}
+
+{% block title %}SoundIT Venue| Currently Playing{% endblock %}
+
+{% block content %}
+	<div class="box">
+	<h2>Current Playlist</h2>
+	<div>
+	{% if music_track_list %}
+	    <ul>
+	    {% for track in music_track_list %}
+	    	<li>{{track.name}}</li>
+	    {% endfor %}
+	    </ul>
+	{% else %}
+	    <p>No tracks are available.</p>
+	{% endif %}
+	</div>
+	</div>
+{% endblock %}
