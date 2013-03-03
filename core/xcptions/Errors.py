@@ -30,7 +30,7 @@ class UserDoesNotExistError(Exception):
     def __str__(self):
         return repr(self.value)
     
-class InvalidLoginError(Exception):    
+class InvalidUserError(Exception):    
     def __init__(self, value):
         self.value = value
         

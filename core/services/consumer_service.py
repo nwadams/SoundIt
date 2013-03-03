@@ -7,7 +7,7 @@ from backend.models import Consumer
 from xcptions.Errors import InvalidAuthTokenError
 from xcptions.Errors import InvalidAuthTokenTypeError
 from xcptions.Errors import UserDoesNotExistError
-from xcptions.Errors import InvalidLoginError
+from xcptions.Errors import InvalidUserError
 import hashlib
 import random
 import logging
@@ -24,7 +24,7 @@ class ConsumerService:
             raise UserDoesNotExistError(device_id)
         
         if not consumer.pk == user_id and not consumer.api_token == api_token :
-            raise InvalidLoginError(user_id)
+            raise InvalidUserError(user_id)
         
         return consumer
 
@@ -93,6 +93,16 @@ class ConsumerService:
         consumer.save()
         return consumer
         
+    def isValidUser(self, user_id, api_token):
+        try: 
+            consumer = Consumer.objects.get(pk= user_id)
+        except (KeyError, Consumer.DoesNotExist):
+            return False
+        
+        if not consumer.api_token == api_token :
+            return True
+        
+        return True
             
     def __checkIfCurrentUser__(self, device_id):
         logger.debug("Checking if user with device id " + str(device_id) + " already exists.")

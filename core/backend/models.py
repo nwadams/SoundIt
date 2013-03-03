@@ -52,6 +52,7 @@ class Location(models.Model):
     salt = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=50)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
@@ -66,6 +67,7 @@ class Location(models.Model):
     ", salt=" + str(self.salt) + "\'" + \
     ", name='" + str(self.name) + "\'" + \
     ", location=" + str(self.location) + "\'" + \
+    ", is_active=" + str(self.is_active) + "\'" + \
     ", phone_number=" + str(self.phone_number) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
@@ -81,6 +83,7 @@ class Location(models.Model):
         result.append({"salt": self.salt})
         result.append({"name": self.name})
         result.append({"location": self.location})
+        result.append({"is_active": str(self.is_active)})
         result.append({"phone_number": self.phone_number})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})

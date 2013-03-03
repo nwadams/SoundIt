@@ -8,11 +8,13 @@ from django.core import serializers
 from django.db.models import Q
 from models import PlaylistItem
 from models import MusicTrack
+from models import Location
 import logging
 from xcptions.Errors import InvalidDeviceError
 from xcptions.Errors import UnableToVoteError
 from xcptions.Errors import PlaylistNotFoundError
 from xcptions.Errors import UnableToAddMusicError
+from xcptions.Errors import InvalidUserError
 
 logger = logging.getLogger('core.backend')
 
@@ -72,8 +74,6 @@ def login(request):
         error = utils.internalServerErrorResponse("Invalid request: Device Id, user_id and api_key required for login.")
         logger.warning("Invalid request: Device Id, user_id and api_key required for login.")
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    
-    
    
     logger.info("Incoming request- login credentials: " + str(device_id) + ' ' + str(user_id) + ' ' + str(api_token))
     
@@ -83,6 +83,23 @@ def login(request):
     
     return HttpResponse(serializers.serialize("json", consumer_list, fields=('id','device_id','api_token','email_address', 'name')), mimetype='application/json')
     
+def getLocations(request):
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
+    
+    consumer_service = ConsumerService()
+    
+    user_id = params.get('id', None)
+    api_token = params.get('api_key', None)
+    
+    if not consumer_service.isValidUser(user_id, api_token):
+        logger.warn("Not using proper user_id and api_token")
+        #raise InvalidUserError(user_id)
+    
+    return HttpResponse(HttpResponse(serializers.serialize("json", Location.objects.all().filter(is_active = True), fields=('pk', 'name', 'location', 'phone_number')), mimetype='application/json'))
 
 def addToPlaylist(request):
     
