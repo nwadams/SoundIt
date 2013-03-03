@@ -130,6 +130,6 @@ h1 {position: relative;left: -121px;margin-bottom: -63px;width: 140px;opacity: 0
 .box div {line-height: 1.5em; background: #fff; padding: 20px 30px; margin: 20px 0px;}
 #content {position: absolute;top: 0;left: 0;z-index: 70;overflow: auto;}
 #menu {position: absolute;padding-top: 40px;padding-left: 141px;z-index: 80;width: 100%;line-height: 12px;}
-#menu div {height: 100px;background: #000;opacity: 0.6;filter: alpha(opacity=60);padding: 7px 0 0 7px;}
-#menu div ul {float: left; padding: 30px 20px}
-#menu div ul li {margin: 2px}
+#menu div {height: 70px;background: #000;opacity: 0.6;filter: alpha(opacity=60);}
+#menu div ul {padding: 30px 0px}
+#menu div ul li {margin: 2px; float: left; padding: 0 15px;}
