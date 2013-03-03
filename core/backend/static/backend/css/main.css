@@ -32,6 +32,7 @@ body{font-family:"Lucida Grande",Helvetica,sans-serif;font-size:10px;cursor:defa
 ******************************************/
 html,body,#bg,#bg table,#bg td,#content{width:100%;height:100%;overflow:hidden}
 .dn {display:none;}
+.logo {font-size:20px; }
 
 /******************************************
 **  Lists: Ordered and Unordered
@@ -100,6 +101,12 @@ a.nodec:hover, .nodec {text-decoration:none;}
 .m-s {margin:2px;} /* small margin */
 .m-m {margin:4px;} /* medium margin */
 .m-l {margin:8px;} /* large margin */
+.m-basic {margin:18px;}
+.m-basic-t {margin-top:18px;}
+.m-basic-r {margin-right:18px;}
+.m-basic-b {margin-bottom:18px;}
+.m-basic-l {margin-left:18px;}
+
 
 .p-basic {padding:18px;}
 .p-basic-t {padding-top:18px;}
@@ -117,11 +124,13 @@ a.nodec:hover, .nodec {text-decoration:none;}
 ******************************************/
 h1 {position: relative;left: -141px;margin-bottom: -63px;width: 140px;opacity: 0.99;}
 
-
 /******************************************
 **  Boxes
 ******************************************/
 .box {position: absolute;top: 15%;right: 200px;width: 500px;padding-bottom: 100px;}
-.box div {line-height: 1.5em; background: #fff; padding: 20px 30px;}
+.box div {line-height: 1.5em; background: #fff; padding: 20px 30px; margin: 20px 0px;}
 #content {position: absolute;top: 0;left: 0;z-index: 70;overflow: auto;}
-#menu {position: absolute;bottom: 20px;left: 141px;z-index: 80;width: 100%;line-height: 12px;}
+#menu {position: absolute;padding-top: 40px;padding-left: 141px;z-index: 80;width: 100%;line-height: 12px;}
+#menu div {height: 100px;background: #000;opacity: 0.6;filter: alpha(opacity=60);padding: 7px 0 0 7px;}
+#menu div ul {float: left; padding: 30px 20px}
+#menu div ul li {margin: 2px}
