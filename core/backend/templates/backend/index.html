@@ -4,14 +4,34 @@
 
 {% block content %}
 	<div class="box">
-		<span class="fs-xl">Current Playlist</span>
+		<span class="fs-xl">CURRENT PLAYLIST</span>
 		<div>
 		{% if music_track_list %}
-		    <ul>
 		    {% for track in music_track_list %}
-		    	<li>{{track.name}}</li>
+		    	<div class="o-h">
+		    		<div class="playlist-item-art">
+		    			{% if track.album.image_URL %}
+		    				{% with url=track.album.image_URL %}
+		    					<img width="100" height="100" src="{{url}}">
+		    				{% endwith %}
+	    				{% else %}
+	    					{% with url="http://api.soundit.ca/static/venue/soundit_logo_small.png" %}
+	    						<img width="100" height="100" src="{{url}}">
+	    					{% endwith %}
+    					{% endif %}
+		    		</div>
+		    		<div class="playlist-item-data">
+		    			<ul>
+		    				<li>{{track.name}}</li>
+		    				<li>{{track.album.name}}</li>
+		    				<li>{{track.artist.name}}</li>
+		    			</ul>
+		    		</div>
+		    		<div class="playlist-item-votes">
+		    			10
+		    		</div>
+		    	</div>
 		    {% endfor %}
-		    </ul>
 		{% else %}
 		    <p>No tracks are available.</p>
 		{% endif %}
