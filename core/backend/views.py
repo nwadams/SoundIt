@@ -283,6 +283,6 @@ def venueGetNextSong(request):
 
 def index(request):
     music_tracks = MusicTrack.objects.all()
-    background = random.randint(0,3)
+    background = 0
     context = {'music_track_list': music_tracks, 'background': background}
     return render(request, 'backend/index.html', context)
