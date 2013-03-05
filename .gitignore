@@ -172,3 +172,11 @@ pip-log.txt
 ## Logfiles
 ############
 logfile*
+SoundIT/SoundIT Canada.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+SoundIT/SoundIT Canada.xcodeproj/xcuserdata/samuelchan.xcuserdatad/xcschemes/SoundIT.xcscheme
+SoundIT/SoundIT Canada.xcodeproj/xcuserdata/samuelchan.xcuserdatad/xcschemes/xcschememanagement.plist
+core/backend/urls.py.BACKUP.34593.py
+core/backend/urls.py.BASE.34593.py
+core/backend/urls.py.LOCAL.34593.py
+core/backend/urls.py.REMOTE.34593.py
+core/backend/urls.py.orig
