@@ -404,7 +404,9 @@ def getSongLibrary(request):
     else:
         library = MusicTrack.objects.all()
             
-    return HttpResponse(serializers.serialize("json", library, relations={'album', 'category', 'artist'}), mimetype='application/json')
+    return HttpResponse(serializers.serialize("json", library, fields= ('name', 'track_URL', 'artist', 'category', 'album'),
+        relations={'album' : {'fields':('name', 'image_URL')}, 'category'  : {'fields':('name')}, 
+        'artist'  : {'fields':('name')},}), mimetype='application/json')
 
 
 def remove_items_in_playlist(library, upcoming_playlist):
