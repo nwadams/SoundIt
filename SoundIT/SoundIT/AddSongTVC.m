@@ -157,9 +157,12 @@
     [[API sharedInstance] callAPIMethod:@"getLibrary"
                              withParams:params
                            onCompletion:^(NSArray *json){
-                               NSLog(@"%@", [json description]);
+                               //debug
+                               NSLog(@"getLibrary API call json response is:%@", [json description]);
+                               NSLog(@"json.count reads:%i", json.count);
                                
-                               if([[json objectAtIndex:0] objectForKey:@"Error Message"] != nil){
+                               if(json.count != 0
+                                  && [[json objectAtIndex:0] objectForKey:@"Error Message"] != nil){
                                    //handle error
                                    [UIAlertView error:(NSString *)[[json objectAtIndex:0] valueForKey:@"Error Message"]];
                                    
@@ -171,6 +174,7 @@
                                    
                                    [self.loadingIndicatorView stopAnimating];
                                    self.overlayView.hidden = YES;
+                                   
                                }
                                
                            }];
