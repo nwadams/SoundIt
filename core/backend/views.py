@@ -9,6 +9,7 @@ from services.playlist_service import PlaylistService
 from django.core import serializers
 from django.db.models import Q
 from models import PlaylistItem
+from models import MusicCategory
 from models import MusicTrack
 from models import Location
 import json
@@ -94,6 +95,24 @@ def login(request):
     
     return HttpResponse(json_obj, mimetype='application/json')
     
+def getCategories(request):
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
+    
+    consumer_service = ConsumerService()
+    
+    user_id = params.get('user_id', None)
+    api_token = params.get('api_key', None)
+    
+    if not consumer_service.isValidUser(user_id, api_token):
+        logger.warn("Not using proper user_id and api_token")
+        #raise InvalidUserError(user_id)
+        
+    return HttpResponse(HttpResponse(serializers.serialize("json", MusicCategory.objects.all(), fields=('name')), mimetype='application/json'))
+   
 def getLocations(request):
     params = None
     if (request.method == 'GET'):

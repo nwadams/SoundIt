@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     
     url(r'^getLocations/$', views.getLocations, name='getLocation'),
     
+    url(r'^getCategories/$', views.getCategories, name='getCategories'),
+    
     url(r'^checkInLocation/$', views.checkInLocation, name='checkInLocation'),
     
     url(r'^checkOutLocation/$', views.checkOutLocation, name='checkOutLocation'),
