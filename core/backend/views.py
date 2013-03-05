@@ -422,7 +422,9 @@ def getSongLibrary(request):
         library = MusicTrack.objects.filter(**kwargs)
     else:
         library = MusicTrack.objects.all()
-            
+        
+    library = sorted(library, key=lambda MusicTrack: MusicTrack.name)
+      
     return HttpResponse(serializers.serialize("json", library, fields= ('name', 'track_URL', 'artist', 'category', 'album'),
         relations={'album' : {'fields':('name', 'image_URL')}, 'category'  : {'fields':('name')}, 
         'artist'  : {'fields':('name')},}), mimetype='application/json')
