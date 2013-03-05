@@ -365,22 +365,46 @@ def __reorderPlaylist__(playlist_items):
         reordered_list = playlist_items
     return reordered_list
 
-def getLibrary(request):
-    #error = utils.internalServerErrorResponse("Error, disabled")
-    #return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    try:
-        device_id = request.GET['device_id']
-        location_id = request.GET['location_id']
-    except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for requesting library.")
-        logger.warning("Invalid request: Device Id and Location Id required for requesting library.")
-        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
-    library = MusicTrack.objects.all()
-    upcoming_playlist = PlaylistItem.objects.filter(Q(item_state = 2) | Q(item_state=1))
-    current_playlist = remove_items_in_playlist(library, upcoming_playlist)
+def getSongLibrary(request):
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
+    
+    consumer_service = ConsumerService()
+    
+    user_id = params.get('user_id', None)
+    api_token = params.get('api_key', None)
+    
+    if not consumer_service.isValidUser(user_id, api_token):
+        logger.warn("Not using proper user_id and api_token")
+        #raise InvalidUserError(user_id)
+    
+    popular = params.get('popular', False)
+    search_string = params.get('search_string', None)
+    category = params.get('category', None)
+    
+    logger.info("Incoming request- get library with parameters device_id " + str(user_id))
+
+    library = None
+    kwargs = {}
+        
+    if popular:
+        kwargs['is_popular'] = True
+        
+    if search_string:
+        kwargs['name__icontains'] = search_string
+        
+    if category:
+        kwargs['category_id'] = category
+
+    if len(kwargs.keys()) > 0:
+        library = MusicTrack.objects.filter(**kwargs)
+    else:
+        library = MusicTrack.objects.all()
             
-    return HttpResponse(serializers.serialize("json", current_playlist, relations={'album', 'category', 'artist'}), mimetype='application/json')
+    return HttpResponse(serializers.serialize("json", library, relations={'album', 'category', 'artist'}), mimetype='application/json')
 
 
 def remove_items_in_playlist(library, upcoming_playlist):

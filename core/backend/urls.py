@@ -27,13 +27,7 @@ urlpatterns = patterns('',
     url(r'^refreshPlaylist/$', views.refreshPlaylist, name='refreshPlaylist'),
    
     # ex: /getLibrary?device_id=id&location_id=id
-    url(r'^getLibrary/$', views.getLibrary, name='getLibrary'),
-    
-    # ex: /getVoteHistory?device_id=id&location_id=id
-    url(r'^getVoteHistory/$', views.getVoteHistory, name='getVoteHistory'),
+    url(r'^getSongLibrary/$', views.getSongLibrary, name='getSongLibrary'),
     
     url(r'^venue/getNextSong/$', views.venueGetNextSong, name='venueGetNextSong'),
-    
-    # ex: /searchLibraryForString?device_id=4331&location_id=thePit&string_to_search=Carly%20Rae%20Jenson
-    url(r'^searchLibraryForString/$', views.searchLibraryForString, name='searchLibraryForString'),
 )

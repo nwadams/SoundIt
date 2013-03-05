@@ -211,6 +211,7 @@ class MusicTrack(models.Model):
     track_URL = models.CharField(max_length=255)
     track_latest_rev = models.IntegerField(null=True)
     category = models.ForeignKey(MusicCategory)
+    is_popular = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
@@ -224,6 +225,7 @@ class MusicTrack(models.Model):
     ", track_URL=" + self.track_URL + "\'" + \
     ", track_latest_rev=" + str(self.track_latest_rev) + "\'" + \
     ", category=" + str(self.category) + "\'" + \
+    ", is_popular=" + str(self.is_deleted) + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -238,6 +240,7 @@ class MusicTrack(models.Model):
         result.append({"track_URL": self.track_URL})
         result.append({"track_latest_rev": self.track_latest_rev})
         result.append({"category": self.category})
+        result.append({"is_popular": str(self.is_deleted)})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})

@@ -84,7 +84,7 @@ class PlaylistService:
         
         # Check if current playlist already has that track. Raise exception if so.
         for playlist_item in playlist_items:
-            if playlist_item.music_track == music_track:
+            if playlist_item.music_track == music_track and playlist_item.item_state > 0:
                 raise TrackAlreadyInPlaylistError("Music track: " + str(music_track_id) + " is already in playlist: " + str(playlist.id))
         
         # If not already in playlist, add it.
