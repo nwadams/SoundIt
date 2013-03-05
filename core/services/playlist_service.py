@@ -56,3 +56,49 @@ class PlaylistService:
         
         return playlist_votes_list
         
+
+    def addToPlaylist(self, device_id, location_id, music_track_id):
+        
+        try :
+            location = Location.objects.get(pk=location_id)
+            music_track = MusicTrack.objects.get(pk=music_track_id)
+        except KeyError:
+            raise UnableToAddMusicError("Could not add music track " + str(music_track_id) + ", location " + str(location_id) + ", consumer " + str(device_id))
+        except Location.DoesNotExist:
+            raise UnableToAddMusicError("Could not find location for id " + str(location_id))
+        except Consumer.DoesNotExist:
+            raise UnableToAddMusicError("Could not find consumer for device id " + str(device_id))
+        except MusicTrack.DoesNotExist:
+            raise UnableToAddMusicError("Could not find music track for id " + str(music_track_id))
+        
+        # Fetch current playlist for that location.
+        try:
+            playlist = Playlist.objects.get(location_id=location.id)
+        except Playlist.DoesNotExist:
+            raise UnableToAddMusicError("Could not find playlist for location " + str(location.id))
+        playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id, music_track_id = music_track_id)
+        
+        # TODO: verify that this is redundant. Remove.
+        if playlist == None:
+            raise PlaylistNotFoundError("Could not find playlist for location id: " + str(location_id))
+        
+        # Check if current playlist already has that track. Raise exception if so.
+        for playlist_item in playlist_items:
+            if playlist_item.music_track == music_track:
+                raise TrackAlreadyInPlaylistError("Music track: " + str(music_track_id) + " is already in playlist: " + str(playlist.id))
+        
+        # If not already in playlist, add it.
+        logger.debug("Creating new playlist item with music track " + str(music_track_id) + " for location " + str(location.id))
+        new_playlist_item = PlaylistItem()
+        new_playlist_item.playlist = playlist
+        new_playlist_item.music_track = music_track
+        new_playlist_item.votes = 0
+        # TODO: This is weird. Fix.
+        new_playlist_item.rank_played = -1
+        # Assuming playlist starts from 1 and goes to n. Not 0 to n-1.
+        new_playlist_item.current_ranking = len(playlist_items) + 1
+        new_playlist_item.item_state = 2
+        new_playlist_item.save()
+        playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id)
+        return playlist_items
+        

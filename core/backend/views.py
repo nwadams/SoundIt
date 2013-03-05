@@ -174,27 +174,55 @@ def checkOutLocation(request):
     return HttpResponse(HttpResponse(json.dumps(response_data), mimetype='application/json')) 
 
 def addToPlaylist(request):
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
     
-    # Check input parameters.
-    try:
-        device_id = request.GET['device_id']
-        music_track_id = request.GET['music_track_id']
-        location_id = request.GET['location_id']
-    except KeyError:
-        error = utils.internalServerErrorResponse("Invalid request: Customer id, location id and track id required for adding to playlist.")
-        logger.warning("Invalid request: Customer id, location id and track id required for adding to playlist.")
-        return HttpResponse( simplejson.dumps(error), mimetype='application/json')
-    logger.info("Incoming request- add to playlist with parameters device_id " + str(device_id) + ", music_track_id " + str(music_track_id) + ", location_id " + str(location_id))
-    voting_service = VotingService()
+    location_service = LocationService()
+    consumer_service = ConsumerService()
+    
+    user_id = params.get('user_id', None)
+    api_token = params.get('api_key', None)
+    
+    location_id = params.get('location_id', None)
+    music_track_id = params.get('music_track_id', None)
+    
+    if not location_id:
+        raise InvalidLocationError(location_id)
+    
+    if not music_track_id:
+        raise MusicTrackNotFoundError(music_track_id)
+        
+    consumer = consumer_service.isValidUser(user_id, api_token)
+    
+    if not consumer:
+        raise InvalidUserError(user_id)
+    
+    if not location_service.isActive(location_id):
+        response_data = {}
+        location_service.checkOut(consumer)
+        response_data['message'] = 'Location is not active'
+        response_data['checked_out'] = True
+        response_data['status'] = 200
+        
+        return HttpResponse(HttpResponse(json.dumps(response_data), mimetype='application/json'))
+    
+    logger.info("Incoming request- add to playlist with parameters device_id " + str(user_id) + ", music_track_id " + str(music_track_id) + ", location_id " + str(location_id))
+
+    playlist_service = PlaylistService()
+    
     try: 
-        updated_playlist_items = voting_service.addToPlaylist(device_id, location_id, music_track_id)
+        playlist_service.addToPlaylist(consumer, location_id, music_track_id)
         logger.info("added music track " + str(music_track_id) + " to playlist for location " + str(location_id))
     # Improve exception handling.
     except (KeyError, PlaylistNotFoundError, UnableToAddMusicError) as exception:
         error = utils.internalServerErrorResponse(exception.value)
         logger.error(exception.value)
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-    return HttpResponse(serializers.serialize("json", updated_playlist_items, relations={'music_track': {'relations': ('album', 'category', 'artist', )}}), mimetype='application/json')
+    
+    return __refreshPlaylistHelper__(consumer, location_id)
 
 def voteUp(request):
     params = None
