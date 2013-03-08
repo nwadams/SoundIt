@@ -5,7 +5,7 @@
 {% block content %}
 	<div class="box">
 		<span class="fs-xl">CURRENT PLAYLIST</span>
-		<div class="current-playlist-box">
+		<div id="flipbox" class="current-playlist-box m-basic-t">
 		{% if music_track_list %}
 		    {% for track in music_track_list %}
 		    	<div class="o-h {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
@@ -36,5 +36,14 @@
 		    <p>No tracks are available.</p>
 		{% endif %}
 		</div>
+		<script type="text/javascript">
+		$(document).ready(function() {
+	    	$("#flipbox").bind("click", function() {
+	    		$("#flipbox").flip({
+	    			direction: 'rl'
+	    		});
+	    	});
+    	});
+    	</script>
 	</div>
 {% endblock %}
