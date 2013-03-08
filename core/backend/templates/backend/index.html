@@ -5,10 +5,10 @@
 {% block content %}
 	<div class="box">
 		<span class="fs-xl">CURRENT PLAYLIST</span>
-		<div>
+		<div class="current-playlist-box">
 		{% if music_track_list %}
 		    {% for track in music_track_list %}
-		    	<div class="o-h">
+		    	<div class="o-h {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
 		    		<div class="playlist-item-art">
 		    			{% if track.album.image_URL %}
 		    				{% with url=track.album.image_URL %}
@@ -20,11 +20,11 @@
 	    					{% endwith %}
     					{% endif %}
 		    		</div>
-		    		<div class="playlist-item-data">
+		    		<div class="playlist-item-data fs-m">
 		    			<ul>
-		    				<li>{{track.name}}</li>
-		    				<li>{{track.album.name}}</li>
-		    				<li>{{track.artist.name}}</li>
+		    				<li class="p-small-t">{{track.name}}</li>
+		    				<li class="p-small-t">{{track.album.name}}</li>
+		    				<li class="p-small-t">{{track.artist.name}}</li>
 		    			</ul>
 		    		</div>
 		    		<div class="playlist-item-votes">
