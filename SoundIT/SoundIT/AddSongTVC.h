@@ -11,17 +11,17 @@
 #import "AddSongCell.h"
 #import "UIAlertView+error.h"
 
-@interface AddSongTVC : UITableViewController <UIAlertViewDelegate, UISearchBarDelegate, UISearchDisplayDelegate>
+@interface AddSongTVC : UITableViewController <UIAlertViewDelegate, UISearchBarDelegate>
 
 @property NSArray *addSongListItems;
 @property UIActivityIndicatorView *loadingIndicatorView;
 @property UIView *overlayView;
 
-@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-
 -(void)refreshAddSongList;
 -(void)searchLibraryFor:(NSString *)songName;
 
 - (IBAction)didPressRefreshAddSongList:(id)sender;
+
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @end

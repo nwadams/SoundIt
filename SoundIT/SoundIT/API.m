@@ -11,10 +11,10 @@
 #import "SBJson.h"
 
 //the web location of the service
-#define kAPIHost @"http://api.soundit.ca"//change to ip or uploading of photos
-#define kAPIPath @"backend"
-//#define kAPIHost @"http://127.0.0.1:8000"
+//#define kAPIHost @"http://api.soundit.ca"//change to ip or uploading of photos
 //#define kAPIPath @"backend"
+#define kAPIHost @"http://127.0.0.1:8000"
+#define kAPIPath @"backend"
 
 @implementation API
 @synthesize user;
