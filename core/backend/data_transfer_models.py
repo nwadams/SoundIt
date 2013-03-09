@@ -2,7 +2,6 @@ from django.db import models
 from django.utils import simplejson
 from backend.models import Playlist
 from backend.models import MusicTrack
-from backend.models import Customer
 
 PLAYLIST_ITEM_STATUS = (
                         (0, 'PLAYED'),

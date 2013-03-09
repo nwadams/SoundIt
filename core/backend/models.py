@@ -1,44 +1,15 @@
 from django.db import models
 from django.utils import simplejson
 
-class Customer(models.Model):
-    # Setting null=True for email address since we're not asking for it yet.
+class Consumer(models.Model):
     email_address = models.CharField(max_length=255, null=True)
-    device_id = models.CharField(max_length=255, null=True)
+    name = models.CharField(max_length=255, null=True)
+    device_id = models.CharField(max_length=255, unique=True)
     password = models.CharField(max_length=255)
     salt = models.CharField(max_length=255)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True, null=True)
-    is_deleted = models.BooleanField(default=False)
-    
-    def __unicode__(self):
-        return "Customer{" + \
-    "id=" + str(self.pk) + \
-    ", email_address='" + str(self.email_address) + '\'' + \
-    ", device_id='" + str(self.device_id) + '\'' + \
-    ", password='" + self.password + "\'" + \
-    ", salt=" + str(self.salt) + "\'" + \
-    ", date_created=" + str(self.date_created) + \
-    ", date_modified=" + str(self.date_modified) + \
-    ", is_deleted=" + str(self.is_deleted) + \
-    "}"
-
-    def toDict(self):
-        result = []
-        result.append({"id": str(self.pk)})
-        result.append({"email_address": self.email_address})
-        result.append({"device_id": self.device_id})
-        result.append({"password": self.password})
-        result.append({"salt": self.salt})
-        result.append({"date_created": str(self.date_created)})
-        result.append({"date_modified": str(self.date_modified)})
-        result.append({"is_deleted": str(self.is_deleted)})
-        return result
-
-class Consumer(models.Model):
-    customer = models.ForeignKey(Customer)
-    facebook_id = models.IntegerField(null=True)
-    device_id = models.IntegerField()
+    api_token = models.CharField(max_length=255)
+    facebook_id = models.CharField(max_length=255, null=True)
+    google_id = models.CharField(max_length=255, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
@@ -46,9 +17,14 @@ class Consumer(models.Model):
     def __unicode__(self):
         return "Consumer{" + \
     "id=" + str(self.pk) + \
-    ", customer='" + self.customer + '\'' + \
-    ", facebook_id='" + self.facebook_id + "\'" + \
-    ", device_id=" + self.device_id + "\'" + \
+    ", email_address='" + self.email_address + '\'' + \
+    ", name='" + str(self.name) + "\'" + \
+    ", device_id='" + str(self.device_id) + '\'' + \
+    ", password='" + self.password + "\'" + \
+    ", salt=" + self.salt + "\'" + \
+    ", api_token=" + self.api_token + "\'" + \
+    ", facebook_id='" + str(self.facebook_id) + "\'" + \
+    ", google_id='" + str(self.google_id) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -57,18 +33,26 @@ class Consumer(models.Model):
     def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
-        result.append({"customer": self.customer})
-        result.append({"facebook_id": self.facebook_id})
+        result.append({"email_address": self.email_address})
         result.append({"device_id": self.device_id})
+        result.append({"password": self.password})
+        result.append({"salt": self.salt})
+        result.append({"api_token": self.api_token})
+        result.append({"facebook_id": str(self.facebook_id)})
+        result.append({"google_id": str(self.google_id)})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})
         return simplejson.dumps(result)
     
 class Location(models.Model):
-    customer = models.ForeignKey(Customer)
+    email_address = models.CharField(max_length=255, null=True)
+    device_id = models.CharField(max_length=255, null=True)
+    password = models.CharField(max_length=255)
+    salt = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=False)
     phone_number = models.CharField(max_length=50)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
@@ -77,9 +61,13 @@ class Location(models.Model):
     def __unicode__(self):
         return "Location{" + \
     "id=" + str(self.pk) + \
-    ", customer='" + str(self.customer) + '\'' + \
+    ", email_address='" + str(self.email_address) + '\'' + \
+    ", device_id='" + str(self.device_id) + '\'' + \
+    ", password='" + self.password + "\'" + \
+    ", salt=" + str(self.salt) + "\'" + \
     ", name='" + str(self.name) + "\'" + \
     ", location=" + str(self.location) + "\'" + \
+    ", is_active=" + str(self.is_active) + "\'" + \
     ", phone_number=" + str(self.phone_number) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
@@ -89,10 +77,50 @@ class Location(models.Model):
     def toDict(self):
         result = []
         result.append({"id": str(self.pk)})
-        result.append({"customer": self.customer})
+        result.append({"email_address": self.email_address})
+        result.append({"device_id": self.device_id})
+        result.append({"password": self.password})
+        result.append({"salt": self.salt})
         result.append({"name": self.name})
         result.append({"location": self.location})
+        result.append({"is_active": str(self.is_active)})
         result.append({"phone_number": self.phone_number})
+        result.append({"date_created": str(self.date_created)})
+        result.append({"date_modified": str(self.date_modified)})
+        result.append({"is_deleted": str(self.is_deleted)})
+        return simplejson.dumps(result)
+    
+class LocationMap(models.Model):
+    consumer = models.ForeignKey(Consumer)
+    location = models.ForeignKey(Location)
+    is_active = models.BooleanField(default=False)
+    check_in_time = models.DateTimeField(auto_now_add=True, null=True)
+    check_out_time = models.DateTimeField(auto_now=False, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True, null=True)
+    is_deleted = models.BooleanField(default=False)
+    
+    def __unicode__(self):
+        return "Location{" + \
+    "id=" + str(self.pk) + \
+    ", consumer='" + str(self.consumer) + '\'' + \
+    ", location='" + str(self.location) + '\'' + \
+    ", is_active=" + str(self.is_active) + \
+    ", check_in_time=" + str(self.check_in_time) + \
+    ", check_out_time=" + str(self.check_out_time) + \
+    ", date_created=" + str(self.date_created) + \
+    ", date_modified=" + str(self.date_modified) + \
+    ", is_deleted=" + str(self.is_deleted) + \
+    "}"  
+
+    def toDict(self):
+        result = []
+        result.append({"id": str(self.pk)})
+        result.append({"consumer": self.consumer})
+        result.append({"location": self.location})
+        result.append({"is_active": str(self.is_active)})
+        result.append({"check_in_time": str(self.check_in_time)})
+        result.append({"check_out_time": str(self.check_out_time)})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})
@@ -183,6 +211,7 @@ class MusicTrack(models.Model):
     track_URL = models.CharField(max_length=255)
     track_latest_rev = models.IntegerField(null=True)
     category = models.ForeignKey(MusicCategory)
+    is_popular = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
@@ -196,6 +225,7 @@ class MusicTrack(models.Model):
     ", track_URL=" + self.track_URL + "\'" + \
     ", track_latest_rev=" + str(self.track_latest_rev) + "\'" + \
     ", category=" + str(self.category) + "\'" + \
+    ", is_popular=" + str(self.is_popular) + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -210,6 +240,7 @@ class MusicTrack(models.Model):
         result.append({"track_URL": self.track_URL})
         result.append({"track_latest_rev": self.track_latest_rev})
         result.append({"category": self.category})
+        result.append({"is_popular": str(self.is_popular)})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})
@@ -217,6 +248,7 @@ class MusicTrack(models.Model):
     
 class Playlist(models.Model):
     location = models.ForeignKey(Location)
+    is_active = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
@@ -225,6 +257,7 @@ class Playlist(models.Model):
         return "Playlist{" + \
     "id=" + str(self.pk) + \
     ", location='" + str(self.location) + '\'' + \
+    ", is_active=" + str(self.is_active) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -234,6 +267,7 @@ class Playlist(models.Model):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"location": self.location})
+        result.append({"is_active": str(self.is_active)})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})
@@ -281,7 +315,7 @@ class PlaylistItem(models.Model):
 
 class Vote(models.Model):
     playlist_item = models.ForeignKey(PlaylistItem)
-    customer = models.ForeignKey(Customer)
+    consumer = models.ForeignKey(Consumer)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
@@ -290,7 +324,7 @@ class Vote(models.Model):
         return "Vote{" + \
     "id=" + str(self.pk) + \
     ", playlist_item='" + str(self.playlist_item) + '\'' + \
-    ", customer='" + str(self.customer) + '\'' + \
+    ", consumer='" + str(self.consumer) + '\'' + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -300,7 +334,7 @@ class Vote(models.Model):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"playlist_item": self.playlist_item})
-        result.append({"customer": self.customer})
+        result.append({"consumer": self.consumer})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})

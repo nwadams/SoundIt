@@ -9,35 +9,31 @@ urlpatterns = patterns('',
 
     # ex: /login?user_id=id&password=pwd
     # Needs to be deprecated for now.
-    # url(r'^login/$', views.login, name='login'),
+    url(r'^login/$', views.login, name='login'),
+    
+    url(r'^getLocations/$', views.getLocations, name='getLocation'),
+    
+    url(r'^getCategories/$', views.getCategories, name='getCategories'),
+    
+    url(r'^checkIn/$', views.checkInLocation, name='checkInLocation'),
+    
+    url(r'^checkOut/$', views.checkOutLocation, name='checkOutLocation'),
     
     # ex: /addToPlaylist?user_id=id&location_id=id&music_track_id=id
     url(r'^addToPlaylist/$', views.addToPlaylist, name='addToPlaylist'),
-
-    # ex: /voteUp?device_id=id&location_id=id&music_track_id=id
-    url(r'^voteUpAndroid/$', views.voteUpAndroid, name='voteUp'),
     
     # ex: /voteUp?device_id=id&location_id=id&music_track_id=id
     url(r'^voteUp/$', views.voteUp, name='voteUp'),
     
     # ex: /refreshPlaylist?user_id=id&location_id=id
     url(r'^refreshPlaylist/$', views.refreshPlaylist, name='refreshPlaylist'),
-    url(r'^refreshPlaylistAndroid/$', views.refreshPlaylistAndroid, name='refreshPlaylistAndroid'),
-    url(r'^refreshPlaylistiOS/$', views.refreshPlaylistiOS, name='refreshPlaylistiOS'),
-
-    
+   
     # ex: /getLibrary?device_id=id&location_id=id
-    url(r'^getLibrary/$', views.getLibrary, name='getLibrary'),
-    
-    # ex: /getVoteHistory?device_id=id&location_id=id
-    url(r'^getVoteHistory/$', views.getVoteHistory, name='getVoteHistory'),
+    url(r'^getSongLibrary/$', views.getSongLibrary, name='getSongLibrary'),
     
     url(r'^venue/getNextSong/$', views.venueGetNextSong, name='venueGetNextSong'),
     
     url(r'^venue/index.html', views.index, name='venueTesting'),
-    
-    # ex: /searchLibraryForString?device_id=4331&location_id=thePit&string_to_search=Carly%20Rae%20Jenson
-    url(r'^searchLibraryForString/$', views.searchLibraryForString, name='searchLibraryForString'),
     
     url(r'^getFormattedLibrary/$', views.getFormattedLibrary, name='getFormattedLibrary'),
     
