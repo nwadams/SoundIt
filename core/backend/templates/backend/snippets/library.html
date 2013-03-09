@@ -1,0 +1,28 @@
+<div id="library-flipbox-data">
+	{% if library %}
+	{% for track in library %}
+		<div class="o-h {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+			<div class="playlist-item-art">
+				{% if track.album.image_URL %}
+    				{% with url=item.music_track.album.image_URL %}
+    					<img width="100" height="100" src="{{url}}">
+    				{% endwith %}
+				{% else %}
+					{% with url="http://api.soundit.ca/static/venue/soundit_logo_small.png" %}
+						<img width="100" height="100" src="{{url}}">
+					{% endwith %}
+				{% endif %}
+			</div>
+			<div class="library-item-data fs-m">
+				<ul>
+					<li class="p-small-t">{{track.name}}</li>
+					<li class="p-small-t">{{track.album.name}}</li>
+					<li class="p-small-t">{{track.artist.name}}</li>
+				</ul>
+			</div>
+		</div>
+	{% endfor %}
+	{% else %}
+		<p>No other tracks are available.</p>	
+	{% endif %}
+</div>

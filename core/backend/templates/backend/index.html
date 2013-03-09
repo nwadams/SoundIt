@@ -5,42 +5,101 @@
 {% block content %}
 	<div class="box">
 		<span class="fs-xl">CURRENT PLAYLIST</span>
-		<div id="flipbox" class="current-playlist-box m-basic-t">
-		{% if music_track_list %}
-		    {% for track in music_track_list %}
-		    	<div class="o-h {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
-		    		<div class="playlist-item-art">
-		    			{% if track.album.image_URL %}
-		    				{% with url=track.album.image_URL %}
-		    					<img width="100" height="100" src="{{url}}">
-		    				{% endwith %}
-	    				{% else %}
-	    					{% with url="http://api.soundit.ca/static/venue/soundit_logo_small.png" %}
-	    						<img width="100" height="100" src="{{url}}">
-	    					{% endwith %}
-    					{% endif %}
-		    		</div>
-		    		<div class="playlist-item-data fs-m">
-		    			<ul>
-		    				<li class="p-small-t">{{track.name}}</li>
-		    				<li class="p-small-t">{{track.album.name}}</li>
-		    				<li class="p-small-t">{{track.artist.name}}</li>
-		    			</ul>
-		    		</div>
-		    		<div class="playlist-item-votes">
-		    			10
-		    		</div>
-		    	</div>
-		    {% endfor %}
-		{% else %}
-		    <p>No tracks are available.</p>
-		{% endif %}
+		<div id="playlist-flipbox" class="current-playlist-box m-basic-t">
+			<div id="playlist-flipbox-data">
+			{% if playlist_item_list %}
+			    {% for item in playlist_item_list %}
+			    	<div class="o-h {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+			    		<div class="playlist-item-art">
+			    			{% if item.music_track.album.image_URL %}
+			    				{% with url=item.music_track.album.image_URL %}
+			    					<img width="100" height="100" src="{{url}}">
+			    				{% endwith %}
+		    				{% else %}
+		    					{% with url="http://api.soundit.ca/static/venue/soundit_logo_small.png" %}
+		    						<img width="100" height="100" src="{{url}}">
+		    					{% endwith %}
+	    					{% endif %}
+			    		</div>
+			    		<div class="playlist-item-data fs-m">
+			    			<ul>
+			    				<li class="p-small-t">{{item.music_track.name}}</li>
+			    				<li class="p-small-t">{{item.music_track.album.name}}</li>
+			    				<li class="p-small-t">{{item.music_track.artist.name}}</li>
+			    			</ul>
+			    		</div>
+			    		<div class="playlist-item-votes">
+			    			10
+			    		</div>
+			    	</div>
+			    {% endfor %}
+			{% else %}
+			    <p>No items currently in playlist.</p>
+			{% endif %}
+			</div>
+		</div>
+		<div id="library-flipbox" class="library-box m-basic-t">
+			<div id="library-flipbox-data" class="dn">
+				{% if music_track_list %}
+				{% for track in music_track_list %}
+					<div class="o-h {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+						<div class="playlist-item-art">
+							{% if track.album.image_URL %}
+			    				{% with url=item.music_track.album.image_URL %}
+			    					<img width="100" height="100" src="{{url}}">
+			    				{% endwith %}
+		    				{% else %}
+		    					{% with url="http://api.soundit.ca/static/venue/soundit_logo_small.png" %}
+		    						<img width="100" height="100" src="{{url}}">
+		    					{% endwith %}
+	    					{% endif %}
+						</div>
+						<div class="playlist-item-data fs-m">
+							<ul>
+								<li class="p-small-t">{{track.name}}</li>
+								<li class="p-small-t">{{track.album.name}}</li>
+								<li class="p-small-t">{{track.artist.name}}</li>
+							</ul>
+						</div>
+					</div>
+				{% endfor %}
+				{% else %}
+					<p>No other tracks are available.</p>	
+				{% endif %}
+			</div>
 		</div>
 		<script type="text/javascript">
 		$(document).ready(function() {
-	    	$("#flipbox").bind("click", function() {
-	    		$("#flipbox").flip({
-	    			direction: 'rl'
+	    	$("#playlist-flipbox").bind("click", function() {
+	    		$("#playlist-flipbox").flip({
+	    			direction: 'rl',
+	    			onBefore: function() {
+	    				$("#playlist-flipbox-data").hide();
+	    			},
+	    			onAnimation: function() {
+	    				// Make API call and update div.
+	    				$.get("http://localhost:11080/backend/getFormattedLibrary/?location_id=2&device_id=1234", function(data) {
+	    					$("#library-flipbox-data").html(data);
+	    				});
+	    			},
+	    			onEnd: function() {
+	    				$("#library-flipbox-data").show();
+	    			}
+	    		});
+	    	});
+	    	
+	    	$("#library-flipbox").bind("click", function() {
+	    		$("#library-flipbox").flip({
+	    			direction: 'rl',
+	    			onBefore: function() {
+	    				$("#library-flipbox-data").hide();
+	    			},
+	    			onAnimation: function() {
+	    				// Make API call and update div.
+	    			},
+	    			onEnd: function() {
+	    				$("#playlist-flipbox-data").show();
+	    			}
 	    		});
 	    	});
     	});

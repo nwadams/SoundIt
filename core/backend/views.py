@@ -75,22 +75,22 @@ def addToPlaylist(request):
 # OUTPUT - JSON response with list of songs to display
 # DESCRIPTION - API method that takes a search request from Android/iOS app 
 def searchLibraryForString(request):
-	#check inputs
-	try:
-		device_id = request.GET['device_id']
-		location_id = request.GET['location_id']
-		string_to_search = request.GET['string_to_search']
-		
-	except KeyError:
-		error = utils.internalServerErrorResponse("Invalid request: you require device_id, location_id and string_to_search to search for songs in the Library.")
-		logger.warning("Invalid request: device_id, location_id, and string_to_search required for adding to a Library.")
-		return HttpResponse(simplejson.dumps(error), mimetype='application/json')
-		
-	logger.info("Incoming request - searchLibraryForString with params device_id:" + str(device_id) + ",location_id:" + str(location_id) + "string_to_search:" + str(string_to_search) )
-	
-	#for now do a case insensitive string match
-	responseLibrary = MusicTrack.objects.filter(Q(name__icontains=string_to_search))
-	return HttpResponse(serializers.serialize("json", responseLibrary, relations={'album', 'category', 'artist'}), mimetype='application/json')
+    #check inputs
+    try:
+        device_id = request.GET['device_id']
+        location_id = request.GET['location_id']
+        string_to_search = request.GET['string_to_search']
+
+    except KeyError:
+        error = utils.internalServerErrorResponse("Invalid request: you require device_id, location_id and string_to_search to search for songs in the Library.")
+        logger.warning("Invalid request: device_id, location_id, and string_to_search required for adding to a Library.")
+        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+
+    logger.info("Incoming request - searchLibraryForString with params device_id:" + str(device_id) + ",location_id:" + str(location_id) + "string_to_search:" + str(string_to_search) )
+
+    #for now do a case insensitive string match
+    responseLibrary = MusicTrack.objects.filter(Q(name__icontains=string_to_search))
+    return HttpResponse(serializers.serialize("json", responseLibrary, relations={'album', 'category', 'artist'}), mimetype='application/json')
 
 def voteUpAndroid(request):
     
@@ -223,6 +223,15 @@ def __reorderPlaylistForIOSvotes__(playlist_items):
     return reordered_list
 
 def getLibrary(request):
+    library = __requestLibrary__(request)
+    return HttpResponse(serializers.serialize("json", library, relations={'album', 'category', 'artist'}), mimetype='application/json')
+
+def getFormattedLibrary(request):
+    library = __requestLibrary__(request)
+    context = {'library': library}
+    return render(request, 'backend/snippets/library.html', context)
+
+def __requestLibrary__(request):
     #error = utils.internalServerErrorResponse("Error, disabled")
     #return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     try:
@@ -232,13 +241,11 @@ def getLibrary(request):
         error = utils.internalServerErrorResponse("Invalid request: Device Id and Location Id required for requesting library.")
         logger.warning("Invalid request: Device Id and Location Id required for requesting library.")
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+
     logger.info("Incoming request- get library with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
     library = MusicTrack.objects.all()
     upcoming_playlist = PlaylistItem.objects.filter(Q(item_state = 2) | Q(item_state=1))
-    current_playlist = remove_items_in_playlist(library, upcoming_playlist)
-            
-    return HttpResponse(serializers.serialize("json", current_playlist, relations={'album', 'category', 'artist'}), mimetype='application/json')
-
+    return remove_items_in_playlist(library, upcoming_playlist)
 
 def remove_items_in_playlist(library, upcoming_playlist):
     
@@ -283,6 +290,7 @@ def venueGetNextSong(request):
 
 def index(request):
     music_tracks = MusicTrack.objects.all()
+    playlist_items = PlaylistItem.objects.all()
     background = 0
-    context = {'music_track_list': music_tracks, 'background': background}
+    context = {'music_track_list': music_tracks, 'playlist_item_list': playlist_items, 'background': background}
     return render(request, 'backend/index.html', context)
