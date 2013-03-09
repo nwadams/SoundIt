@@ -3,6 +3,13 @@
 {% block title %}SoundIT Venue| Currently Playing{% endblock %}
 
 {% block content %}
+	<div class="audio-box">
+		<audio id="player" controls height="100" width="100">
+		  	<source src="donomar.m4a" type="audio/mpeg">
+		  	<source src="horse.ogg" type="audio/ogg">
+		  	<embed height="50" width="100" src="">
+		</audio>
+	</div>
 	<div class="box">
 		<span class="fs-xl">CURRENT PLAYLIST</span>
 		<div id="playlist-flipbox" class="current-playlist-box m-basic-t">
@@ -103,6 +110,34 @@
 	    			onEnd: function() {
 	    				$("#playlist-flipbox-data").show();
 	    			}
+	    		});
+	    	});
+	    	
+	    	var player = $("#player");
+	    	player.src="donomar.m4a";
+	    	player.bind("ended", function() {
+	    		$.get("http://api.soundit.ca/backend/venue/getNextSong/", function(data) {
+	    			if(data.toLowerCase == "beautiful day") {
+	    				player.src="u2.m4a";
+	    			} else if (data.toLowerCase == "danza kuduro") {
+	    				player.src="donomar.m4a";
+    				} else if (data.toLowerCase == "we found love") {
+	    				player.src="rihanna.m4a";
+	    			} else if (data.toLowerCase == "gangnam style") {
+	    				player.src="psy.m4a";
+    				} else if (data.toLowerCase == "party in the usa") {
+	    				player.src="miley-cyrus.m4a";
+	    			} else if (data.toLowerCase == "moves like jagger") {
+	    				player.src="maroon5.m4a";
+	    			} else if (data.toLowerCase == "hotel california") {
+	    				player.src="eagles.m4a";
+	    			} else if (data.toLowerCase == "livin on a prayer") {
+	    				player.src="bonjovi.m4a";
+	    			} else if (data.toLowerCase == "billie jean") {
+	    				player.src="billie-jean.m4a";
+    				} else if (data.toLowerCase == "skyfall") {
+	    				player.src="adele.m4a";
+    				}
 	    		});
 	    	});
     	});

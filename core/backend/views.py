@@ -299,6 +299,5 @@ def venueGetNextSong(request):
 def index(request):
     music_tracks = MusicTrack.objects.all()
     playlist_items = PlaylistItem.objects.all()
-    background = 0
-    context = {'music_track_list': music_tracks, 'playlist_item_list': playlist_items, 'background': background}
+    context = {'music_track_list': music_tracks, 'playlist_item_list': playlist_items}
     return render(request, 'backend/index.html', context)
