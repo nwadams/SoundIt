@@ -447,8 +447,15 @@ def getVoteHistory(request):
 
 
 def venueGetNextSong(request):
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
+        
+    location_id = params.get('location_id', None)
     venue_service = VenueService()
-    result =  venue_service.updateCurrentPlaying()
+    result =  venue_service.updateCurrentPlaying(location_id)
     return HttpResponse(result.music_track.name)
 
 def getFormattedLibrary(request):
