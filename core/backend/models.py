@@ -225,7 +225,7 @@ class MusicTrack(models.Model):
     ", track_URL=" + self.track_URL + "\'" + \
     ", track_latest_rev=" + str(self.track_latest_rev) + "\'" + \
     ", category=" + str(self.category) + "\'" + \
-    ", is_popular=" + str(self.is_deleted) + \
+    ", is_popular=" + str(self.is_popular) + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -240,7 +240,7 @@ class MusicTrack(models.Model):
         result.append({"track_URL": self.track_URL})
         result.append({"track_latest_rev": self.track_latest_rev})
         result.append({"category": self.category})
-        result.append({"is_popular": str(self.is_deleted)})
+        result.append({"is_popular": str(self.is_popular)})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})
@@ -248,6 +248,7 @@ class MusicTrack(models.Model):
     
 class Playlist(models.Model):
     location = models.ForeignKey(Location)
+    is_active = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     date_modified = models.DateTimeField(auto_now=True, null=True)
     is_deleted = models.BooleanField(default=False)
@@ -256,6 +257,7 @@ class Playlist(models.Model):
         return "Playlist{" + \
     "id=" + str(self.pk) + \
     ", location='" + str(self.location) + '\'' + \
+    ", is_active=" + str(self.is_active) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
     ", is_deleted=" + str(self.is_deleted) + \
@@ -265,6 +267,7 @@ class Playlist(models.Model):
         result = []
         result.append({"id": str(self.pk)})
         result.append({"location": self.location})
+        result.append({"is_active": str(self.is_active)})
         result.append({"date_created": str(self.date_created)})
         result.append({"date_modified": str(self.date_modified)})
         result.append({"is_deleted": str(self.is_deleted)})

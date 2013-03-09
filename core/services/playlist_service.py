@@ -25,7 +25,7 @@ class PlaylistService:
     def getPlaylistVotes(self, consumer, location_id):
         playlist_votes_list = []
         try:
-            playlist = Playlist.objects.get(location_id = location_id)
+            playlist = Playlist.objects.get(location_id = location_id, is_active = True)
             playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id, item_state__in=[2,1])
             vote_history = Vote.objects.filter(consumer = consumer.pk, playlist_item_id__in=playlist_items)
             for item in playlist_items:
@@ -73,7 +73,7 @@ class PlaylistService:
         
         # Fetch current playlist for that location.
         try:
-            playlist = Playlist.objects.get(location_id=location.id)
+            playlist = Playlist.objects.get(location_id=location.id, is_active = True)
         except Playlist.DoesNotExist:
             raise UnableToAddMusicError("Could not find playlist for location " + str(location.id))
         playlist_items = PlaylistItem.objects.filter(playlist_id = playlist.id, music_track_id = music_track_id)

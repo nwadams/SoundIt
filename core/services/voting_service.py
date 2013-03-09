@@ -27,7 +27,7 @@ class VotingService:
         
         try:
             location = Location.objects.get(pk=location_id)
-            playlist = Playlist.objects.get(location=location)
+            playlist = Playlist.objects.get(location=location, is_active = True)
             playlist_item = PlaylistItem.objects.get(playlist_id = playlist.id,music_track_id= music_track_id)
         except KeyError:
             raise UnableToVoteError("Could not find objects for parameters- user_id: " + str(consumer.pk) + ", location_id: " + str(location_id) + ", music_track_id: " + str(music_track_id))
