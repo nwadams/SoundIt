@@ -1,0 +1,31 @@
+<div id="playlist-flipbox-data">
+{% if playlist_items %}
+    {% for item in playlist_items %}
+	<div class="o-h {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+		<div class="playlist-item-art">
+			{% if item.music_track.album.image_URL %}
+				{% with url=item.music_track.album.image_URL %}
+					<img width="100" height="100" src="{{url}}">
+				{% endwith %}
+			{% else %}
+				{% with url="http://api.soundit.ca/static/venue/soundit_logo_small.png" %}
+					<img width="100" height="100" src="{{url}}">
+				{% endwith %}
+			{% endif %}
+		</div>
+		<div class="playlist-item-data fs-m">
+			<ul>
+				<li class="p-small-t">{{item.music_track.name}}</li>
+				<li class="p-small-t">{{item.music_track.album.name}}</li>
+				<li class="p-small-t">{{item.music_track.artist.name}}</li>
+			</ul>
+		</div>
+		<div class="playlist-item-votes">
+			10
+		</div>
+	</div>
+    {% endfor %}
+{% else %}
+    <p>No items currently in playlist.</p>
+{% endif %}
+</div>

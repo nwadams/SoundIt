@@ -141,6 +141,15 @@ def voteUp(request):
 
 def refreshPlaylist(request):
     
+    playlist_items = __refreshPlaylist__(request)
+    return HttpResponse(serializers.serialize("json", playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
+
+def refreshPlaylistFormatted(request):
+    playlist_items = __refreshPlaylist__(request)
+    context = {'playlist_items': playlist_items}
+    return render(request, 'backend/snippets/playlist.html', context)
+
+def __refreshPlaylist__(request):
     try: 
         device_id = request.GET['device_id']
         location_id = request.GET['location_id'] 
@@ -150,9 +159,8 @@ def refreshPlaylist(request):
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     logger.info("Incoming request- refresh playlist with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
     # Use location id to fetch current playlist
-    playlist_items = __reorderPlaylistForIOS__(PlaylistItem.objects.all())
-    return HttpResponse(serializers.serialize("json", playlist_items, relations={'music_track':{'relations': ('album', 'category', 'artist', )},}), mimetype='application/json')
-
+    return __reorderPlaylistForIOS__(PlaylistItem.objects.all())
+    
 def refreshPlaylistAndroid(request):
     
     try: 

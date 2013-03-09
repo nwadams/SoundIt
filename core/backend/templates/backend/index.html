@@ -96,6 +96,9 @@
 	    			},
 	    			onAnimation: function() {
 	    				// Make API call and update div.
+	    				$.get("http://localhost:11080/backend/refreshPlaylistFormatted/?device_id=1&location_id=1", function(data) {
+	    					$("#playlist-flipbox-data").html(data);
+	    				});
 	    			},
 	    			onEnd: function() {
 	    				$("#playlist-flipbox-data").show();
