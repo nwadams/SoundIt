@@ -332,7 +332,7 @@ def refreshPlaylist(request):
     if not location_map:
         logger.warn("user with user_id" + str(user_id) + " not checked in")
         
-    if location_map and not location_map.location.pk == location_id:
+    if location_map and str(location_map.location.pk) != location_id:
         logger.warn("user with user_id" + str(user_id) + " not checked in to correct location: " + location_id)
 
     logger.info("Incoming request- refresh playlist with parameters device_id " + str(user_id) + ", location_id " + str(location_id))
