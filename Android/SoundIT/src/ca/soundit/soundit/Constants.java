@@ -37,17 +37,26 @@ public class Constants {
 	public static final String JSON_ARTIST_NAME = "name";
 	public static final String JSON_NONE = "none";
 	public static final String JSON_PK = "pk";
+	public static final String JSON_API_TOKEN = "api_token";
+	public static final String JSON_EMAIL_ADDRESS = "email_address";
+	public static final String JSON_NAME = "name";
+	public static final String JSON_DEVICE_ID = "device_id";
 	
 	public static final int STATE_CURRENT_PLAYING = 1;
 	public static final int STATE_TO_BE_PLAYED = 2;
 	
 	public static final String OK = "ok";
 	
-	public static final String PREFS_NAME = "USER_DATA_PREFS";
-	public static final String PREFS_PASSWORD = "password";
+	public static final String PREFS_USER_INFO = "USER_DATA_PREFS";
+	public static final String PREFS_USER_ID = "user_id";
+	public static final String PREFS_API_TOKEN = "api_token";
+	public static final String PREFS_DEVICE_ID = "device_id";
+	public static final String PREFS_EMAIL_ADDRESS = "email_address";
+	public static final String PREFS_NAME = "name";
 	
 	public static final String GA_CATEGORY_APP_FLOW = "app_flow";
 	public static final String GA_APP_FLOW_SIGN_UP = "sign_up";
+	public static final String GA_APP_FLOW_SIGN_UP_NO_ACCOUNT = "no_account";	
 	public static final String GA_APP_FLOW_ADD_SONG = "add_song";
 	public static final String GA_APP_FLOW_SETTINGS = "settings";
 	public static final String GA_APP_FLOW_REFRESH = "refresh";

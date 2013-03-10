@@ -15,5 +15,9 @@
     <string name="song_list_next">Next Song</string>
     <string name="song_list_votes">Votes</string>
     <string name="activity_title_add_song">Add Song</string>
+    <string name="activity_login_title">Login</string>
+    <string name="button_login">Just let me vote</string>
+    <string name="dialog_login_message">Logging in. </string>
+    <string name="dialog_login_title">Login </string>
 
 </resources>
