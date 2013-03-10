@@ -21,7 +21,7 @@ public class LoginActivity extends BaseActivity implements LoginFragment.OnLogin
 	@Override
 	public void onLoginComplete() {
 		EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_APP_FLOW, Constants.GA_APP_FLOW_SIGN_UP, "", null);
-		startActivity(new Intent(LoginActivity.this, SongListActivity.class));
+		startActivity(new Intent(LoginActivity.this, CheckInActivity.class));
 		finish();
 	}
 }

@@ -105,7 +105,8 @@ public class LoginFragment extends SherlockFragment {
 	}
 	
 	private void hideProgressDialog() {
-		mProgressDialog.dismiss();	
+		if (mProgressDialog != null)
+			mProgressDialog.dismiss();	
 	}
 
 	public void signUpSuccess() {

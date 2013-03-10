@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name="ca.soundit.soundit.activities.AddSongActivity" />
+        <activity android:name="ca.soundit.soundit.activities.CheckInActivity" />
         <activity android:name="ca.soundit.soundit.activities.SongListActivity" />
     </application>
 

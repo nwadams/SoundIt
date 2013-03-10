@@ -13,11 +13,14 @@ public class Constants {
 	public static final String URL_ADD_TO_PLAYLIST = "addToPlaylist/";
 	public static final String URL_GET_VOTE_HISTORY = "getVoteHistory/";
 	public static final String URL_VOTE_UP = "voteUpAndroid/";
+	public static final String URL_GET_LOCATIONS = "getLocations/";
 	
 	public static final String API_DEVICE_ID_KEY = "device_id";
 	public static final String API_LOCATION_ID_KEY = "location_id";
 	public static final String API_PASSWORD = "password";
 	public static final String API_MUSIC_TRACK_ID = "music_track_id";
+	public static final String API_USER_ID = "user_id";
+	public static final String API_API_KEY = "api_key";
 	
 	public static final String JSON_ERROR_MESSAGE = "Error Message";
 	public static final String JSON_FIELDS = "fields";
@@ -41,6 +44,7 @@ public class Constants {
 	public static final String JSON_EMAIL_ADDRESS = "email_address";
 	public static final String JSON_NAME = "name";
 	public static final String JSON_DEVICE_ID = "device_id";
+	public static final String JSON_LOCATION = "location";
 	
 	public static final int STATE_CURRENT_PLAYING = 1;
 	public static final int STATE_TO_BE_PLAYED = 2;
@@ -67,4 +71,5 @@ public class Constants {
 	public static final String GA_CATEGORY_MENU_OPTION = "menu_option";
 	public static final String GA_APP_FLOW_ADD_SONG_COMPLETE = "add_song_complete";
 	public static final String GA_VOTE_UP = "vote_up";
+	public static final String GA_APP_FLOW_CHECK_IN = "checkin";
 }
