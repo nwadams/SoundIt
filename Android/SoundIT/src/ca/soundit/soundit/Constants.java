@@ -76,4 +76,5 @@ public class Constants {
 	public static final String GA_VOTE_UP = "vote_up";
 	public static final String GA_APP_FLOW_CHECK_IN = "checkin";
 	public static final String GA_APP_FLOW_CHECK_OUT = "checkout";
+	public static final String GA_APP_FLOW_LOG_OUT = "logout";
 }

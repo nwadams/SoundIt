@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
@@ -17,6 +18,7 @@ import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.asynctask.CheckOutAsyncTask;
 import ca.soundit.soundit.back.asynctask.RefreshPlaylistAsyncTask;
 import ca.soundit.soundit.fragments.CurrentSongFragment;
+import ca.soundit.soundit.fragments.LogoutAlertDialogFragment;
 import ca.soundit.soundit.fragments.SongListFragment;
 
 import com.actionbarsherlock.view.Menu;
@@ -103,32 +105,60 @@ public class SongListActivity extends BaseActivity {
         	return true;
         case R.id.menu_check_out:
         	EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_MENU_OPTION, Constants.GA_APP_FLOW_CHECK_OUT, "", null);
-        	CheckOutAsyncTask checkOutTask = new CheckOutAsyncTask(this);
-        	
-        	SharedPreferences settings = getSharedPreferences(Constants.PREFS_USER_INFO, Context.MODE_PRIVATE);
-        	SharedPreferences.Editor editor = settings.edit();
-			editor.remove(Constants.PREFS_LOCATION_ID);
-			
-			if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
-				editor.commit();
-			} else {
-				editor.apply();
-			}	
-        	
-        	if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-        		checkOutTask.execute();
-    		} else {
-    			checkOutTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    		}
-        	
-    		startActivity(new Intent(this, CheckInActivity.class));
-    		finish();
-    		
+        	checkOut();	
         	return true;
+        case R.id.menu_logout:
+        	EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_MENU_OPTION, Constants.GA_APP_FLOW_LOG_OUT, "", null);
+        	logout();
         default:
             return super.onOptionsItemSelected(item);
         }
     }
+
+	private void logout() {
+		DialogFragment newFragment = LogoutAlertDialogFragment.newInstance();
+	    newFragment.show(this.getSupportFragmentManager(), "dialog");
+	}
+
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
+	public void logoutDialogAccept() {
+		SharedPreferences settings = getSharedPreferences(Constants.PREFS_USER_INFO, Context.MODE_PRIVATE);
+    	SharedPreferences.Editor editor = settings.edit();
+    	editor.clear();
+    	
+    	if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+			editor.commit();
+		} else {
+			editor.apply();
+		}	
+    	
+    	startActivity(new Intent(this, CheckInActivity.class));
+		finish();
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void checkOut() {
+		CheckOutAsyncTask checkOutTask = new CheckOutAsyncTask(this);
+    	
+    	SharedPreferences settings = getSharedPreferences(Constants.PREFS_USER_INFO, Context.MODE_PRIVATE);
+    	SharedPreferences.Editor editor = settings.edit();
+		editor.remove(Constants.PREFS_LOCATION_ID);
+		
+		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+			editor.commit();
+		} else {
+			editor.apply();
+		}	
+    	
+    	if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+    		checkOutTask.execute();
+		} else {
+			checkOutTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		}
+    	
+		startActivity(new Intent(this, CheckInActivity.class));
+		finish();
+	}
 
 	private void startAddSongActivity() {
 		
