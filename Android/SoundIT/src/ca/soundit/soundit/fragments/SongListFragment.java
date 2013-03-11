@@ -70,8 +70,8 @@ public class SongListFragment extends SherlockFragment {
 	public void notifiyVoteComplete(String result) {
 		if (Constants.OK.equals(result)) {
 			updateList(SoundITApplication.getInstance().getSongQueue());
-			SongListActivity activity = (SongListActivity) this.getActivity();
-			activity.forceRefresh();
+			//SongListActivity activity = (SongListActivity) this.getActivity();
+			//activity.forceRefresh();
 		} else {
 			
 		}
