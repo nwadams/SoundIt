@@ -32,7 +32,6 @@ public class JSONParseHelper {
 					song.setVotes(fields.getInt(Constants.JSON_VOTES));
 					song.setVotedOn(fields.optBoolean(Constants.JSON_IS_VOTED));
 					song.setState(fields.getInt(Constants.JSON_ITEM_STATE));
-					song.setCurrentRanking(fields.getInt(Constants.JSON_CURRENT_RANKING));
 					
 					JSONObject musicTrack = fields.getJSONObject(Constants.JSON_MUSIC_TRACK);
 					song.setMusicTrackID(musicTrack.getInt(Constants.JSON_PK));

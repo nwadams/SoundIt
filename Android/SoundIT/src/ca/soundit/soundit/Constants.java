@@ -7,13 +7,14 @@ public class Constants {
 	public static final int REFRESH_INTERVAL = 30;
 	
 	public static final String URL_ROOT = "http://api.soundit.ca/backend/";
-	public static final String URL_REFRESH_PLAYLIST = "refreshPlaylistAndroid/";
+	public static final String URL_REFRESH_PLAYLIST = "refreshPlaylist/";
 	public static final String URL_SIGNUP = "signUp/";
-	public static final String URL_GET_LIBRARY = "getLibrary/";
+	public static final String URL_GET_LIBRARY = "getSongLibrary/";
 	public static final String URL_ADD_TO_PLAYLIST = "addToPlaylist/";
 	public static final String URL_GET_VOTE_HISTORY = "getVoteHistory/";
-	public static final String URL_VOTE_UP = "voteUpAndroid/";
+	public static final String URL_VOTE_UP = "voteUp/";
 	public static final String URL_GET_LOCATIONS = "getLocations/";
+	public static final String URL_CHECK_IN = "checkIn/";
 	
 	public static final String API_DEVICE_ID_KEY = "device_id";
 	public static final String API_LOCATION_ID_KEY = "location_id";
@@ -57,6 +58,7 @@ public class Constants {
 	public static final String PREFS_DEVICE_ID = "device_id";
 	public static final String PREFS_EMAIL_ADDRESS = "email_address";
 	public static final String PREFS_NAME = "name";
+	public static final String PREFS_LOCATION_ID = "location_id";
 	
 	public static final String GA_CATEGORY_APP_FLOW = "app_flow";
 	public static final String GA_APP_FLOW_SIGN_UP = "sign_up";

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,9 +17,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
+import ca.soundit.soundit.activities.SongListActivity;
 import ca.soundit.soundit.adapter.CheckInListArrayAdapter;
+import ca.soundit.soundit.back.asynctask.CheckInAsyncTask;
 import ca.soundit.soundit.back.asynctask.GetActiveLocationsAsyncTask;
 import ca.soundit.soundit.back.data.Location;
 
@@ -29,6 +36,10 @@ public class CheckInListFragment extends SherlockFragment {
 
 	private ListView mListView;
 	private CheckInListArrayAdapter mArrayAdapter;
+	private ProgressDialog mProgressDialog;
+	
+	private int mId;
+
 
 	private GetActiveLocationsAsyncTask mGetActiveLocationsAsyncTask;
 
@@ -69,8 +80,9 @@ public class CheckInListFragment extends SherlockFragment {
 	}
 
 	protected void checkIn(int id) {
-
-
+		mId = id;
+		showProgressDialog();
+		new CheckInAsyncTask(this).execute(id);
 	}
 
 	@Override
@@ -82,6 +94,11 @@ public class CheckInListFragment extends SherlockFragment {
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void getLocationList() {
+		if (mArrayAdapter != null)
+		{
+			mArrayAdapter.clear();
+			mArrayAdapter.notifyDataSetChanged();
+		}
 		mGetActiveLocationsAsyncTask = new GetActiveLocationsAsyncTask(this);
 
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
@@ -97,6 +114,8 @@ public class CheckInListFragment extends SherlockFragment {
 
 		if (mGetActiveLocationsAsyncTask != null)
 			mGetActiveLocationsAsyncTask.cancel(true);
+		
+		hideProgressDialog();
 	}
 
 	@Override
@@ -133,7 +152,44 @@ public class CheckInListFragment extends SherlockFragment {
 	}
 
 	private void displayFailed() {
+	}
+	
+	private void showProgressDialog() {
+		if (mProgressDialog == null) {
+			mProgressDialog = ProgressDialog.show(this.getActivity(), this.getActivity().getString(R.string.dialog_checkin_title),
+					this.getActivity().getString(R.string.dialog_checkin_message), true, true);
+		} else {
+			mProgressDialog.show();
+		}
+		
+	}
+	
+	private void hideProgressDialog() {
+		if (mProgressDialog != null)
+			mProgressDialog.dismiss();	
+	}
 
+	public void checkInComplete(String result) {
+		hideProgressDialog();
+		
+		if (Constants.OK.equals(result) && this.getActivity() != null) {
+			SharedPreferences settings = this.getActivity().getSharedPreferences(Constants.PREFS_USER_INFO, Context.MODE_PRIVATE);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putInt(Constants.PREFS_LOCATION_ID, mId);
+
+			if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+				editor.commit();
+			} else {
+				editor.apply();
+			}
+			
+			this.startActivity(new Intent(this.getActivity(), SongListActivity.class));
+			this.getActivity().finish();
+		} else {
+			Toast.makeText(getActivity(), R.string.toast_check_in_fail, Toast.LENGTH_SHORT).show();
+			getLocationList();
+		}
+		
 	}
 
 }
