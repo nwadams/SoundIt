@@ -19,6 +19,14 @@ public class JSONParseHelper {
 		SoundITApplication myApplication = (SoundITApplication) activity.getApplication();
 		if (jsonString != null)
 		{
+			try {
+				JSONObject json = new JSONObject(jsonString);
+				if (json.getBoolean(Constants.JSON_CHECKED_OUT))
+					return "inactive";
+			} catch (Exception e){
+				
+			}
+			
 			StringBuilder sb = new StringBuilder();
 			try {
 				JSONArray jsonArray = new JSONArray(jsonString);

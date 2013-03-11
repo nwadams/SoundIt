@@ -14,6 +14,8 @@
     <string name="toast_song_added_to_queue">Song added to queue </string>
     <string name="toast_song_already_in_queue">Song already in queue</string>
     <string name="toast_check_in_fail">Check in failed. </string>
+    <string name="toast_check_out">Checked out successfully</string>
+    <string name="toast_check_out_inactive">The location you are checked into is no longer active</string>
     <string name="current_playing">Now Playing </string>
     <string name="song_list_next">Next Song</string>
     <string name="song_list_votes">Votes</string>
@@ -29,5 +31,7 @@
     <string name="alert_dialog_logout_title">Logout</string>
     <string name="alert_dialog_logout_message">Are you sure you want to log out?</string>
     <string name="alert_dialog_logout_ok">Logout</string>
+    <string name="alert_dialog_no_locations_title">No Locations available</string>
+    <string name="alert_dialog_no_locations_message">Sorry. No SoundIT locations are available in your area. </string>
 
 </resources>

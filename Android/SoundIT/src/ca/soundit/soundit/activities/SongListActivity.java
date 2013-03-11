@@ -106,6 +106,7 @@ public class SongListActivity extends BaseActivity {
         case R.id.menu_check_out:
         	EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_MENU_OPTION, Constants.GA_APP_FLOW_CHECK_OUT, "", null);
         	checkOut();	
+        	Toast.makeText(this, R.string.toast_check_out, Toast.LENGTH_SHORT).show();
         	return true;
         case R.id.menu_logout:
         	EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_MENU_OPTION, Constants.GA_APP_FLOW_LOG_OUT, "", null);
@@ -193,8 +194,11 @@ public class SongListActivity extends BaseActivity {
 		this.setSupportProgressBarIndeterminateVisibility(mRefreshingPlaylist);
 		if (mRefreshMenuItem != null) 
 			mRefreshMenuItem.setVisible(!mRefreshingPlaylist);
-
-		if (!Constants.OK.equals(result)) {
+		
+		if ("inactive".equals(result)){
+			checkOut();
+        	Toast.makeText(this, R.string.toast_check_out_inactive, Toast.LENGTH_SHORT).show();
+		} else if (!Constants.OK.equals(result)) {
 			Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
 		}
 		

@@ -47,6 +47,7 @@ public class Constants {
 	public static final String JSON_NAME = "name";
 	public static final String JSON_DEVICE_ID = "device_id";
 	public static final String JSON_LOCATION = "location";
+	public static final String JSON_CHECKED_OUT = "checked_out";
 	
 	public static final int STATE_CURRENT_PLAYING = 1;
 	public static final int STATE_TO_BE_PLAYED = 2;

@@ -1,26 +1,16 @@
 package ca.soundit.soundit.back.asynctask;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import ca.soundit.soundit.Constants;
-import ca.soundit.soundit.back.data.Location;
-import ca.soundit.soundit.back.data.Song;
-import ca.soundit.soundit.back.http.HTTPHelper;
-import ca.soundit.soundit.back.json.JSONParseHelper;
-import ca.soundit.soundit.fragments.CheckInListFragment;
-import ca.soundit.soundit.fragments.LoginFragment;
 
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
+import ca.soundit.soundit.Constants;
+import ca.soundit.soundit.back.http.HTTPHelper;
+import ca.soundit.soundit.back.json.JSONParseHelper;
+import ca.soundit.soundit.fragments.CheckInListFragment;
 
 public class CheckInAsyncTask extends AsyncTask<Integer, Void, String>{
 	

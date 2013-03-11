@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,7 @@ public class CheckInListFragment extends SherlockFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		mListView.getEmptyView().setVisibility(View.VISIBLE);
 
 		getLocationList();
 	}
@@ -136,7 +138,7 @@ public class CheckInListFragment extends SherlockFragment {
 	}
 
 	public void displayAvailableLocations(List<Location> result) {
-		if (result == null) {
+		if (result == null || result.isEmpty()) {
 			displayFailed();
 		} else {
 			mArrayAdapter.clear();
@@ -152,6 +154,9 @@ public class CheckInListFragment extends SherlockFragment {
 	}
 
 	private void displayFailed() {
+		mListView.getEmptyView().setVisibility(View.GONE);
+		DialogFragment newFragment = NoLocationsAlertDialogFragment.newInstance();
+	    newFragment.show(getFragmentManager(), "dialog");
 	}
 	
 	private void showProgressDialog() {
@@ -160,8 +165,7 @@ public class CheckInListFragment extends SherlockFragment {
 					this.getActivity().getString(R.string.dialog_checkin_message), true, true);
 		} else {
 			mProgressDialog.show();
-		}
-		
+		}		
 	}
 	
 	private void hideProgressDialog() {
@@ -169,6 +173,7 @@ public class CheckInListFragment extends SherlockFragment {
 			mProgressDialog.dismiss();	
 	}
 
+	@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 	public void checkInComplete(String result) {
 		hideProgressDialog();
 		

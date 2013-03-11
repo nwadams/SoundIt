@@ -6,7 +6,6 @@ import android.os.AsyncTask;
 import android.provider.Settings;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.back.http.HTTPHelper;
-import ca.soundit.soundit.back.json.JSONParseHelper;
 import ca.soundit.soundit.fragments.AddSongFragment;
 
 public class AddToPlaylistAsyncTask extends

@@ -5,7 +5,6 @@ import java.util.Hashtable;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.provider.Settings;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.activities.SongListActivity;
 import ca.soundit.soundit.back.http.HTTPHelper;

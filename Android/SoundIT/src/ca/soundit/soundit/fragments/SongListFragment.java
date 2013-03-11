@@ -13,7 +13,6 @@ import android.widget.ListView;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
-import ca.soundit.soundit.activities.SongListActivity;
 import ca.soundit.soundit.adapter.SongListArrayAdapter;
 import ca.soundit.soundit.back.data.Song;
 
