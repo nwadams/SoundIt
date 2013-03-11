@@ -9,6 +9,7 @@ public class Constants {
 	public static final String URL_ROOT = "http://api.soundit.ca/backend/";
 	public static final String URL_REFRESH_PLAYLIST = "refreshPlaylist/";
 	public static final String URL_SIGNUP = "signUp/";
+	public static final String URL_LOGIN = "login/";
 	public static final String URL_GET_LIBRARY = "getSongLibrary/";
 	public static final String URL_ADD_TO_PLAYLIST = "addToPlaylist/";
 	public static final String URL_GET_VOTE_HISTORY = "getVoteHistory/";
@@ -74,4 +75,5 @@ public class Constants {
 	public static final String GA_APP_FLOW_ADD_SONG_COMPLETE = "add_song_complete";
 	public static final String GA_VOTE_UP = "vote_up";
 	public static final String GA_APP_FLOW_CHECK_IN = "checkin";
+	public static final String GA_APP_FLOW_CHECK_OUT = "checkout";
 }

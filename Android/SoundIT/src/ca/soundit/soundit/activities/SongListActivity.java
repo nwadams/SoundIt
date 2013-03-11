@@ -3,12 +3,18 @@ package ca.soundit.soundit.activities;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
+import ca.soundit.soundit.back.asynctask.CheckOutAsyncTask;
 import ca.soundit.soundit.back.asynctask.RefreshPlaylistAsyncTask;
 import ca.soundit.soundit.fragments.CurrentSongFragment;
 import ca.soundit.soundit.fragments.SongListFragment;
@@ -76,7 +82,8 @@ public class SongListActivity extends BaseActivity {
         return true;
     }
     
-    @Override
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case android.R.id.home:
@@ -93,6 +100,30 @@ public class SongListActivity extends BaseActivity {
         	startAddSongActivity();
         case R.id.menu_about:
         	EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_MENU_OPTION, Constants.GA_APP_FLOW_ABOUT, "", null);
+        	return true;
+        case R.id.menu_check_out:
+        	EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_MENU_OPTION, Constants.GA_APP_FLOW_CHECK_OUT, "", null);
+        	CheckOutAsyncTask checkOutTask = new CheckOutAsyncTask(this);
+        	
+        	SharedPreferences settings = getSharedPreferences(Constants.PREFS_USER_INFO, Context.MODE_PRIVATE);
+        	SharedPreferences.Editor editor = settings.edit();
+			editor.remove(Constants.PREFS_LOCATION_ID);
+			
+			if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.FROYO) {
+				editor.commit();
+			} else {
+				editor.apply();
+			}	
+        	
+        	if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+        		checkOutTask.execute();
+    		} else {
+    			checkOutTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    		}
+        	
+    		startActivity(new Intent(this, CheckInActivity.class));
+    		finish();
+    		
         	return true;
         default:
             return super.onOptionsItemSelected(item);
@@ -160,5 +191,4 @@ public class SongListActivity extends BaseActivity {
 		
 		
 	}
-    
 }
