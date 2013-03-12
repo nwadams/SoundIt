@@ -22,7 +22,7 @@
     <string name="activity_title_add_song">Add Song</string>
     <string name="activity_login_title">Login</string>
     <string name="activity_checkin_title">CheckIn</string>
-    <string name="button_login">Just let me vote</string>
+    <string name="button_login">Take me to the music!</string>
     <string name="dialog_login_message">Logging in. </string>
     <string name="dialog_checkin_message">Please wait.</string>
     <string name="dialog_login_title">Login </string>
