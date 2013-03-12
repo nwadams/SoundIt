@@ -7,15 +7,13 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
@@ -30,6 +28,8 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.widget.SearchView;
+import com.actionbarsherlock.widget.SearchView.OnQueryTextListener;
 import com.google.analytics.tracking.android.EasyTracker;
 
 public class AddSongFragment extends SherlockFragment {
@@ -130,7 +130,6 @@ public class AddSongFragment extends SherlockFragment {
 		updateList(result);
 	}
 	
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_add_song_menu, menu);
@@ -143,7 +142,7 @@ public class AddSongFragment extends SherlockFragment {
 
 			@Override
 			public boolean onQueryTextChange(String newText) {
-				if (newText.isEmpty()) {
+				if (TextUtils.isEmpty(newText)) {
 					getLibrary(null);
 					return true;
 				} else {
@@ -154,7 +153,7 @@ public class AddSongFragment extends SherlockFragment {
 
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				if (query.isEmpty())
+				if (TextUtils.isEmpty(query))
 					getLibrary(null);
 				else
 					getLibrary(query);
