@@ -85,7 +85,7 @@
 	    			},
 	    			onAnimation: function() {
 	    				// Make API call and update div.
-	    				$.get("{{domain_url}}/backend/getFormattedLibrary/?location_id=2&device_id=1234", function(data) {
+	    				$.get("http://{{domain_url}}/backend/getFormattedLibrary/?location_id=2&device_id=1234", function(data) {
 	    					$("#library-flipbox-data").html(data);
 	    				});
 	    			},
@@ -103,7 +103,7 @@
 	    			},
 	    			onAnimation: function() {
 	    				// Make API call and update div.
-	    				$.get("{{domain_url}}/backend/refreshPlaylistFormatted/?device_id=1&location_id=1", function(data) {
+	    				$.get("http://{{domain_url}}/backend/refreshPlaylistFormatted/?device_id=1&location_id=1", function(data) {
 	    					$("#playlist-flipbox-data").html(data);
 	    				});
 	    			},
@@ -116,7 +116,7 @@
 	    	var player = $("#player");
 	    	player.src="/static/venue/donomar.m4a";
 	    	player.bind("ended", function() {
-	    		$.get("{{domain_url}}/backend/venue/getNextSong/", function(data) {
+	    		$.get("http://{{domain_url}}/backend/venue/getNextSong/", function(data) {
 	    			if(data.toLowerCase == "beautiful day") {
 	    				player.src="/static/venue/u2.m4a";
 	    			} else if (data.toLowerCase == "danza kuduro") {
