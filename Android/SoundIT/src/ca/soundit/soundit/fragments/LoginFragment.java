@@ -1,5 +1,6 @@
 package ca.soundit.soundit.fragments;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Hashtable;
 
@@ -20,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
+import ca.soundit.soundit.activities.SongListActivity;
+import ca.soundit.soundit.back.asynctask.RefreshPlaylistAsyncTask;
 import ca.soundit.soundit.back.asynctask.SignUpAsyncTask;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -31,6 +34,9 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.android.gms.auth.GoogleAuthException;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailedListener;
@@ -130,7 +136,7 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
-			
+
 		View v = inflater.inflate(R.layout.fragment_login, container, false);
 
 		mLoginButton = (Button) v.findViewById(R.id.login_button);
@@ -170,7 +176,7 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 		mFacebookLoginButton = (LoginButton) v.findViewById(R.id.facebook_authButton);
 		mFacebookLoginButton.setReadPermissions(Arrays.asList("email"));
 		mFacebookLoginButton.setFragment(this);
-		
+
 		Bundle b = getActivity().getIntent().getExtras();
 		if (b != null && b.containsKey("logout")) {
 			Session s = Session.getActiveSession();
@@ -294,19 +300,49 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 	private void loginGoogle() {
 		EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_APP_FLOW, Constants.GA_APP_FLOW_SIGN_UP, Constants.GA_APP_FLOW_SIGN_UP_GOOGLE, null);
 		showProgressDialog();
-		Person person = mPlusClient.getCurrentPerson();
-		Hashtable<String,String> paramsTable = new Hashtable<String,String>();
-		String AndroidId = Settings.Secure.getString(this.getActivity().getContentResolver(),Settings.Secure.ANDROID_ID);
-		paramsTable.put(Constants.API_DEVICE_ID_KEY, AndroidId);
-		paramsTable.put(Constants.API_EMAIL, mPlusClient.getAccountName());
-		paramsTable.put(Constants.API_NAME,  person.getName().hasFormatted() ? person.getName().getFormatted():person.getName().getGivenName() + " " + person.getName().getFamilyName());
+		AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
 
-		mSignUpTask = new SignUpAsyncTask(this, paramsTable);
+			@Override
+			protected String doInBackground(Void... params) {
+				try {
+					String accessToken = GoogleAuthUtil.getToken(getActivity(), mPlusClient.getAccountName(),
+							"oauth2:" + Scopes.PLUS_LOGIN + " https://www.googleapis.com/auth/userinfo.email");
+					Hashtable<String,String> paramsTable = new Hashtable<String,String>();
+					String AndroidId = Settings.Secure.getString(LoginFragment.this.getActivity().getContentResolver(),Settings.Secure.ANDROID_ID);
+					paramsTable.put(Constants.API_DEVICE_ID_KEY, AndroidId);
+					paramsTable.put(Constants.API_AUTH_TOKEN, accessToken);
+					paramsTable.put(Constants.API_TOKEN_TYPE, "google");
 
+					mSignUpTask = new SignUpAsyncTask(LoginFragment.this, paramsTable);
+
+					if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+						getActivity().runOnUiThread(new Runnable() {
+							public void run() {
+								mSignUpTask.execute();
+							}
+						});					
+					} else {
+						mSignUpTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+					}		
+
+				} catch (UserRecoverableAuthException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (GoogleAuthException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				return null;
+			}
+		};
 		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
-			mSignUpTask.execute();
+			task.execute();				
 		} else {
-			mSignUpTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+			task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		}		
 	}
 
