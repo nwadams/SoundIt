@@ -1,15 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp"
-    android:orientation="vertical" >
-    
-    <Button
+    android:orientation="vertical"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp" >
+
+    <com.facebook.widget.LoginButton
+        android:id="@+id/facebook_authButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
+    <Button
         android:id="@+id/login_button"
-        android:text="@string/button_login"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/button_login" />
 
 </LinearLayout>

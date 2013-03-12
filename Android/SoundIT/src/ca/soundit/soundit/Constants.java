@@ -23,6 +23,12 @@ public class Constants {
 	public static final String API_MUSIC_TRACK_ID = "music_track_id";
 	public static final String API_USER_ID = "user_id";
 	public static final String API_API_KEY = "api_key";
+	public static final String API_EMAIL = "email";
+	public static final String API_NAME = "name";
+	public static final String API_AUTH_TOKEN = "auth_token";
+	public static final String API_TOKEN_TYPE = "token_type";
+	public static final String API_FACEBOOK_ID = "facebook_id";
+	public static final String API_SEARCH_STRING = "search_string";
 	
 	public static final String JSON_ERROR_MESSAGE = "Error Message";
 	public static final String JSON_FIELDS = "fields";
@@ -65,7 +71,9 @@ public class Constants {
 	public static final String GA_CATEGORY_APP_FLOW = "app_flow";
 	public static final String GA_APP_FLOW_SIGN_UP = "sign_up";
 	public static final String GA_APP_FLOW_SIGN_UP_NO_ACCOUNT = "no_account";	
+	public static final String GA_APP_FLOW_SIGN_UP_GOOGLE = "google";
 	public static final String GA_APP_FLOW_ADD_SONG = "add_song";
+	public static final String GA_APP_FLOW_GET_SONG_LIBRARY = "get_song_library";
 	public static final String GA_APP_FLOW_SETTINGS = "settings";
 	public static final String GA_APP_FLOW_REFRESH = "refresh";
 	public static final String GA_APP_FLOW_ABOUT = "about";

@@ -10,11 +10,13 @@ import com.google.analytics.tracking.android.EasyTracker;
 
 public class LoginActivity extends BaseActivity implements LoginFragment.OnLoginCompleteListener {
 
+	private static final int REQUEST_CODE_RESOLVE_ERR = 9000;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		
+
 		this.getSupportActionBar().setTitle(R.string.activity_login_title);
 	}
 
@@ -23,5 +25,19 @@ public class LoginActivity extends BaseActivity implements LoginFragment.OnLogin
 		EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_APP_FLOW, Constants.GA_APP_FLOW_SIGN_UP, "", null);
 		startActivity(new Intent(LoginActivity.this, CheckInActivity.class));
 		finish();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
+		super.onActivityResult(requestCode, responseCode, intent);
+		if (requestCode == REQUEST_CODE_RESOLVE_ERR && responseCode == RESULT_OK) {
+			LoginFragment loginFragment = (LoginFragment)
+	                getSupportFragmentManager().findFragmentById(R.id.fragment_login);
+			
+			if(loginFragment != null)
+			{
+				loginFragment.reconnectToPlus();
+			}
+		}
 	}
 }

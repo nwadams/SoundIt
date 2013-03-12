@@ -37,7 +37,10 @@ public class CheckInActivity extends BaseActivity {
 		}
 		
 		if (userId < 0 || apiKey == null) {
-			startActivity(new Intent(this, LoginActivity.class));
+			Intent i = new Intent(this, LoginActivity.class);
+			if (getIntent().getExtras() != null && getIntent().getExtras().containsKey("logout"))
+				i.putExtra("logout", true);
+			startActivity(i);
 			finish();
 		} else if (locationId > 0) {
 			startActivity(new Intent(this, SongListActivity.class));
