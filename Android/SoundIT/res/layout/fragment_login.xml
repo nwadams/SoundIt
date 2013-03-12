@@ -5,19 +5,18 @@
     android:paddingLeft="40dp"
     android:paddingRight="40dp" >
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:layout_marginBottom="10dp"/>
-    
     <com.facebook.widget.LoginButton
         android:id="@+id/facebook_authButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        />
-    
+        android:layout_marginBottom="10dp" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+
     <Button
         android:id="@+id/login_button"
         android:layout_width="match_parent"
