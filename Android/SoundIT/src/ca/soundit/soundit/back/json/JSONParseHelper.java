@@ -19,6 +19,14 @@ public class JSONParseHelper {
 		SoundITApplication myApplication = (SoundITApplication) activity.getApplication();
 		if (jsonString != null)
 		{
+			try {
+				JSONObject json = new JSONObject(jsonString);
+				if (json.getBoolean(Constants.JSON_CHECKED_OUT))
+					return "inactive";
+			} catch (Exception e){
+				
+			}
+			
 			StringBuilder sb = new StringBuilder();
 			try {
 				JSONArray jsonArray = new JSONArray(jsonString);
@@ -32,16 +40,10 @@ public class JSONParseHelper {
 					song.setVotes(fields.getInt(Constants.JSON_VOTES));
 					song.setVotedOn(fields.optBoolean(Constants.JSON_IS_VOTED));
 					song.setState(fields.getInt(Constants.JSON_ITEM_STATE));
-					song.setCurrentRanking(fields.getInt(Constants.JSON_CURRENT_RANKING));
 					
 					JSONObject musicTrack = fields.getJSONObject(Constants.JSON_MUSIC_TRACK);
 					song.setMusicTrackID(musicTrack.getInt(Constants.JSON_PK));
 					fields = musicTrack.getJSONObject(Constants.JSON_FIELDS);
-					
-					if (!Constants.JSON_NONE.equals(fields.getString(Constants.JSON_TRACK_URL)))
-						song.setAlbumURL(fields.getString(Constants.JSON_TRACK_URL));
-					else 
-						song.setAlbumURL(null);
 					
 					song.setName(fields.getString(Constants.JSON_TRACK_NAME));
 					
@@ -49,7 +51,8 @@ public class JSONParseHelper {
 					album = album.getJSONObject(Constants.JSON_FIELDS);
 					song.setAlbum(album.getString(Constants.JSON_ALBUM_NAME));
 					
-					if (!Constants.JSON_NONE.equals(album.getString(Constants.JSON_ALBUM_URL)))
+					String albumURL = album.getString(Constants.JSON_ALBUM_URL);
+					if (albumURL != null && !(Constants.JSON_NONE.equals(albumURL) || "".equals(albumURL) ))
 						song.setAlbumURL(album.getString(Constants.JSON_ALBUM_URL));
 					else 
 						song.setAlbumURL(null);

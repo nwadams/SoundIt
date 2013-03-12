@@ -18,9 +18,6 @@ public class SoundITApplication extends Application {
 			return mInstance;
     }
 	
-	private int cacheSize = 20; // 4 * 1024 * 1024; //4MB
-	private LruCache<String, Bitmap> mBitmapCache;
-	
 	private Song mCurrentPlayingSong;
 	private List<Song> mSongQueue;
 	private List<Song> mSongLibrary;
@@ -61,18 +58,7 @@ public class SoundITApplication extends Application {
         super.onCreate();
         
         mInstance = this;
-        
-        setBitmapCache(new LruCache<String, Bitmap>(cacheSize));
-
     }
-
-	public LruCache<String, Bitmap> getBitmapCache() {
-		return mBitmapCache;
-	}
-
-	public void setBitmapCache(LruCache<String, Bitmap> mBitmapCache) {
-		this.mBitmapCache = mBitmapCache;
-	}
 
 	public List<Song> getSongLibrary() {
 		return mSongLibrary;

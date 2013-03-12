@@ -13,7 +13,6 @@ import android.widget.ListView;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
-import ca.soundit.soundit.activities.SongListActivity;
 import ca.soundit.soundit.adapter.SongListArrayAdapter;
 import ca.soundit.soundit.back.data.Song;
 
@@ -70,8 +69,8 @@ public class SongListFragment extends SherlockFragment {
 	public void notifiyVoteComplete(String result) {
 		if (Constants.OK.equals(result)) {
 			updateList(SoundITApplication.getInstance().getSongQueue());
-			SongListActivity activity = (SongListActivity) this.getActivity();
-			activity.forceRefresh();
+			//SongListActivity activity = (SongListActivity) this.getActivity();
+			//activity.forceRefresh();
 		} else {
 			
 		}

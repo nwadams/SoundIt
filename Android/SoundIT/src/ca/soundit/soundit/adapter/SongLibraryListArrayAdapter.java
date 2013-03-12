@@ -1,23 +1,18 @@
 package ca.soundit.soundit.adapter;
 
-import java.util.Hashtable;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
-import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.data.Song;
-import ca.soundit.soundit.back.http.HTTPHelper;
+import ca.soundit.soundit.utils.ImageDownloadManager;
 
 public class SongLibraryListArrayAdapter extends ArrayAdapter<Song> {
 	
@@ -59,34 +54,9 @@ public class SongLibraryListArrayAdapter extends ArrayAdapter<Song> {
         
         Song song = mSongList.get(position);
         
-        if (song.getAlbumURL() != null && !song.getAlbumURL().equals("none") && !song.getAlbumURL().equals("null")) {
-        	if (SoundITApplication.getInstance().getBitmapCache().get(song.getAlbumURL()) != null) {
-        		holder.albumArt.setImageBitmap(SoundITApplication.getInstance().getBitmapCache().get(song.getAlbumURL()));
-        	} else {
-        		holder.albumArt.setImageResource(R.drawable.default_album_300);
-                new AsyncTask<String, Void, String>() {
-					@Override
-					protected String doInBackground(String... params) {
-						Hashtable<String,String> paramsTable = new Hashtable<String,String>();
-						Bitmap bitmap = HTTPHelper.HTTPImageGetRequest(params[0], paramsTable);
-						if (bitmap != null) {
-							SoundITApplication.getInstance().getBitmapCache().put(params[0], bitmap);
-							return Constants.OK;
-						}
-						return null;
-					}
-					
-					@Override
-					protected void onPostExecute(String result) {
-						if (Constants.OK.equals(result))
-							notifyDataSetChanged();
-					}
-                	
-                }.execute(song.getAlbumURL());
-        	}
-        } else {
-        	holder.albumArt.setImageResource(R.drawable.default_album_300);
-        }
+        if (song.getAlbumURL() != null) {
+			ImageDownloadManager.getInstance().loadImage(song.getAlbumURL(), holder.albumArt);
+		}
         
         holder.songTitle.setText(song.getName());
         holder.artistName.setText(song.getArtist());

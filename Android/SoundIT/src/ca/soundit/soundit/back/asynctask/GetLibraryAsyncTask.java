@@ -8,30 +8,35 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.provider.Settings;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.activities.AddSongActivity;
 import ca.soundit.soundit.back.data.Song;
 import ca.soundit.soundit.back.http.HTTPHelper;
+import ca.soundit.soundit.fragments.AddSongFragment;
 
 public class GetLibraryAsyncTask extends
-		AsyncTask<Void, Void, List<Song>> {
+		AsyncTask<String, Void, List<Song>> {
 
-	private AddSongActivity mAddSongActivity;
+	private AddSongFragment mAddSongActivity;
 	
-	public GetLibraryAsyncTask(AddSongActivity activity){
+	public GetLibraryAsyncTask(AddSongFragment activity){
 		mAddSongActivity = activity;
 	}
 	
 	@Override
-	protected List<Song> doInBackground(Void... params) {
+	protected List<Song> doInBackground(String... params) {
 		Hashtable<String,String> paramsTable = new Hashtable<String,String>();
-		//paramsTable.put(Constants.QUERY_API_KEY, Constants.API_KEY);
-		String AndroidId = Settings.Secure.getString(mAddSongActivity.getContentResolver(),Settings.Secure.ANDROID_ID);
-		paramsTable.put(Constants.API_DEVICE_ID_KEY, AndroidId);
-		paramsTable.put(Constants.API_LOCATION_ID_KEY, "1");
+		SharedPreferences settings = mAddSongActivity.getActivity().getSharedPreferences(Constants.PREFS_USER_INFO, Context.MODE_PRIVATE);
+		paramsTable.put(Constants.API_USER_ID, String.valueOf(settings.getInt(Constants.PREFS_USER_ID, 0)));
+		paramsTable.put(Constants.API_API_KEY, settings.getString(Constants.PREFS_API_TOKEN, ""));
+		
+		if (params[0] != null) {
+			paramsTable.put(Constants.API_SEARCH_STRING, params[0]);
+		}
 		String result = HTTPHelper.HTTPGetRequest(Constants.URL_ROOT + Constants.URL_GET_LIBRARY, paramsTable);
 		
 		if (result != null)
@@ -47,17 +52,17 @@ public class GetLibraryAsyncTask extends
 
 					JSONObject fields = json.getJSONObject(Constants.JSON_FIELDS);
 					
-					if (!Constants.JSON_NONE.equals(fields.getString(Constants.JSON_TRACK_URL)))
-						song.setAlbumURL(fields.getString(Constants.JSON_TRACK_URL));
-					
 					song.setName(fields.getString(Constants.JSON_TRACK_NAME));
 					
 					JSONObject album = fields.getJSONObject(Constants.JSON_ALBUM);
 					album = album.getJSONObject(Constants.JSON_FIELDS);
 					song.setAlbum(album.getString(Constants.JSON_ALBUM_NAME));
 					
-					if (!Constants.JSON_NONE.equals(album.getString(Constants.JSON_ALBUM_URL)))
+					String albumURL = album.getString(Constants.JSON_ALBUM_URL);
+					if (albumURL != null && !(Constants.JSON_NONE.equals(albumURL) || "".equals(albumURL) ))
 						song.setAlbumURL(album.getString(Constants.JSON_ALBUM_URL));
+					else 
+						song.setAlbumURL(null);
 					
 					JSONObject category = fields.getJSONObject(Constants.JSON_CATEOGORY);
 					category = category.getJSONObject(Constants.JSON_FIELDS);
