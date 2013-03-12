@@ -395,12 +395,15 @@ def getSongLibrary(request):
         kwargs['is_popular'] = True
         
     if search_string:
-        kwargs['name__icontains'] = search_string
+    	kwargs_name = {'name__icontains':search_string}
+    	kwargs_artistname = {'artist__name__icontains':search_string}
         
     if category:
         kwargs['category_id'] = category
 
-    if len(kwargs.keys()) > 0:
+    if search_string is not None:
+		library = MusicTrack.objects.filter(Q(**kwargs_name) | Q(**kwargs_artistname))
+    elif len(kwargs.keys()) > 0:
         library = MusicTrack.objects.filter(**kwargs)
     else:
         library = MusicTrack.objects.all()
