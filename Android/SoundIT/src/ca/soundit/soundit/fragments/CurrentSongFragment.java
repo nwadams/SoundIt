@@ -17,6 +17,8 @@ import ca.soundit.soundit.R;
 import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.back.data.Song;
 import ca.soundit.soundit.back.http.HTTPHelper;
+import ca.soundit.soundit.utils.ImageCacheHandler;
+import ca.soundit.soundit.utils.ImageDownloadManager;
 
 import com.actionbarsherlock.app.SherlockFragment;
 
@@ -43,35 +45,9 @@ public class CurrentSongFragment extends SherlockFragment {
 		artistName.setText(currentPlayingSong.getArtist());
 		
 		final ImageView albumArt = (ImageView) v.findViewById(R.id.album_art_image);
-		if (currentPlayingSong.getAlbumURL() != null && !currentPlayingSong.getAlbumURL().equals("none") && !currentPlayingSong.getAlbumURL().equals("null")) {
-        	if (SoundITApplication.getInstance().getBitmapCache().get(currentPlayingSong.getAlbumURL()) != null) {
-        		albumArt.setImageBitmap(SoundITApplication.getInstance().getBitmapCache().get(currentPlayingSong.getAlbumURL()));
-        	} else {
-        		albumArt.setImageResource(R.drawable.default_album_300);
-                new AsyncTask<String, Void, String>() {
-					@Override
-					protected String doInBackground(String... params) {
-						Hashtable<String,String> paramsTable = new Hashtable<String,String>();
-						Bitmap bitmap = HTTPHelper.HTTPImageGetRequest(params[0], paramsTable);
-						if (bitmap != null) {
-							SoundITApplication.getInstance().getBitmapCache().put(params[0], bitmap);
-							return Constants.OK;
-						}
-							
-						return null;
-					}
-					
-					@Override
-					protected void onPostExecute(String result) {
-						if (Constants.OK.equals(result))
-							albumArt.setImageBitmap(SoundITApplication.getInstance().getBitmapCache().get(currentPlayingSong.getAlbumURL()));
-					}
-                	
-                }.execute(currentPlayingSong.getAlbumURL());
-        	}
-		} else {
-        	albumArt.setImageResource(R.drawable.default_album_300);
-        }
+		if (currentPlayingSong.getAlbumURL() != null) {
+			ImageDownloadManager.getInstance().loadImage(currentPlayingSong.getAlbumURL(), albumArt);
+		}
 	}
 
 }
