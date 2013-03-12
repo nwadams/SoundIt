@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.utils import simplejson
 from django.http import QueryDict
 from django.shortcuts import render
+from django.conf import settings
 import utils
 from services.customer_service import CustomerService
 from services.venue_service import VenueService
@@ -299,5 +300,5 @@ def venueGetNextSong(request):
 def index(request):
     music_tracks = MusicTrack.objects.all()
     playlist_items = PlaylistItem.objects.all()
-    context = {'music_track_list': music_tracks, 'playlist_item_list': playlist_items}
+    context = {'music_track_list': music_tracks, 'playlist_item_list': playlist_items, 'domain_url': request.META['HTTP_HOST']}
     return render(request, 'backend/index.html', context)

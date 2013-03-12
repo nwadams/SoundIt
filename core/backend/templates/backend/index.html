@@ -5,8 +5,8 @@
 {% block content %}
 	<div class="audio-box">
 		<audio id="player" controls height="100" width="100">
-		  	<source src="/static/backend/donomar.m4a" type="audio/mpeg">
-		  	<source src="horse.ogg" type="audio/ogg">
+		  	<source src="/static/venue/donomar.m4a" type="audio/mpeg">
+		  	<source src="/static/venue/horse.ogg" type="audio/ogg">
 		  	<embed height="50" width="100" src="">
 		</audio>
 	</div>
@@ -23,8 +23,8 @@
 			    					<img width="100" height="100" src="{{url}}">
 			    				{% endwith %}
 		    				{% else %}
-		    					{% with url="http://api.soundit.ca/static/venue/soundit_logo_small.png" %}
-		    						<img width="100" height="100" src="{{url}}">
+		    					{% with url="/static/venue/soundit_logo_small.png" %}
+		    						<img width="100" height="100" src="{{domain_url}}{{url}}">
 		    					{% endwith %}
 	    					{% endif %}
 			    		</div>
@@ -56,8 +56,8 @@
 			    					<img width="100" height="100" src="{{url}}">
 			    				{% endwith %}
 		    				{% else %}
-		    					{% with url="http://api.soundit.ca/static/venue/soundit_logo_small.png" %}
-		    						<img width="100" height="100" src="{{url}}">
+		    					{% with url="/static/venue/soundit_logo_small.png" %}
+		    						<img width="100" height="100" src="{{domain_url}}{{url}}">
 		    					{% endwith %}
 	    					{% endif %}
 						</div>
@@ -85,7 +85,7 @@
 	    			},
 	    			onAnimation: function() {
 	    				// Make API call and update div.
-	    				$.get("http://localhost:11080/backend/getFormattedLibrary/?location_id=2&device_id=1234", function(data) {
+	    				$.get("{{domain_url}}/backend/getFormattedLibrary/?location_id=2&device_id=1234", function(data) {
 	    					$("#library-flipbox-data").html(data);
 	    				});
 	    			},
@@ -103,7 +103,7 @@
 	    			},
 	    			onAnimation: function() {
 	    				// Make API call and update div.
-	    				$.get("http://localhost:11080/backend/refreshPlaylistFormatted/?device_id=1&location_id=1", function(data) {
+	    				$.get("{{domain_url}}/backend/refreshPlaylistFormatted/?device_id=1&location_id=1", function(data) {
 	    					$("#playlist-flipbox-data").html(data);
 	    				});
 	    			},
@@ -114,35 +114,36 @@
 	    	});
 	    	
 	    	var player = $("#player");
-	    	player.src="donomar.m4a";
+	    	player.src="/static/venue/donomar.m4a";
 	    	player.bind("ended", function() {
-	    		$.get("http://api.soundit.ca/backend/venue/getNextSong/", function(data) {
+	    		$.get("{{domain_url}}/backend/venue/getNextSong/", function(data) {
 	    			if(data.toLowerCase == "beautiful day") {
-	    				player.src="u2.m4a";
+	    				player.src="/static/venue/u2.m4a";
 	    			} else if (data.toLowerCase == "danza kuduro") {
-	    				player.src="donomar.m4a";
+	    				player.src="/static/venue/donomar.m4a";
     				} else if (data.toLowerCase == "we found love") {
-	    				player.src="rihanna.m4a";
+	    				player.src="/static/venue/rihanna.m4a";
 	    			} else if (data.toLowerCase == "gangnam style") {
-	    				player.src="psy.m4a";
+	    				player.src="/static/venue/psy.m4a";
     				} else if (data.toLowerCase == "party in the usa") {
-	    				player.src="miley-cyrus.m4a";
+	    				player.src="/static/venue/miley-cyrus.m4a";
 	    			} else if (data.toLowerCase == "moves like jagger") {
-	    				player.src="maroon5.m4a";
+	    				player.src="/static/venue/maroon5.m4a";
 	    			} else if (data.toLowerCase == "hotel california") {
-	    				player.src="eagles.m4a";
+	    				player.src="/static/venue/eagles.m4a";
 	    			} else if (data.toLowerCase == "livin on a prayer") {
-	    				player.src="bonjovi.m4a";
+	    				player.src="/static/venue/bonjovi.m4a";
 	    			} else if (data.toLowerCase == "billie jean") {
-	    				player.src="billie-jean.m4a";
+	    				player.src="/static/venue/billie-jean.m4a";
     				} else if (data.toLowerCase == "skyfall") {
-	    				player.src="adele.m4a";
+	    				player.src="/static/venue/adele.m4a";
     				}
     				if (data != false) {
-    					player.play();
+    					player.get(0).play();
     				}
 	    		});
 	    	});
+	    	player.get(0).play();
     	});
     	</script>
 	</div>
