@@ -28,6 +28,7 @@ public class Constants {
 	public static final String API_AUTH_TOKEN = "auth_token";
 	public static final String API_TOKEN_TYPE = "token_type";
 	public static final String API_FACEBOOK_ID = "facebook_id";
+	public static final String API_SEARCH_STRING = "search_string";
 	
 	public static final String JSON_ERROR_MESSAGE = "Error Message";
 	public static final String JSON_FIELDS = "fields";
@@ -72,6 +73,7 @@ public class Constants {
 	public static final String GA_APP_FLOW_SIGN_UP_NO_ACCOUNT = "no_account";	
 	public static final String GA_APP_FLOW_SIGN_UP_GOOGLE = "google";
 	public static final String GA_APP_FLOW_ADD_SONG = "add_song";
+	public static final String GA_APP_FLOW_GET_SONG_LIBRARY = "get_song_library";
 	public static final String GA_APP_FLOW_SETTINGS = "settings";
 	public static final String GA_APP_FLOW_REFRESH = "refresh";
 	public static final String GA_APP_FLOW_ABOUT = "about";

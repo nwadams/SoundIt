@@ -21,8 +21,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
-import ca.soundit.soundit.activities.SongListActivity;
-import ca.soundit.soundit.back.asynctask.RefreshPlaylistAsyncTask;
 import ca.soundit.soundit.back.asynctask.SignUpAsyncTask;
 
 import com.actionbarsherlock.app.SherlockFragment;
@@ -44,7 +42,6 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.plus.GooglePlusUtil;
 import com.google.android.gms.plus.PlusClient;
-import com.google.android.gms.plus.model.people.Person;
 
 public class LoginFragment extends SherlockFragment implements ConnectionCallbacks, OnConnectionFailedListener{
 

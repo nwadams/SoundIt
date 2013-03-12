@@ -16,22 +16,27 @@ import ca.soundit.soundit.SoundITApplication;
 import ca.soundit.soundit.activities.AddSongActivity;
 import ca.soundit.soundit.back.data.Song;
 import ca.soundit.soundit.back.http.HTTPHelper;
+import ca.soundit.soundit.fragments.AddSongFragment;
 
 public class GetLibraryAsyncTask extends
-		AsyncTask<Void, Void, List<Song>> {
+		AsyncTask<String, Void, List<Song>> {
 
-	private AddSongActivity mAddSongActivity;
+	private AddSongFragment mAddSongActivity;
 	
-	public GetLibraryAsyncTask(AddSongActivity activity){
+	public GetLibraryAsyncTask(AddSongFragment activity){
 		mAddSongActivity = activity;
 	}
 	
 	@Override
-	protected List<Song> doInBackground(Void... params) {
+	protected List<Song> doInBackground(String... params) {
 		Hashtable<String,String> paramsTable = new Hashtable<String,String>();
-		SharedPreferences settings = mAddSongActivity.getSharedPreferences(Constants.PREFS_USER_INFO, Context.MODE_PRIVATE);
+		SharedPreferences settings = mAddSongActivity.getActivity().getSharedPreferences(Constants.PREFS_USER_INFO, Context.MODE_PRIVATE);
 		paramsTable.put(Constants.API_USER_ID, String.valueOf(settings.getInt(Constants.PREFS_USER_ID, 0)));
 		paramsTable.put(Constants.API_API_KEY, settings.getString(Constants.PREFS_API_TOKEN, ""));
+		
+		if (params[0] != null) {
+			paramsTable.put(Constants.API_SEARCH_STRING, params[0]);
+		}
 		String result = HTTPHelper.HTTPGetRequest(Constants.URL_ROOT + Constants.URL_GET_LIBRARY, paramsTable);
 		
 		if (result != null)

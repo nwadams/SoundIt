@@ -58,7 +58,7 @@ public class SongListActivity extends BaseActivity {
 			public void run() {
 				 refreshPlaylist(false);
 			}  		
-    	}, 0, 1000 * Constants.REFRESH_INTERVAL); //run every minute
+    	}, 0, 1000 * Constants.REFRESH_INTERVAL);
     	
         notifiyRefresh(Constants.OK);
 

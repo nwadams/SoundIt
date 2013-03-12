@@ -26,9 +26,7 @@ public class AddSongActivity extends BaseActivity {
         this.getSupportActionBar().setTitle(R.string.activity_title_add_song);
         
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        this.setSupportProgressBarIndeterminateVisibility(true);
         
-        getLibrary();
 	}
 	
 	 @Override
@@ -43,23 +41,5 @@ public class AddSongActivity extends BaseActivity {
 	        }
 	    }
 
-	private void getLibrary() {
-		new GetLibraryAsyncTask(this).execute();
-	}
-
-	public void notifiyRefresh(List<Song> result) {
-        this.setSupportProgressBarIndeterminateVisibility(false);
-
-		if (result == null) {
-			return;
-		}
-						
-		AddSongFragment addSongFragment = (AddSongFragment)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_add_song);
-		
-		if(addSongFragment != null)
-		{
-			addSongFragment.updateList(result);
-		}
-	}
+	
 }
