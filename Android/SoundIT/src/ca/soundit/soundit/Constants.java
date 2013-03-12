@@ -25,6 +25,9 @@ public class Constants {
 	public static final String API_API_KEY = "api_key";
 	public static final String API_EMAIL = "email";
 	public static final String API_NAME = "name";
+	public static final String API_AUTH_TOKEN = "auth_token";
+	public static final String API_TOKEN_TYPE = "token_type";
+	public static final String API_FACEBOOK_ID = "facebook_id";
 	
 	public static final String JSON_ERROR_MESSAGE = "Error Message";
 	public static final String JSON_FIELDS = "fields";

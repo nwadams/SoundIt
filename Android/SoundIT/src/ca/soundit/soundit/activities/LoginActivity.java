@@ -29,6 +29,7 @@ public class LoginActivity extends BaseActivity implements LoginFragment.OnLogin
 
 	@Override
 	protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
+		super.onActivityResult(requestCode, responseCode, intent);
 		if (requestCode == REQUEST_CODE_RESOLVE_ERR && responseCode == RESULT_OK) {
 			LoginFragment loginFragment = (LoginFragment)
 	                getSupportFragmentManager().findFragmentById(R.id.fragment_login);

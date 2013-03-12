@@ -132,8 +132,9 @@ public class SongListActivity extends BaseActivity {
 		} else {
 			editor.apply();
 		}	
-    	
-    	startActivity(new Intent(this, CheckInActivity.class));
+    	Intent i = new Intent(this, CheckInActivity.class);
+    	i.putExtra("logout", true);
+    	startActivity(i);
 		finish();
 	}
 

@@ -1,15 +1,18 @@
 package ca.soundit.soundit.fragments;
 
+import java.util.Arrays;
 import java.util.Hashtable;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +23,13 @@ import ca.soundit.soundit.R;
 import ca.soundit.soundit.back.asynctask.SignUpAsyncTask;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
+import com.facebook.widget.LoginButton;
 import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
@@ -37,6 +47,9 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 
 	private Button mLoginButton;
 	private SignInButton mGoogleLoginButton;
+	private LoginButton mFacebookLoginButton;
+
+	private UiLifecycleHelper uiHelper;
 
 	private boolean loginAttempt;
 
@@ -63,6 +76,9 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 		// Progress bar to be displayed if the connection failure is not resolved.
 		mConnectionProgressDialog = new ProgressDialog(this.getActivity());
 		mConnectionProgressDialog.setMessage("Signing in...");
+
+		uiHelper = new UiLifecycleHelper(getActivity(), callback);
+		uiHelper.onCreate(savedInstanceState);
 	}
 
 	@Override
@@ -75,6 +91,24 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 	public void onStop() {
 		super.onStop();
 		mPlusClient.disconnect();
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		uiHelper.onActivityResult(requestCode, resultCode, data);
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		uiHelper.onDestroy();
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		uiHelper.onSaveInstanceState(outState);
 	}
 
 
@@ -96,6 +130,7 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 
 			Bundle savedInstanceState) {
+			
 		View v = inflater.inflate(R.layout.fragment_login, container, false);
 
 		mLoginButton = (Button) v.findViewById(R.id.login_button);
@@ -110,7 +145,7 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 			}
 
 		});
-		
+
 		loginAttempt = false;
 		mGoogleLoginButton.setOnClickListener(new OnClickListener() {
 
@@ -131,12 +166,34 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 			}
 
 		});
+
+		mFacebookLoginButton = (LoginButton) v.findViewById(R.id.facebook_authButton);
+		mFacebookLoginButton.setReadPermissions(Arrays.asList("email"));
+		mFacebookLoginButton.setFragment(this);
+		
+		Bundle b = getActivity().getIntent().getExtras();
+		if (b != null && b.containsKey("logout")) {
+			Session s = Session.getActiveSession();
+			if (s != null)
+				s.closeAndClearTokenInformation();
+			mFacebookLoginButton.setSession(s);
+		}
+
 		return v;
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+
+		Session session = Session.getActiveSession();
+		if (session != null &&
+				(session.isOpened() || session.isClosed()) ) {
+			//onSessionStateChange(session, session.getState(), null);
+		}
+
+		uiHelper.onResume();
+
 		int errorCode = GooglePlusUtil.checkGooglePlusApp(this.getActivity());
 		if (errorCode != GooglePlusUtil.SUCCESS) {
 			mGoogleLoginButton.setVisibility(View.GONE);
@@ -147,8 +204,10 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 
 	@Override
 	public void onPause() {
-		hideProgressDialog();
 		super.onPause();
+
+		hideProgressDialog();
+		uiHelper.onResume();
 
 		if (mSignUpTask != null)
 			mSignUpTask.cancel(true);
@@ -222,10 +281,10 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 		mConnectionProgressDialog.dismiss();
 		if (!loginAttempt) {
 			if (mPlusClient.isConnected()) {
-                mPlusClient.clearDefaultAccount();
-                mPlusClient.disconnect();
-                mPlusClient.connect();
-            }
+				mPlusClient.clearDefaultAccount();
+				mPlusClient.disconnect();
+				mPlusClient.connect();
+			}
 		} else {
 			loginGoogle();
 		}
@@ -253,12 +312,60 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 
 	@Override
 	public void onDisconnected() {
-
 	}
 
 	public void reconnectToPlus() {
 		mConnectionResult = null;
-        mPlusClient.connect();
+		mPlusClient.connect();
+	}
+
+	private Session.StatusCallback callback = new Session.StatusCallback() {
+		@Override
+		public void call(Session session, SessionState state, Exception exception) {
+			onSessionStateChange(session, state, exception);
+		}
+	};
+
+	private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+		if (state.isOpened()) {
+			Log.i(Constants.TAG, "Logged in...");
+			final String accessToken = session.getAccessToken();
+
+			// make request to the /me API
+			Request.executeMeRequestAsync(session, new Request.GraphUserCallback() {
+
+				// callback after Graph API response with user object
+				@Override
+				public void onCompleted(GraphUser user, Response response) {
+					if (user != null) {
+						String id = user.getId();
+						loginFacebook(accessToken, id);
+					}
+				}
+			});
+		} else if (state.isClosed()) {
+			Log.i(Constants.TAG, "Logged out...");
+		}
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void loginFacebook(String accessToken, String id) {
+		EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_APP_FLOW, Constants.GA_APP_FLOW_SIGN_UP, Constants.GA_APP_FLOW_SIGN_UP_GOOGLE, null);
+		showProgressDialog();
+		Hashtable<String,String> paramsTable = new Hashtable<String,String>();
+		String AndroidId = Settings.Secure.getString(this.getActivity().getContentResolver(),Settings.Secure.ANDROID_ID);
+		paramsTable.put(Constants.API_DEVICE_ID_KEY, AndroidId);
+		paramsTable.put(Constants.API_AUTH_TOKEN, accessToken);
+		paramsTable.put(Constants.API_TOKEN_TYPE, "facebook");
+		paramsTable.put(Constants.API_FACEBOOK_ID, id);
+
+		mSignUpTask = new SignUpAsyncTask(this, paramsTable);
+
+		if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.GINGERBREAD_MR1) {
+			mSignUpTask.execute();
+		} else {
+			mSignUpTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		}		
 	}
 
 }
