@@ -33,6 +33,9 @@
     <string name="alert_dialog_logout_title">Logout</string>
     <string name="alert_dialog_logout_message">Are you sure you want to log out?</string>
     <string name="alert_dialog_logout_ok">Logout</string>
+    <string name="alert_dialog_checkout_title">Checkout</string>
+    <string name="alert_dialog_checkout_message">Are you sure you want to leave?</string>
+    <string name="alert_dialog_checkout_ok">Leave</string>
     <string name="alert_dialog_no_locations_title">No Locations available</string>
     <string name="alert_dialog_no_locations_message">Sorry. No SoundIT locations are available in your area. </string>
     <string name="add_song_search_query_hint">Search for Song</string>
