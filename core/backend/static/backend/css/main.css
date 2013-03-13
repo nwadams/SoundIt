@@ -23,7 +23,7 @@ q:before,q:after{content:""}
 blockquote,q{quotes:"" ""}
 /* </reset from Eric Meyer, thanks! */
 
-body{font-family:"Lucida Grande",Helvetica,sans-serif;font-size:10px;cursor:default;background:url(loading.gif);color:#000}
+body{font-family:"Lucida Grande",Helvetica,sans-serif;font-size:10px;cursor:default;color:#000}
 
 /******************************************
 **

@@ -24,7 +24,7 @@
 			    				{% endwith %}
 		    				{% else %}
 		    					{% with url="/static/venue/soundit_logo_small.png" %}
-		    						<img width="100" height="100" src="{{domain_url}}{{url}}">
+		    						<img width="100" height="100" src="http://{{domain_url}}{{url}}">
 		    					{% endwith %}
 	    					{% endif %}
 			    		</div>
@@ -57,7 +57,7 @@
 			    				{% endwith %}
 		    				{% else %}
 		    					{% with url="/static/venue/soundit_logo_small.png" %}
-		    						<img width="100" height="100" src="{{domain_url}}{{url}}">
+		    						<img width="100" height="100" src="http://{{domain_url}}{{url}}">
 		    					{% endwith %}
 	    					{% endif %}
 						</div>
@@ -116,7 +116,7 @@
 	    	var player = $("#player");
 	    	player.src="/static/venue/donomar.m4a";
 	    	player.bind("ended", function() {
-	    		$.get("http://{{domain_url}}/backend/venue/getNextSong/", function(data) {
+	    		$.get("http://{{domain_url}}/backend/venue/getNextSong/?location_id=1", function(data) {
 	    			if(data.toLowerCase == "beautiful day") {
 	    				player.src="/static/venue/u2.m4a";
 	    			} else if (data.toLowerCase == "danza kuduro") {
