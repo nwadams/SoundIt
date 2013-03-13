@@ -117,30 +117,10 @@
 	    	player.src="/static/venue/donomar.m4a";
 	    	player.bind("ended", function() {
 	    		$.get("http://{{domain_url}}/backend/venue/getNextSong/?location_id=1", function(data) {
-	    			if(data.toLowerCase() == "beautiful day") {
-	    				player.get(0).src="/static/venue/u2.m4a";
-	    			} else if (data.toLowerCase() == "danza kuduro") {
-	    				player.get(0).src="/static/venue/donomar.m4a";
-    				} else if (data.toLowerCase() == "we found love") {
-	    				player.get(0).src="/static/venue/rihanna.m4a";
-	    			} else if (data.toLowerCase() == "gangnam style") {
-	    				player.get(0).src="/static/venue/psy.m4a";
-    				} else if (data.toLowerCase() == "party in the usa") {
-	    				player.get(0).src="/static/venue/miley-cyrus.m4a";
-	    			} else if (data.toLowerCase() == "moves like jagger") {
-	    				player.get(0).src="/static/venue/maroon5.m4a";
-	    			} else if (data.toLowerCase() == "hotel california") {
-	    				player.get(0).src="/static/venue/eagles.m4a";
-	    			} else if (data.toLowerCase() == "livin on a prayer") {
-	    				player.get(0).src="/static/venue/bonjovi.m4a";
-	    			} else if (data.toLowerCase() == "billie jean") {
-	    				player.get(0).src="/static/venue/billie-jean.m4a";
-    				} else if (data.toLowerCase() == "skyfall") {
-	    				player.get(0).src="/static/venue/adele.m4a";
-    				}
-    				if (data != false) {
-    					player.get(0).play();
-    				}
+	    			if (data != false) {
+	    				player.get(0).src = "/static/venue/" + data.toLowerCase() + ".m4a";
+	    				player.get(0).play();
+	    			}
 	    		});
 	    	});
 	    	player.get(0).play();
