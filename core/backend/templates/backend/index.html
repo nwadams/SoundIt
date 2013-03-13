@@ -85,7 +85,7 @@
 	    			},
 	    			onAnimation: function() {
 	    				// Make API call and update div.
-	    				$.get("http://{{domain_url}}/backend/getFormattedLibrary/?location_id=1&device_id=1234", function(data) {
+	    				$.get("http://{{domain_url}}/backend/getFormattedLibrary/?location_id={{location_id}}&device_id=1234", function(data) {
 	    					$("#library-flipbox-data").html(data);
 	    				});
 	    			},
@@ -103,7 +103,7 @@
 	    			},
 	    			onAnimation: function() {
 	    				// Make API call and update div.
-	    				$.get("http://{{domain_url}}/backend/refreshPlaylistFormatted/?device_id=1&location_id=1", function(data) {
+	    				$.get("http://{{domain_url}}/backend/refreshPlaylistFormatted/?device_id=1&location_id={{location_id}}", function(data) {
 	    					$("#playlist-flipbox-data").html(data);
 	    				});
 	    			},
@@ -119,13 +119,13 @@
 	    			if (data != false) {
 	    				player.get(0).src = "/static/venue/" + data.toLowerCase() + ".m4a";
 	    				player.get(0).play();
-	    				$.get("http://{{domain_url}}/backend/refreshPlaylistFormatted/?location_id=1&device_id=1234", function(data) {
+	    				$.get("http://{{domain_url}}/backend/refreshPlaylistFormatted/?location_id={{location_id}}&device_id=1234", function(data) {
 	    					$("#playlist-flipbox-data").html(data);
 	    				});
 	    			}
 	    		});
 	    	});
-	    	$.get("http://{{domain_url}}/backend/venue/getCurrentSong/?location_id=1", function(data) {
+	    	$.get("http://{{domain_url}}/backend/venue/getCurrentSong/?location_id={{location_id}}", function(data) {
     			if (data != false) {
     				player.get(0).src="/static/venue/" + data.toLowerCase() + ".m4a";
     				player.get(0).play();

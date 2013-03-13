@@ -499,9 +499,16 @@ def __requestLibrary__(request):
 
 
 def index(request):
+    try: 
+        location_id = request.GET['location_id'] 
+    except KeyError:
+        error = utils.internalServerErrorResponse("Invalid request: Location Id required for logging into venue app.")
+        logger.warning("Invalid request: Location Id required for logging into venue app.")
+        return HttpResponse(simplejson.dumps(error), mimetype='application/json')
+    logger.info("Incoming request- venue app login with parameters location_id " + str(location_id))
     music_tracks = MusicTrack.objects.all()
     playlist_items = PlaylistItem.objects.all()
-    context = {'music_track_list': music_tracks, 'playlist_item_list': playlist_items, 'domain_url': request.META['HTTP_HOST']}
+    context = {'music_track_list': music_tracks, 'playlist_item_list': playlist_items, 'domain_url': request.META['HTTP_HOST'], 'location_id': location_id}
     return render(request, 'backend/index.html', context)
 
 def refreshPlaylistFormatted(request):
