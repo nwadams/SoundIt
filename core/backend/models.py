@@ -161,8 +161,8 @@ class Album(models.Model):
     def __unicode__(self):
         return "Album{" + \
     "id=" + str(self.pk) + \
-    ", name='" + self.name + "\'" + \
-    ", image_URL=" + self.image_URL + "\'" + \
+    ", name='" + str(self.name) + "\'" + \
+    ", image_URL=" + str(self.image_URL) + "\'" + \
     ", image_latest_rev=" + str(self.image_latest_rev) + "\'" + \
     ", date_created=" + str(self.date_created) + \
     ", date_modified=" + str(self.date_modified) + \
@@ -221,8 +221,8 @@ class MusicTrack(models.Model):
     "id=" + str(self.pk) + \
     ", album='" + str(self.album) + '\'' + \
     ", artist='" + str(self.artist) + '\'' + \
-    ", name='" + self.name + "\'" + \
-    ", track_URL=" + self.track_URL + "\'" + \
+    ", name='" + str(self.name) + "\'" + \
+    ", track_URL=" + str(self.track_URL) + "\'" + \
     ", track_latest_rev=" + str(self.track_latest_rev) + "\'" + \
     ", category=" + str(self.category) + "\'" + \
     ", is_popular=" + str(self.is_popular) + \
