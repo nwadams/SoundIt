@@ -5,7 +5,7 @@
 {% block content %}
 	<div class="audio-box">
 		<audio id="player" controls height="100" width="100">
-		  	<source src="/static/venue/donomar.m4a" type="audio/mpeg">
+		  	<source src="/static/venue/danza kuduro.m4a" type="audio/mpeg">
 		  	<source src="/static/venue/horse.ogg" type="audio/ogg">
 		  	<embed height="50" width="100" src="">
 		</audio>
@@ -30,13 +30,13 @@
 			    		</div>
 			    		<div class="playlist-item-data fs-m">
 			    			<ul>
-			    				<li class="p-small-t">{{item.music_track.name}}</li>
+			    				<li class="p-small-t fs-l">{{item.music_track.name}}</li>
 			    				<li class="p-small-t">{{item.music_track.album.name}}</li>
 			    				<li class="p-small-t">{{item.music_track.artist.name}}</li>
 			    			</ul>
 			    		</div>
 			    		<div class="playlist-item-votes">
-			    			10
+			    			{{item.votes}}
 			    		</div>
 			    	</div>
 			    {% endfor %}
@@ -85,7 +85,7 @@
 	    			},
 	    			onAnimation: function() {
 	    				// Make API call and update div.
-	    				$.get("http://{{domain_url}}/backend/getFormattedLibrary/?location_id=2&device_id=1234", function(data) {
+	    				$.get("http://{{domain_url}}/backend/getFormattedLibrary/?location_id=1&device_id=1234", function(data) {
 	    					$("#library-flipbox-data").html(data);
 	    				});
 	    			},
@@ -114,16 +114,23 @@
 	    	});
 	    	
 	    	var player = $("#player");
-	    	player.src="/static/venue/donomar.m4a";
 	    	player.bind("ended", function() {
 	    		$.get("http://{{domain_url}}/backend/venue/getNextSong/?location_id=1", function(data) {
 	    			if (data != false) {
 	    				player.get(0).src = "/static/venue/" + data.toLowerCase() + ".m4a";
 	    				player.get(0).play();
+	    				$.get("http://{{domain_url}}/backend/refreshPlaylistFormatted/?location_id=1&device_id=1234", function(data) {
+	    					$("#playlist-flipbox-data").html(data);
+	    				});
 	    			}
 	    		});
 	    	});
-	    	player.get(0).play();
+	    	$.get("http://{{domain_url}}/backend/venue/getCurrentSong/?location_id=1", function(data) {
+    			if (data != false) {
+    				player.get(0).src="/static/venue/" + data.toLowerCase() + ".m4a";
+    				player.get(0).play();
+    			}
+			});
     	});
     	</script>
 	</div>

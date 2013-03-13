@@ -42,5 +42,13 @@ class VenueService:
             return new_song
         except:
             raise PlaylistNotFoundError(new_song_list)
+        
+    def getCurrentPlaying(self, location_id):
+        playlist = Playlist.objects.get(location_id=location_id, is_active=True)
+        try:
+            current_playing = PlaylistItem.objects.get(playlist_id = playlist.id, item_state=1)
+        except:
+            logger.warn("no song at location_id " + location_id + "with item state 1")
+        return current_playing
 
     

@@ -33,6 +33,8 @@ urlpatterns = patterns('',
     
     url(r'^venue/getNextSong/$', views.venueGetNextSong, name='venueGetNextSong'),
     
+    url(r'^venue/getCurrentSong/$', views.venueGetCurrentSong, name='venueGetCurrentSong'),
+    
     url(r'^venue/index.html', views.index, name='venueTesting'),
     
     url(r'^getFormattedLibrary/$', views.getFormattedLibrary, name='getFormattedLibrary'),

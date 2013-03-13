@@ -155,4 +155,4 @@ h1 {position: relative;left: -121px;margin-bottom: -63px;width: 140px;opacity: 0
 .playlist-item-wrap {min-height:100px; position: relative;}
 .playlist-item-art {width:100px; float:left; padding-right: 10px;}
 .playlist-item-data {width:300px; float:left; padding-right: 10px;}
-.playlist-item-votes {width:80px; float:left;}
+.playlist-item-votes {width:80px; float:left; position:relative; top:40px; left:20px; font-size:24px;}

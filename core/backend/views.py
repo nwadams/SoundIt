@@ -462,6 +462,20 @@ def venueGetNextSong(request):
     result =  venue_service.updateCurrentPlaying(location_id)
     return HttpResponse(result.music_track.name)
 
+def venueGetCurrentSong(request):
+    params = None
+    if (request.method == 'GET'):
+        params = request.GET
+    elif request.method == 'POST':
+        params = request.POST
+        
+    location_id = params.get('location_id', None)
+    
+    venue_service = VenueService()
+    result =  venue_service.getCurrentPlaying(location_id)
+    return HttpResponse(result.music_track.name)
+
+
 def getFormattedLibrary(request):
     library = __requestLibrary__(request)
     context = {'library': library}
@@ -505,7 +519,7 @@ def __refreshPlaylist__(request):
         return HttpResponse(simplejson.dumps(error), mimetype='application/json')
     logger.info("Incoming request- refresh playlist with parameters device_id " + str(device_id) + ", location_id " + str(location_id))
     # Use location id to fetch current playlist
-    return __reorderPlaylist__(PlaylistItem.objects.all())
+    return __reorderPlaylist__(PlaylistItem.objects.filter(Q(item_state=2) | Q(item_state=1))) 
 
 def __reorderPlaylist__(playlist_items):
     
