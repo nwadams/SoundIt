@@ -189,12 +189,6 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 	public void onResume() {
 		super.onResume();
 
-		Session session = Session.getActiveSession();
-		if (session != null &&
-				(session.isOpened() || session.isClosed()) ) {
-			//onSessionStateChange(session, session.getState(), null);
-		}
-
 		uiHelper.onResume();
 
 		int errorCode = GooglePlusUtil.checkGooglePlusApp(this.getActivity());
@@ -382,7 +376,7 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void loginFacebook(String accessToken, String id) {
+	public void loginFacebook(String accessToken, String id) {
 		EasyTracker.getTracker().sendEvent(Constants.GA_CATEGORY_APP_FLOW, Constants.GA_APP_FLOW_SIGN_UP, Constants.GA_APP_FLOW_SIGN_UP_GOOGLE, null);
 		showProgressDialog();
 		Hashtable<String,String> paramsTable = new Hashtable<String,String>();
@@ -401,4 +395,7 @@ public class LoginFragment extends SherlockFragment implements ConnectionCallbac
 		}		
 	}
 
+	public UiLifecycleHelper getUIHelper() {
+		return uiHelper;
+	}
 }

@@ -6,6 +6,7 @@ import ca.soundit.soundit.Constants;
 import ca.soundit.soundit.R;
 import ca.soundit.soundit.fragments.LoginFragment;
 
+import com.facebook.Session;
 import com.google.analytics.tracking.android.EasyTracker;
 
 public class LoginActivity extends BaseActivity implements LoginFragment.OnLoginCompleteListener {
@@ -30,14 +31,16 @@ public class LoginActivity extends BaseActivity implements LoginFragment.OnLogin
 	@Override
 	protected void onActivityResult(int requestCode, int responseCode, Intent intent) {
 		super.onActivityResult(requestCode, responseCode, intent);
+		LoginFragment loginFragment = (LoginFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_login);
+		
+	    //loginFragment.getUIHelper().onActivityResult(requestCode, responseCode, intent);
 		if (requestCode == REQUEST_CODE_RESOLVE_ERR && responseCode == RESULT_OK) {
-			LoginFragment loginFragment = (LoginFragment)
-	                getSupportFragmentManager().findFragmentById(R.id.fragment_login);
 			
 			if(loginFragment != null)
 			{
 				loginFragment.reconnectToPlus();
 			}
-		}
+		} 
 	}
 }

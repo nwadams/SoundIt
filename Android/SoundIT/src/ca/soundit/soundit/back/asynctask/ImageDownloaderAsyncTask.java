@@ -26,6 +26,9 @@ public class ImageDownloaderAsyncTask extends AsyncTask<String, Void, Bitmap> {
 		Hashtable<String,String> paramsTable = new Hashtable<String,String>();
 		Bitmap bitmap = HTTPHelper.HTTPImageGetRequest(mUrl, paramsTable);
 		
+		if (bitmap != null)
+			mDownloader.putImageInCache(mUrl, bitmap);
+		
 		return bitmap;
 	}
 

@@ -87,9 +87,7 @@ public class ImageDownloadManager {
 	}
 
 
-	public void downloadComplete(String url, Bitmap result) {
-		putImageInCache(url, result);
-		
+	public void downloadComplete(String url, Bitmap result) {	
 		List<ImageView> imageList = mImageViewTable.get(url);
 		Iterator<ImageView> itr = imageList.iterator();
 		while (itr.hasNext()) {
@@ -101,7 +99,7 @@ public class ImageDownloadManager {
 		notifyDownloader();
 	}
 
-	private void putImageInCache(String url, Bitmap result) {
+	public void putImageInCache(String url, Bitmap result) {
 		mImageCacheHandler.put(url, result);	
 	}
 	

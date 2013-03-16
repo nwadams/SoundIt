@@ -1,5 +1,7 @@
 package ca.soundit.soundit.utils;
 
+import com.jakewharton.DiskLruCache;
+
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -9,6 +11,7 @@ public class ImageCacheHandler {
 
 	private int cacheSize = 4 * 1024 * 1024; //4MB
 	private LruCache<String, Bitmap> mBitmapCache;
+	private DiskLruCache mDiskCache;
 
 	public ImageCacheHandler() {
 		mBitmapCache = new LruCache<String, Bitmap>(cacheSize) {
@@ -20,8 +23,6 @@ public class ImageCacheHandler {
 					return value.getByteCount();
 				}
 			}};
-			
-		
 	}
 	
 	public void put(String key, Bitmap value) {
